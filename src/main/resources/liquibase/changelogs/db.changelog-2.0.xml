@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="3" author="anna" context="main">
+        <createSequence sequenceName="users_seq" />
+    </changeSet>
+
+    <changeSet id="4" author="anna" context="main">
+        <createTable tableName="users">
+            
+			<column name="user_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="login" type="varchar(50)">
+            </column>
+
+            <column name="password" type="varchar(50)">
+            </column>
+			
+			<column name="name" type="varchar(50)">
+            </column>
+			
+			<column name="surname" type="varchar(50)">
+            </column>
+			
+			<column name="email" type="varchar(50)">
+            </column>
+			
+			<column name="access_level" type="varchar(10)">
+            </column>
+			
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="anna" context="main">
+        <createSequence sequenceName="ideas_seq" />
+    </changeSet>
+	
+	<changeSet id="6" author="anna" context="main">
+        <createTable tableName="ideas0">
+            
+			<column name="idea_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="user_id" type="BIGINT" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+			
+        </createTable>
+    </changeSet>
+
+    <changeSet id="7" author="anna" context="main">
+        <createSequence sequenceName="activities_seq" />
+    </changeSet>
+	
+	<changeSet id="8" author="anna" context="main">
+        <createTable tableName="activities0">
+            
+			<column name="activity_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="user_id" type="BIGINT" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+			
+        </createTable>
+    </changeSet>
+	
+	<changeSet id = "9" author="anna" context="main">
+    <addForeignKeyConstraint baseColumnNames="user_id"
+            baseTableName="ideas0"
+            constraintName="fk_idea_user"
+            onDelete="CASCADE"
+            onUpdate="RESTRICT"
+            referencedColumnNames="user_id"
+            referencedTableName="users"/>
+	</changeSet>
+	
+	<changeSet id = "10" author="anna" context="main">
+    <addForeignKeyConstraint baseColumnNames="user_id"
+            baseTableName="activities0"
+            constraintName="fk_activity_user"
+            onDelete="CASCADE"
+            onUpdate="RESTRICT"
+            referencedColumnNames="user_id"
+            referencedTableName="users"/>
+	</changeSet>
+
+</databaseChangeLog>
