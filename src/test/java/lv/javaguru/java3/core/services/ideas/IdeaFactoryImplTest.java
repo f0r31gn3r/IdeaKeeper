@@ -30,33 +30,34 @@ public class IdeaFactoryImplTest {
 
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
+    private static final Long USERID = 111L;
 
 
 
     @Test
     public void createShouldInvokeValidator() {
-        ideaFactory.create(TITLE, DESCRIPTION);
-        verify(ideaValidator).validate(TITLE, DESCRIPTION);
+        ideaFactory.create(TITLE, DESCRIPTION, USERID);
+        verify(ideaValidator).validate(TITLE, DESCRIPTION, USERID);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void createShouldFailIfValidationFail() {
         doThrow(new IllegalArgumentException())
-                .when(ideaValidator).validate(TITLE, DESCRIPTION);
-        ideaFactory.create(TITLE, DESCRIPTION);
+                .when(ideaValidator).validate(TITLE, DESCRIPTION, USERID);
+        ideaFactory.create(TITLE, DESCRIPTION, USERID);
     }
 
     @Test
     public void createShouldPersistUserAfterValidation() {
-        Idea idea = ideaFactory.create(TITLE, DESCRIPTION);
+        Idea idea = ideaFactory.create(TITLE, DESCRIPTION, USERID);
         InOrder inOrder = inOrder(ideaValidator, ideaDAO);
-        inOrder.verify(ideaValidator).validate(TITLE, DESCRIPTION);
+        inOrder.verify(ideaValidator).validate(TITLE, DESCRIPTION, USERID);
         inOrder.verify(ideaDAO).create(idea);
     }
 
     @Test
     public void createShouldReturnNewIdea() {
-        Idea idea = ideaFactory.create(TITLE, DESCRIPTION);
+        Idea idea = ideaFactory.create(TITLE, DESCRIPTION, USERID);
         assertThat(idea.getTitle(), is(TITLE));
         assertThat(idea.getDescription(), is(DESCRIPTION));
     }

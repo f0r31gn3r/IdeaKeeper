@@ -24,7 +24,8 @@ class UpdateIdeaCommandHandler
         Idea idea = ideaService.update(
                 command.getIdeaId(),
                 command.getTitle(),
-                command.getDescription()
+                command.getDescription(),
+                command.getUserId()
         );
         return new UpdateIdeaResult(idea);
     }

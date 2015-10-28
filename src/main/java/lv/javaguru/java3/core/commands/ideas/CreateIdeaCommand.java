@@ -9,15 +9,20 @@ public class CreateIdeaCommand implements DomainCommand<CreateIdeaResult> {
 
     private String title;
     private String description;
+    private Long userId;
 
     public CreateIdeaCommand(String title,
-                             String description) {
+                             String description,
+                             Long userId) {
         this.title = title;
         this.description = description;
+        this.userId = userId;
     }
 
-    public CreateIdeaCommand(String title) {
+    public CreateIdeaCommand(String title,
+                             Long userId) {
         this.title = title;
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -26,5 +31,9 @@ public class CreateIdeaCommand implements DomainCommand<CreateIdeaResult> {
 
     public String getDescription() {
         return description;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }

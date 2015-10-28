@@ -21,8 +21,8 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest{
     @Transactional
     public void testCreateIdeaWithAll() {
         Idea idea = createIdea()
-                .withTitle("title")
-                .withAll("title", "description")
+                .withTitle("title", 111L)
+                .withAll("title", "description", 111L)
                 .build();
         assertThat(idea.getIdeaId(), is(nullValue()));
         ideaDAO.create(idea);
@@ -33,8 +33,8 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest{
     @Transactional
     public void testGetIdeaById() {
         Idea idea = createIdea()
-                .withTitle("title")
-                .withAll("title", "description")
+                .withTitle("title", 111L)
+                .withAll("title", "description", 111L)
                 .build();
         ideaDAO.create(idea);
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());

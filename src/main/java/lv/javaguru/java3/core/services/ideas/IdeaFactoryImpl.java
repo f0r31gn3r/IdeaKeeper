@@ -20,11 +20,11 @@ class IdeaFactoryImpl implements IdeaFactory {
 
 
     @Override
-    public Idea create(String title, String description) {
-        ideaValidator.validate(title, description);
+    public Idea create(String title, String description, Long userId) {
+        ideaValidator.validate(title, description, userId);
         Idea idea = createIdea()
-                .withTitle(title)
-                .withAll(title, description)
+                .withTitle(title, userId)
+                .withAll(title, description, userId)
                 .build();
         ideaDAO.create(idea);
         return idea;

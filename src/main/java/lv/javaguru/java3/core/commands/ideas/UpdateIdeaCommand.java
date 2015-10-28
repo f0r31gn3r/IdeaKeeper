@@ -10,13 +10,16 @@ public class UpdateIdeaCommand implements DomainCommand<UpdateIdeaResult> {
     private Long ideaId;
     private String title;
     private String description;
+    private Long userId;
 
     public UpdateIdeaCommand(Long ideaId,
                              String title,
-                             String description) {
+                             String description,
+                             Long userId) {
         this.ideaId = ideaId;
         this.title = title;
         this.description = description;
+        this.userId = userId;
     }
 
     public Long getIdeaId() {
@@ -29,5 +32,9 @@ public class UpdateIdeaCommand implements DomainCommand<UpdateIdeaResult> {
 
     public String getDescription() {
         return description;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }

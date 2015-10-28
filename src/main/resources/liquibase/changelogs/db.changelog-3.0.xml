@@ -22,4 +22,25 @@
         </createTable>
     </changeSet>
 
+
+    <changeSet id="12" author="anna" context="main">
+        <addColumn tableName="ideas">
+            <column name="user_id" type="BIGINT" autoIncrement="false"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="13" author="anna" context="main">
+        <dropForeignKeyConstraint baseTableName="ideas0" constraintName="fk_idea_user"/>
+    </changeSet>
+
+    <changeSet id = "14" author="anna" context="main">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="ideas"
+                                 constraintName="fk_idea_user"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="user_id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
 </databaseChangeLog>

@@ -11,6 +11,8 @@ public class IdeaBuilder {
 
     private String description;
 
+    private Long userId;
+
     public static IdeaBuilder createIdea() {
         return new IdeaBuilder();
     }
@@ -21,18 +23,21 @@ public class IdeaBuilder {
         idea.setIdeaId(ideaId);
         idea.setTitle(title);
         idea.setDescription(description);
+        idea.setUserId(userId);
 
         return idea;
     }
 
-    public IdeaBuilder withTitle(String title) {
+    public IdeaBuilder withTitle(String title, Long userId) {
         this.title = title;
+        this.userId = userId;
         return this;
     }
 
-    public IdeaBuilder withAll(String title, String description) {
+    public IdeaBuilder withAll(String title, String description, Long userId) {
         this.title = title;
         this.description = description;
+        this.userId = userId;
         return this;
     }
 }

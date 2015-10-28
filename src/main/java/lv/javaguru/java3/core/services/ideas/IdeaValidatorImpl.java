@@ -13,7 +13,7 @@ import static org.apache.commons.lang.StringUtils.*;
 class IdeaValidatorImpl implements IdeaValidator {
 
     @Override
-    public void validate(String title, String description) {
+    public void validate(String title, String description, Long userId) {
         validateTitle(title);
         validateDescription(description);
     }
@@ -28,4 +28,5 @@ class IdeaValidatorImpl implements IdeaValidator {
         checkArgument(!isBlank(description), "Idea description must not be empty");
     }
 
+    //TODO: validation for userId
 }

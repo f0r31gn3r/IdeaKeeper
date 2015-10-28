@@ -24,6 +24,9 @@ public class Idea {
     @Column(name="description")
     private String description;
 
+    @Column(name="user_id", nullable = false)
+    private Long userId;
+
     public Long getIdeaId() {
         return ideaId;
     }
@@ -46,5 +49,13 @@ public class Idea {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

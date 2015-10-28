@@ -27,7 +27,8 @@ class CreateIdeaCommandHandler
     public CreateIdeaResult execute(CreateIdeaCommand command) {
         Idea idea = ideaFactory.create(
                 command.getTitle(),
-                command.getDescription()
+                command.getDescription(),
+                command.getUserId()
         );
         return new CreateIdeaResult(idea);
     }

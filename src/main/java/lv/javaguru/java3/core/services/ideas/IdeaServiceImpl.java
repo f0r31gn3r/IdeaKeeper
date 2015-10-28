@@ -19,12 +19,14 @@ public class IdeaServiceImpl implements IdeaService {
     @Override
     public Idea update(Long ideaId,
                        String newTitle,
-                       String newDescription) {
-        ideaValidator.validate(newTitle, newDescription);
+                       String newDescription,
+                       Long newUserId) {
+        ideaValidator.validate(newTitle, newDescription, newUserId);
         Idea idea = get(ideaId);
 
         idea.setTitle(newTitle);
         idea.setDescription(newDescription);
+        idea.setUserId(newUserId);
         return idea;
     }
 

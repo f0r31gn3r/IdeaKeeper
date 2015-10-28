@@ -9,7 +9,8 @@ public interface IdeaService {
 
     Idea update(Long ideaId,
                 String title,
-                String description);
+                String description,
+                Long userId);
 
     Idea get(Long ideaId);
 
