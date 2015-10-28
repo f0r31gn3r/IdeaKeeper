@@ -7,8 +7,6 @@ import lv.javaguru.java3.core.domain.user.User;
  */
 public interface UserFactory {
 
-    User create(String login, String password);
-
-    User create(String login, String password, String name, String surname);
+    User create(String login, String password, String name, String surname, String email, String accessLevel);
 
 }

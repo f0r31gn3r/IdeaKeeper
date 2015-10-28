@@ -26,7 +26,11 @@ class UpdateUserCommandHandler
         User user = userService.update(
                 command.getUserId(),
                 command.getLogin(),
-                command.getPassword()
+                command.getPassword(),
+                command.getName(),
+                command.getSurname(),
+                command.getEmail(),
+                command.getAccessLevel()
         );
         return new UpdateUserResult(user);
     }

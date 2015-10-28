@@ -24,7 +24,11 @@ class CreateUserCommandHandler
     public CreateUserResult execute(CreateUserCommand command) {
         User user = userFactory.create(
                 command.getLogin(),
-                command.getPassword()
+                command.getPassword(),
+                command.getName(),
+                command.getSurname(),
+                command.getEmail(),
+                command.getAccessLevel()
         );
         return new CreateUserResult(user);
     }

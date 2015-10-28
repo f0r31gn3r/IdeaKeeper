@@ -25,9 +25,6 @@ public class UserBuilder {
 
     private List<String> activities;
 
-    public UserBuilder() {
-    }
-
     public static UserBuilder createUser() {
         return new UserBuilder();
     }
@@ -57,6 +54,17 @@ public class UserBuilder {
         this.password = password;
         this.name = name;
         this.surname = surname;
+        return this;
+    }
+
+    //Added!!!
+    public UserBuilder withAll(String login, String password, String name, String surname, String email, String accessLevel) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.accessLevel = accessLevel;
         return this;
     }
 }
