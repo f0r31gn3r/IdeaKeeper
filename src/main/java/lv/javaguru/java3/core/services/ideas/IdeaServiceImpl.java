@@ -3,10 +3,13 @@ package lv.javaguru.java3.core.services.ideas;
 import lv.javaguru.java3.core.database.IdeaDAO;
 import lv.javaguru.java3.core.domain.idea.Idea;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Anna on 28.10.2015.
  */
+
+@Component
 public class IdeaServiceImpl implements IdeaService {
 
     @Autowired private IdeaDAO ideaDAO;
