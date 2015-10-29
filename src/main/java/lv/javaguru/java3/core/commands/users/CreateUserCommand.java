@@ -11,6 +11,9 @@ public class CreateUserCommand implements DomainCommand<CreateUserResult> {
     private String password;
     private String name;
     private String surname;
+    private String email;
+    private String accessLevel;
+
 
     public CreateUserCommand(String login,
                              String password) {
@@ -28,6 +31,20 @@ public class CreateUserCommand implements DomainCommand<CreateUserResult> {
         this.surname = surname;
     }
 
+    public CreateUserCommand(String login,
+                             String password,
+                             String name,
+                             String surname,
+                             String email,
+                             String accessLevel) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.accessLevel = accessLevel;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -43,4 +60,8 @@ public class CreateUserCommand implements DomainCommand<CreateUserResult> {
     public String getSurname() {
         return surname;
     }
+
+    public String getEmail() { return email; }
+
+    public String getAccessLevel() { return accessLevel; }
 }

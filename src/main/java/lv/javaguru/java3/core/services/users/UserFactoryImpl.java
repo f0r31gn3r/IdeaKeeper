@@ -18,20 +18,12 @@ class UserFactoryImpl implements UserFactory {
 
 
     @Override
-    public User create(String login, String password) {
-        userValidator.validate(login, password);
+    public User create(String login, String password, String name, String surname, String email, String accessLevel) {
+        userValidator.validate(login, password, name, surname, email, accessLevel);
         User user = createUser()
                 .withLogPas(login, password)
-                .build();
-        userDAO.create(user);
-        return user;
-    }
-
-    @Override
-    public User create(String login, String password, String name, String surname) {
-        userValidator.validate(login, password);
-        User user = createUser()
                 .withLogPasNamSur(login, password, name, surname)
+                .withAll(login, password, name, surname, email, accessLevel)
                 .build();
         userDAO.create(user);
         return user;

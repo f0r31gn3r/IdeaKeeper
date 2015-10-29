@@ -9,7 +9,11 @@ public interface UserService {
 
     User update(Long userId,
                 String newLogin,
-                String newPassword);
+                String newPassword,
+                String newName,
+                String newSurname,
+                String newEmail,
+                String newAccessLevel);
 
     User get(Long userId);
 

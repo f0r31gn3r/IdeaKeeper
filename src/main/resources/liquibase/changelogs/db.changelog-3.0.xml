@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="11" author="anna" context="main">
+        <createTable tableName="ideas">
+            
+			<column name="idea_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="title" type="varchar(50)">
+            </column>
+
+            <column name="description" type="varchar(50)">
+            </column>
+			
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="12" author="anna" context="main">
+        <addColumn tableName="ideas">
+            <column name="user_id" type="BIGINT" autoIncrement="false"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="13" author="anna" context="main">
+        <dropForeignKeyConstraint baseTableName="ideas0" constraintName="fk_idea_user"/>
+    </changeSet>
+
+    <changeSet id = "14" author="anna" context="main">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="ideas"
+                                 constraintName="fk_idea_user"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="user_id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>

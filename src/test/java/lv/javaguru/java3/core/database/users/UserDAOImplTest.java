@@ -17,9 +17,11 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
 
     @Test
     @Transactional
-    public void testCreateUser() {
+    public void testCreateUserWithAll() {
         User user = createUser()
                 .withLogPas("login", "password")
+                .withLogPasNamSur("login", "password", "name", "surname")
+                .withAll("login", "password", "name", "surname", "email", "access")
                 .build();
         assertThat(user.getUserId(), is(nullValue()));
         userDAO.create(user);
@@ -30,7 +32,9 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testGetUserById() {
         User user = createUser()
+                .withLogPas("login", "password")
                 .withLogPasNamSur("login", "password", "name", "surname")
+                .withAll("login", "password", "name", "surname", "email", "access")
                 .build();
         userDAO.create(user);
         User userFromDb = userDAO.getById(user.getUserId());

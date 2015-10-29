@@ -4,6 +4,8 @@ package lv.javaguru.java3.core.domain.user;
  * Created by Anna on 26.10.2015.
  */
 
+import lv.javaguru.java3.core.domain.idea.Idea;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class User {
 
     @OneToMany(mappedBy = "ideaId", fetch = FetchType.EAGER,
             cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Idea0> ideas;
+    private List<Idea> ideas;
 
     @OneToMany(mappedBy = "activityId", fetch = FetchType.EAGER,
             cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -100,11 +102,11 @@ public class User {
         this.accessLevel = accessLevel;
     }
 
-    public List<Idea0> getIdeas() {
+    public List<Idea> getIdeas() {
         return ideas;
     }
 
-    public void setIdeas(List<Idea0> ideas) {
+    public void setIdeas(List<Idea> ideas) {
         this.ideas = ideas;
     }
 

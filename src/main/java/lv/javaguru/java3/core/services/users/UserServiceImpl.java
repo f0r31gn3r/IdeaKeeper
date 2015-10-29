@@ -18,11 +18,19 @@ class UserServiceImpl implements UserService {
     @Override
     public User update(Long userId,
                        String newLogin,
-                       String newPassword) {
-        userValidator.validate(newLogin, newPassword);
+                       String newPassword,
+                       String newName,
+                       String newSurname,
+                       String newEmail,
+                       String newAccessLevel) {
+        userValidator.validate(newLogin, newPassword, newName, newSurname, newEmail, newAccessLevel);
         User user = get(userId);
         user.setLogin(newLogin);
         user.setPassword(newPassword);
+        user.setName(newName);
+        user.setSurname(newSurname);
+        user.setEmail(newEmail);
+        user.setAccessLevel(newAccessLevel);
         return user;
     }
 
@@ -30,6 +38,5 @@ class UserServiceImpl implements UserService {
     public User get(Long userId) {
         return userDAO.getRequired(userId);
     }
-
 }
 
