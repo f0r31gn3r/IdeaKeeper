@@ -7,11 +7,9 @@ import lv.javaguru.java3.core.domain.user.User;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-
-import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
-
 
 public class UserDAOImplTest extends DatabaseHibernateTest {
 

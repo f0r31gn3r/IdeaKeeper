@@ -4,16 +4,13 @@ import lv.javaguru.java3.core.domain.idea.Idea;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static lv.javaguru.java3.core.domain.idea.IdeaBuilder.createIdea;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 /**
  * Created by Anna on 29.10.2015.
  */
-
-import static lv.javaguru.java3.core.domain.idea.IdeaBuilder.createIdea;
 
 public class IdeaDAOImplTest extends DatabaseHibernateTest{
 
