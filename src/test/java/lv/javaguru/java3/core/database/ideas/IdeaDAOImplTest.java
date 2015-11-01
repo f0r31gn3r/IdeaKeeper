@@ -1,5 +1,6 @@
 package lv.javaguru.java3.core.database.ideas;
 
+import lv.javaguru.java3.core.database.DatabaseHibernateTest;
 import lv.javaguru.java3.core.domain.idea.Idea;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import static org.junit.Assert.assertThat;
  * Created by Anna on 29.10.2015.
  */
 
-public class IdeaDAOImplTest extends DatabaseHibernateTest{
+public class IdeaDAOImplTest extends DatabaseHibernateTest {
 
     @Test
     @Transactional
