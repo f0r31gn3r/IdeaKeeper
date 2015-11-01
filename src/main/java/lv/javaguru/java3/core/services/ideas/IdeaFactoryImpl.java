@@ -3,10 +3,9 @@ package lv.javaguru.java3.core.services.ideas;
 /**
  * Created by Anna on 28.10.2015.
  */
+
 import lv.javaguru.java3.core.database.IdeaDAO;
-import lv.javaguru.java3.core.database.UserDAO;
 import lv.javaguru.java3.core.domain.idea.Idea;
-import lv.javaguru.java3.core.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

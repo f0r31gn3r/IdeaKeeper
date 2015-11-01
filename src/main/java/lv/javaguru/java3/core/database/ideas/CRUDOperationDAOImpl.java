@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by Anna on 28.10.2015.
  */
+
 abstract class CRUDOperationDAOImpl<E, K extends Serializable> implements CRUDOperationDAO<E, K> {
 
     @Autowired

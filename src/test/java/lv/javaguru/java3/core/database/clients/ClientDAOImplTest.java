@@ -1,5 +1,6 @@
 package lv.javaguru.java3.core.database.clients;
 
+import lv.javaguru.java3.core.database.DatabaseHibernateTest;
 import lv.javaguru.java3.core.domain.Client;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
