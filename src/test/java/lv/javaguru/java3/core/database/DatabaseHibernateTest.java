@@ -27,4 +27,7 @@ public abstract class DatabaseHibernateTest {
     @Autowired
     protected UserDAO userDAO;
 
+    @Autowired
+    protected AttemptDAO attemptDAO;
+
 }

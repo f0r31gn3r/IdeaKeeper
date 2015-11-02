@@ -4,6 +4,7 @@ package lv.javaguru.java3.core.domain.user;
  * Created by Anna on 26.10.2015.
  */
 
+import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.idea.Idea;
 
 import javax.persistence.*;
@@ -44,7 +45,11 @@ public class User {
 
     @OneToMany(mappedBy = "activityId", fetch = FetchType.EAGER,
             cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Activity0> activities;
+    private List<Activity> activities;
+
+    @OneToMany(mappedBy = "attemptId", fetch = FetchType.EAGER,
+            cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Attempt> attempts;
 
     public Long getUserId() {
         return userId;
@@ -110,11 +115,19 @@ public class User {
         this.ideas = ideas;
     }
 
-    public List<Activity0> getActivities() {
+    public List<Activity> getActivities() {
         return activities;
     }
 
-    public void setActivities(List<Activity0> activities) {
+    public void setActivities(List<Activity> activities) {
         this.activities = activities;
+    }
+
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
     }
 }
