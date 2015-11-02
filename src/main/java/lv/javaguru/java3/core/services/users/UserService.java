@@ -16,5 +16,4 @@ public interface UserService {
                 String newAccessLevel);
 
     User get(Long userId);
-
 }

@@ -10,4 +10,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserDAOImpl extends CRUDOperationDAOImpl<User, Long> implements UserDAO {
+
 }

@@ -60,5 +60,5 @@ abstract class CRUDOperationDAOImpl<E, K extends Serializable> implements CRUDOp
     public List<E> getAll() {
         return getCurrentSession().createCriteria(daoType).list();
     }
-
+    
 }
