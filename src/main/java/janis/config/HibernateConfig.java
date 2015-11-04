@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.persistence.EntityManagerFactory;
 
 @Configuration
-@EntityScan(basePackages = "janis")
+@EntityScan(basePackages = "janis.core.domain")
 public class HibernateConfig {
 
     @Autowired
