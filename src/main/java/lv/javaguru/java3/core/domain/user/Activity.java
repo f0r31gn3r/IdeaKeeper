@@ -9,14 +9,17 @@ import javax.persistence.*;
 @Table(name="activities0")
 public class Activity {
 
-    @Id
-    @GeneratedValue(generator = "activities_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "activities_seq", sequenceName = "activities_seq", allocationSize = 1)
+//    @Id
+//    @GeneratedValue(generator = "activities_seq", strategy = GenerationType.SEQUENCE)
+//    @SequenceGenerator(name = "activities_seq", sequenceName = "activities_seq", allocationSize = 1)
+//    @Column(name="activity_id", nullable = false)
 
-    @Column(name="activity_id", nullable = false)
+    @Id
+    @Column(name="activity_id",columnDefinition = "int(11)")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long activityId;
 
-    @Column(name="user_id", nullable = false)
+    @Column(name="user_id", columnDefinition = "int(11)", nullable = false)
     private Long userId;
 
     public Long getActivityId() {

@@ -11,6 +11,4 @@ public interface AttemptFactory {
 
     Attempt create(Long userId, String login, int attempts,	Date lastModified);
 
-    //Authentication authenticate(Authentication authentication) throws AuthenticationException;
-
 }

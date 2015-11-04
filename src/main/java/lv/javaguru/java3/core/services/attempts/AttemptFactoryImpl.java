@@ -31,26 +31,5 @@ class AttemptFactoryImpl implements AttemptFactory {
         return attempt;
     }
 
-//    @Override
-//    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-//
-//        try {
-//            Authentication auth = super.authenticate(authentication);
-//
-//            //if corrent password, reset the user_attempts
-//           attemptDAO.resetFailAttempts(authentication.getName());
-//
-//            return auth;
-//
-//        } catch (BadCredentialsException e) {
-//
-//            //invalid login, update user_attempts, set attempts+1
-//            attemptDAO.updateFailAttempts(authentication.getName());
-//
-//            throw e;
-//
-//        }
-//
-//    }
 }
 

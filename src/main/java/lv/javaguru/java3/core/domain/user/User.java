@@ -14,40 +14,43 @@ import java.util.List;
 @Table(name="users")
 public class User {
 
-    @Id
-    @GeneratedValue(generator = "users_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
+//    @Id
+//    @GeneratedValue(generator = "users_seq", strategy = GenerationType.SEQUENCE)
+//    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
+//    @Column(name="user_id", nullable = false)
 
-    @Column(name="user_id", nullable = false)
+    @Id
+    @Column(name="user_id",columnDefinition = "int(11)")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    @Column(name="login")
+    @Column(name="login", columnDefinition = "CHAR(50)")
     private String login;
 
-    @Column(name="password")
+    @Column(name="password", columnDefinition = "CHAR(150)")
     private String password;
 
-    @Column(name="name")
+    @Column(name="name", columnDefinition = "CHAR(50)")
     private String name;
 
-    @Column(name="surname")
+    @Column(name="surname", columnDefinition = "CHAR(50)")
     private String surname;
 
-    @Column(name="email")
+    @Column(name="email", columnDefinition = "CHAR(50)")
     private String email;
 
-    @Column(name="access_level")
+    @Column(name="access_level", columnDefinition = "CHAR(50)")
     private String accessLevel;
 
-    @OneToMany(mappedBy = "ideaId", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "ideaId", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Idea> ideas;
 
-    @OneToMany(mappedBy = "activityId", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Activity> activities;
 
-    @OneToMany(mappedBy = "attemptId", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "attemptId", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Attempt> attempts;
 

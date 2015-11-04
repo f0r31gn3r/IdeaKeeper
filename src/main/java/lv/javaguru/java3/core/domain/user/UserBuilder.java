@@ -39,6 +39,7 @@ public class UserBuilder {
 
         user.setUserId(userId);
         user.setLogin(login);
+        //user.setPassword(new BCryptPasswordEncoder().encode(password));
         user.setPassword(password);
         user.setName(name);
         user.setSurname(surname);

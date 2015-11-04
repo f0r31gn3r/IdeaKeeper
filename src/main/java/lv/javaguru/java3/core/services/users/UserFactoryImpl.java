@@ -25,8 +25,13 @@ class UserFactoryImpl implements UserFactory {
                 .withLogPasNamSur(login, password, name, surname)
                 .withAll(login, password, name, surname, email, accessLevel)
                 .build();
-        userDAO.create(user);
-        return user;
+        if(userDAO.getByLogin(login) == null){
+            userDAO.create(user);
+            return user;
+        } else {
+            return null;
+        }
+
     }
 
 }
