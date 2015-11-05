@@ -21,4 +21,5 @@ public interface AttemptService {
 
     Attempt resetFailAttempts(Attempt attempt);
 
+    //Attempt createNewAttempt (Attempt attempt);
 }

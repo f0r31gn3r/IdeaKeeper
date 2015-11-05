@@ -10,4 +10,6 @@ public interface UserDAO extends CRUDOperationDAO<User, Long>, AuthenticationMan
 
     User getByLogin(String login);
 
+    String login(String login, String password);
+
 }

@@ -17,4 +17,5 @@ public interface UserService {
 
     User get(Long userId);
 
+    //String login (String login, String password);
 }

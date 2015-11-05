@@ -30,13 +30,24 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
     @Mock
     Authentication request;
 
+    private static final String LOGIN = "login";
+    private static final String INCORRECTLOGIN = "login1";
+    private static final String PASSWORD = "password";
+    private static final String INCORRECTPASSWORD = "password1";
+    private static final String NAME = "name";
+    private static final String SURNAME = "surname";
+    private static final String EMAIL = "email";
+    private static final String ACCESSLEVEL = AccessLevel.USER.name();
+    private static final int ALLOWEDATTEMPTS = 2;
+    private static final int DISALLOWEDATTEMPTS = 5;
+
     @Test
     @Transactional
     public void testCreateUserWithAll() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogPas(LOGIN, PASSWORD)
+                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
         assertThat(user.getUserId(), is(nullValue()));
         userDAO.create(user);
@@ -47,9 +58,9 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testGetUserById() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogPas(LOGIN, PASSWORD)
+                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
         userDAO.create(user);
         User userFromDb = userDAO.getById(user.getUserId());
@@ -60,21 +71,21 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testGetByLogin() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogPas(LOGIN, PASSWORD)
+                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
         userDAO.create(user);
-        assertThat(userDAO.getByLogin("login"), is(notNullValue()));
+        assertThat(userDAO.getByLogin(LOGIN), is(notNullValue()));
     }
 
     @Test
     @Transactional
     public void testGetAll() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogPas(LOGIN, PASSWORD)
+                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
         userDAO.create(user);
         assertThat(userDAO.getAll().size(), is(1));
@@ -84,17 +95,17 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testAuthenticateShouldBeOK() {
         //request = new UsernamePasswordAuthenticationToken("login", new BCryptPasswordEncoder().encode("password"));
-        request = new UsernamePasswordAuthenticationToken("login", "password");
-        assertThat(request.getName(), is("login"));
+        request = new UsernamePasswordAuthenticationToken(LOGIN, PASSWORD);
+        assertThat(request.getName(), is(LOGIN));
         //assertThat(request.getCredentials(), is(new BCryptPasswordEncoder().encode("password")));
-        assertThat(request.getCredentials(), is("password"));
+        assertThat(request.getCredentials(), is(PASSWORD));
 
         User user = createUser()
-                .withAll("login", "password", "name", "surname", "email", AccessLevel.USER.name())
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
         userDAO.create(user);
         User userFromDb = userDAO.getById(user.getUserId());
-        assertThat(userFromDb.getLogin(), is("login"));
+        assertThat(userFromDb.getLogin(), is(LOGIN));
         assertThat(userFromDb, is(notNullValue()));
 
         Attempt attempt = createAttempt()
@@ -102,26 +113,26 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
                 .build();
         attemptDAO.create(attempt);
         assertThat(attempt.getAttemptId(), is(notNullValue()));
-        assertThat(attempt.getLogin(), is("login"));
+        assertThat(attempt.getLogin(), is(LOGIN));
 
         Authentication result = userDAO.authenticate(request);
-        assertThat(result.getName(), is("login"));
+        assertThat(result.getName(), is(LOGIN));
 
     }
 
     @Test (expected=BadCredentialsException.class)
     @Transactional
     public void testAuthenticateShouldFail() {
-        request = new UsernamePasswordAuthenticationToken("login", "password123");
-        assertThat(request.getName(), is("login"));
-        assertThat(request.getCredentials(), is("password123"));
+        request = new UsernamePasswordAuthenticationToken(LOGIN, INCORRECTPASSWORD);
+        assertThat(request.getName(), is(LOGIN));
+        assertThat(request.getCredentials(), is(INCORRECTPASSWORD));
 
         User user = createUser()
-                .withAll("login", "password", "name", "surname", "email", AccessLevel.USER.name())
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
         userDAO.create(user);
         User userFromDb = userDAO.getById(user.getUserId());
-        assertThat(userFromDb.getLogin(), is("login"));
+        assertThat(userFromDb.getLogin(), is(LOGIN));
         assertThat(userFromDb, is(notNullValue()));
 
         Attempt attempt = createAttempt()
@@ -129,7 +140,7 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
                 .build();
         attemptDAO.create(attempt);
         assertThat(attempt.getAttemptId(), is(notNullValue()));
-        assertThat(attempt.getLogin(), is("login"));
+        assertThat(attempt.getLogin(), is(LOGIN));
 
         Authentication result = userDAO.authenticate(request);
     }
@@ -137,16 +148,16 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
     @Test (expected=DisabledException.class)
     @Transactional
     public void testAuthenticateShouldBlock() {
-        request = new UsernamePasswordAuthenticationToken("login", "password");
-        assertThat(request.getName(), is("login"));
-        assertThat(request.getCredentials(), is("password"));
+        request = new UsernamePasswordAuthenticationToken(LOGIN, PASSWORD);
+        assertThat(request.getName(), is(LOGIN));
+        assertThat(request.getCredentials(), is(PASSWORD));
 
         User user = createUser()
-                .withAll("login", "password", "name", "surname", "email", AccessLevel.USER.name())
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
         userDAO.create(user);
         User userFromDb = userDAO.getById(user.getUserId());
-        assertThat(userFromDb.getLogin(), is("login"));
+        assertThat(userFromDb.getLogin(), is(LOGIN));
         assertThat(userFromDb, is(notNullValue()));
 
         Attempt attempt = createAttempt()
@@ -154,9 +165,111 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
                 .build();
         attemptDAO.create(attempt);
         assertThat(attempt.getAttemptId(), is(notNullValue()));
-        assertThat(attempt.getLogin(), is("login"));
+        assertThat(attempt.getLogin(), is(LOGIN));
 
         Authentication result = userDAO.authenticate(request);
+        assertThat(user.getAccessLevel(), is(AccessLevel.BLOCKED.name()));
+    }
+
+    @Test
+    @Transactional
+    public void loginShouldSuccessWithPreviousAttempts() {
+
+        User user = createUser()
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .build();
+        userDAO.create(user);
+
+        Attempt attempt = createAttempt()
+                .withAll(user.getUserId(), user.getLogin(), ALLOWEDATTEMPTS, new Date())
+                .build();
+        attemptDAO.create(attempt);
+
+        assertThat(attemptDAO.getAttemptByUserLogin(LOGIN).getAttempts(), is(ALLOWEDATTEMPTS));
+        String msg = userDAO.login(LOGIN, PASSWORD);
+        assertThat(msg, is("Login attempt successful"));
+        assertThat(attemptDAO.getAttemptByUserLogin(LOGIN).getAttempts(), is(0));
+    }
+
+    @Test
+    @Transactional
+    public void loginShouldSuccessWithoutPreviousAttempts() {
+
+        User user = createUser()
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .build();
+        userDAO.create(user);
+        assertThat(attemptDAO.getAttemptByUserLogin(LOGIN), is(nullValue()));
+
+        String msg = userDAO.login(LOGIN, PASSWORD);
+        assertThat(msg, is("Login attempt successful"));
+        assertThat(attemptDAO.getAttemptByUserLogin(LOGIN).getAttempts(), is(0));
+    }
+
+    @Test
+    @Transactional
+    public void loginShouldFailWithPreviousAttempts() {
+
+        User user = createUser()
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .build();
+        userDAO.create(user);
+
+        Attempt attempt = createAttempt()
+                .withAll(user.getUserId(), user.getLogin(), ALLOWEDATTEMPTS, new Date())
+                .build();
+        attemptDAO.create(attempt);
+
+        String msg = userDAO.login(LOGIN, INCORRECTPASSWORD);
+        assertThat(msg, is("Login and pass don't match"));
+        assertThat(attemptDAO.getAttemptByUserLogin(LOGIN).getAttempts(), is(ALLOWEDATTEMPTS+1));
+    }
+
+    @Test
+    @Transactional
+    public void loginShouldFailWithoutPreviousAttempts() {
+
+        User user = createUser()
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .build();
+        userDAO.create(user);
+
+        String msg = userDAO.login(LOGIN, INCORRECTPASSWORD);
+        assertThat(msg, is("Login and pass don't match"));
+        assertThat(attemptDAO.getAttemptByUserLogin(LOGIN).getAttempts(), is(1));
+    }
+
+    @Test
+    @Transactional
+    public void loginShouldBlockUser() {
+
+        User user = createUser()
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .build();
+        userDAO.create(user);
+
+        Attempt attempt = createAttempt()
+                .withAll(user.getUserId(), user.getLogin(), DISALLOWEDATTEMPTS, new Date())
+                .build();
+        attemptDAO.create(attempt);
+
+        String msg = userDAO.login(LOGIN, INCORRECTPASSWORD);
+        assertThat(msg, is("User is blocked"));
+        //assertThat(attemptDAO.getAttemptByUserLogin(LOGIN).getAttempts(), is(1));
+    }
+
+    @Test
+    @Transactional
+    public void loginShouldFailWithIncorrectLoginName() {
+
+        User user = createUser()
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .build();
+        userDAO.create(user);
+
+        String msg = userDAO.login(INCORRECTLOGIN, PASSWORD);
+        assertThat(msg, is("User with such login doesn't exist"));
+        //assertThat(attemptDAO.getAttemptByUserLogin(LOGIN).getAttempts(), is(1));
     }
 
 }

@@ -7,7 +7,6 @@ package lv.javaguru.java3.core.services.attempts;
 import lv.javaguru.java3.core.database.AttemptDAO;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -33,6 +32,7 @@ class AttemptServiceImpl implements AttemptService {
         attempt.setUserId(newUserId);
         attempt.setAttempts(newAttempts);
         attempt.setLastModified(newLastModified);
+        attemptDAO.update(attempt);
         return attempt;
     }
 
@@ -44,24 +44,16 @@ class AttemptServiceImpl implements AttemptService {
     @Override
     public Attempt updateFailAttempts(Attempt userAttempt) {
         Date refreshDate = new Date();
-        if ( userAttempt == null ){
-            userAttempt = new Attempt();
-            userAttempt.setLastModified(refreshDate);
-            userAttempt.setAttempts(1);
-            attemptDAO.create(userAttempt);
-        } else if (userAttempt.getAttempts() + 1 >= MAX_ATTEMPTS){
-            throw new LockedException("User Account is locked!");
-        } else {
-            userAttempt.setAttempts(userAttempt.getAttempts() + 1);
-            userAttempt.setLastModified(refreshDate);
-            attemptDAO.update(userAttempt);
-        }
+        userAttempt.setAttempts(userAttempt.getAttempts() + 1);
+        userAttempt.setLastModified(refreshDate);
+        attemptDAO.update(userAttempt);
         return userAttempt;
     }
 
     @Override
     public Attempt resetFailAttempts(Attempt attempt) {
         attempt.setAttempts(0);
+        attempt.setLastModified(new Date());
         attemptDAO.update(attempt);
         return attempt;
     }
