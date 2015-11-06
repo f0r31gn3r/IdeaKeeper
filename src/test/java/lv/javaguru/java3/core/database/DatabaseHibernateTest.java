@@ -7,11 +7,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
 
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {AppCoreConfig.class})
+@TransactionConfiguration(defaultRollback = true)
+
 //@IntegrationTest("server.port:0")
 public abstract class DatabaseHibernateTest {
 
@@ -28,6 +31,6 @@ public abstract class DatabaseHibernateTest {
     protected UserDAO userDAO;
 
     @Autowired
-    protected TaskListDAO taskListDAO;
+    protected AttemptDAO attemptDAO;
 
 }

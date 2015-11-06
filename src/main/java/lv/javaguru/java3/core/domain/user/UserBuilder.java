@@ -1,5 +1,8 @@
 package lv.javaguru.java3.core.domain.user;
 
+import lv.javaguru.java3.core.domain.attempt.Attempt;
+import lv.javaguru.java3.core.domain.idea.Idea;
+
 import java.util.List;
 
 /**
@@ -21,9 +24,11 @@ public class UserBuilder {
 
     private String accessLevel;
 
-    private List<String> ideas;
+    private List<Idea> ideas;
 
-    private List<String> activities;
+    private List<Activity> activities;
+
+    private List<Attempt> attempts;
 
     public static UserBuilder createUser() {
         return new UserBuilder();
@@ -34,6 +39,7 @@ public class UserBuilder {
 
         user.setUserId(userId);
         user.setLogin(login);
+        //user.setPassword(new BCryptPasswordEncoder().encode(password));
         user.setPassword(password);
         user.setName(name);
         user.setSurname(surname);

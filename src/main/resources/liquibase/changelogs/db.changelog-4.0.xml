@@ -1,29 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="15" author="jm" context="main">
-        <createSequence sequenceName="tasklist_seq" />
+	<changeSet id="15" author="anna" context="main">
+        <createSequence sequenceName="attempts_seq" />
     </changeSet>
 
-    <changeSet id="16" author="jm" context="main">
-        <createTable tableName="tasklists">
-            <column name="tasklist_id" type="BIGINT" autoIncrement="true">
+
+    <changeSet id="16" author="anna" context="main">
+        <createTable tableName="attempts">
+            
+			<column name="attempt_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            
             <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="task_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
 
-            <column name="created_date" type="DATETIME">
+            <column name="login" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="end_date" type="DATETIME" />
+            
+             <column name="attempts_count" type="INTEGER">
+            </column>
+            
+            <column name="last_modified" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+            </column>
+			
         </createTable>
     </changeSet>
-</databaseChangeLog> 
+
+    <changeSet id = "17" author="anna" context="main">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="attempts"
+                                 constraintName="fk_attempt_user"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="user_id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    
+    <!--changeSet id = "18" author="anna" context="main">
+        <addForeignKeyConstraint baseColumnNames="login"
+                                 baseTableName="attempts"
+                                 constraintName="fk_attempt_login"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="login"
+                                 referencedTableName="users"/>
+    </changeSet-->
+
+</databaseChangeLog>

@@ -3,12 +3,14 @@ package lv.javaguru.java3.core.database.clients;
 import lv.javaguru.java3.core.database.DatabaseHibernateTest;
 import lv.javaguru.java3.core.domain.Client;
 import org.junit.Test;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import static lv.javaguru.java3.core.domain.ClientBuilder.createClient;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ClientDAOImplTest extends DatabaseHibernateTest {
 
     @Test

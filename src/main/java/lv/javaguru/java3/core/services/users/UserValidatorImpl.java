@@ -3,7 +3,6 @@ package lv.javaguru.java3.core.services.users;
 /**
  * Created by Anna on 27.10.2015.
  */
-
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import org.springframework.stereotype.Component;
 

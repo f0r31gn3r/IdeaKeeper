@@ -3,7 +3,9 @@ package lv.javaguru.java3.core.services.users;
 /**
  * Created by Anna on 27.10.2015.
  */
+
 import lv.javaguru.java3.core.database.UserDAO;
+import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,8 +31,8 @@ public class UserFactoryImplTest {
     private static final String PASSWORD = "password";
     private static final String NAME = "name";
     private static final String SURNAME = "surname";
-    private static final String EMAIL = "email";
-    private static final String ACCESSLEVEL = "accesslevel";
+    private static final String EMAIL = "email@email.lv";
+    private static final String ACCESSLEVEL = AccessLevel.USER.name();
 
 
 

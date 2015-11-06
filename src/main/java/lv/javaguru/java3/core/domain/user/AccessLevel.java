@@ -1,8 +1,5 @@
 package lv.javaguru.java3.core.domain.user;
 
-/**
- * Created by Anna on 02.11.2015.
- */
 public enum AccessLevel {
 
     VIP  (3),  //calls constructor with value 3
