@@ -5,6 +5,8 @@ import java.util.Date;
 /**
  * Created by Anna on 02.11.2015.
  */
+
+@Deprecated
 public class AttemptBuilder {
 
     private Long attemptId;

@@ -45,9 +45,6 @@ public class LoginServiceImplTest {
     @InjectMocks    private UserService userService = new UserServiceImpl();
     @InjectMocks    private LoginService loginService = new LoginServiceImpl();
 
-
-
-
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
     private static final String INCORRECTPASSWORD = "incorrectPassword";

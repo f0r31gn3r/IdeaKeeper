@@ -5,6 +5,7 @@ package lv.javaguru.java3.core.services.attempts;
  */
 import org.springframework.stereotype.Component;
 
+@Deprecated
 @Component
 class AttemptValidatorImpl implements AttemptValidator {
 //

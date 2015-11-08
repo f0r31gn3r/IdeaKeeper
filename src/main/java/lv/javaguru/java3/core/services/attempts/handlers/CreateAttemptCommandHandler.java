@@ -12,6 +12,7 @@ import lv.javaguru.java3.core.services.clients.ClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Deprecated
 @Component
 class CreateAttemptCommandHandler
         implements DomainCommandHandler<CreateAttemptCommand, CreateAttemptResult> {

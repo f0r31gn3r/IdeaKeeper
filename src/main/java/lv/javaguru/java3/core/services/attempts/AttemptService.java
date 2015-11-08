@@ -6,10 +6,9 @@ package lv.javaguru.java3.core.services.attempts;
 
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 
-import java.util.Date;
+import java.util.Date;;
 
-;
-
+@Deprecated
 
 public interface AttemptService {
 

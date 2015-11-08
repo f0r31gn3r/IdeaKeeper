@@ -13,6 +13,7 @@ import java.util.Date;
 
 import static lv.javaguru.java3.core.domain.attempt.AttemptBuilder.createAttempt;
 
+@Deprecated
 @Component
 public
 //class AttemptFactoryImpl extends DaoAuthenticationProvider implements AttemptFactory {

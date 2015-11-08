@@ -6,6 +6,7 @@ package lv.javaguru.java3.core.domain.attempt;
 import javax.persistence.*;
 import java.util.Date;
 
+@Deprecated
 @Entity
 @Table(name="attempts")
 public class Attempt {

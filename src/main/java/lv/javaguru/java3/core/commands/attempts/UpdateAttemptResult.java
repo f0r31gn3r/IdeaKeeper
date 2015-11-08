@@ -6,7 +6,7 @@ package lv.javaguru.java3.core.commands.attempts;
 import lv.javaguru.java3.core.commands.DomainCommandResult;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 
-
+@Deprecated
 public class UpdateAttemptResult implements DomainCommandResult {
 
     private Attempt attempt;

@@ -6,6 +6,8 @@ import lv.javaguru.java3.core.domain.attempt.Attempt;
 /**
  * Created by Anna on 02.11.2015.
  */
+
+@Deprecated
 public class GetAttemptResult implements DomainCommandResult {
 
     private Attempt attempt;

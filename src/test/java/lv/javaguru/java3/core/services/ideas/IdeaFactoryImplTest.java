@@ -21,18 +21,14 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class IdeaFactoryImplTest {
 
-    @Mock
-    private IdeaValidator ideaValidator;
-    @Mock private IdeaDAO ideaDAO;
+    @Mock   private IdeaValidator ideaValidator;
+    @Mock   private IdeaDAO ideaDAO;
 
-    @InjectMocks
-    private IdeaFactory ideaFactory = new IdeaFactoryImpl();
+    @InjectMocks    private IdeaFactory ideaFactory = new IdeaFactoryImpl();
 
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
     private static final Long USERID = 111L;
-
-
 
     @Test
     public void createShouldInvokeValidator() {

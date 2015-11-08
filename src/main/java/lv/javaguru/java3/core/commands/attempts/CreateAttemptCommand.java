@@ -7,6 +7,7 @@ import lv.javaguru.java3.core.commands.DomainCommand;
 
 import java.util.Date;
 
+@Deprecated
 public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> {
 
     private Long userId;

@@ -11,6 +11,7 @@ import lv.javaguru.java3.core.services.attempts.AttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Deprecated
 @Component
 class UpdateAttemptCommandHandler
         implements DomainCommandHandler<UpdateAttemptCommand, UpdateAttemptResult> {

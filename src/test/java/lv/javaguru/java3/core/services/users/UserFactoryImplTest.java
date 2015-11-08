@@ -21,11 +21,10 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class UserFactoryImplTest {
 
-    @Mock private UserValidator userValidator;
-    @Mock private UserDAO userDAO;
+    @Mock   private UserValidator userValidator;
+    @Mock   private UserDAO userDAO;
 
-    @InjectMocks
-    private UserFactory userFactory = new UserFactoryImpl();
+    @InjectMocks    private UserFactory userFactory = new UserFactoryImpl();
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";

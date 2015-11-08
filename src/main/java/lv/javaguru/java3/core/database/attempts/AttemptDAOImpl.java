@@ -9,6 +9,7 @@ import lv.javaguru.java3.core.domain.attempt.Attempt;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
+@Deprecated
 @Component
 class AttemptDAOImpl extends CRUDOperationDAOImpl<Attempt, Long> implements AttemptDAO {
 

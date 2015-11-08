@@ -7,6 +7,7 @@ package lv.javaguru.java3.core.database.attempts;
 import lv.javaguru.java3.core.database.DatabaseHibernateTest;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.user.User;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,8 @@ import static lv.javaguru.java3.core.domain.attempt.AttemptBuilder.createAttempt
 import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+
+@Deprecated @Ignore
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AttemptDAOImplTest extends DatabaseHibernateTest {
 
