@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
 
 @Component
-class UserFactoryImpl implements UserFactory {
+public class UserFactoryImpl implements UserFactory {
 
     @Autowired private UserValidator userValidator;
     @Autowired private UserDAO userDAO;
@@ -20,12 +20,13 @@ class UserFactoryImpl implements UserFactory {
     @Override
     public User create(String login, String password, String name, String surname, String email, String accessLevel) {
         userValidator.validate(login, password, name, surname, email, accessLevel);
-        User user = createUser()
+        if(userDAO.getUserByLogin(login) == null){
+            User user = createUser()
                 .withLogPas(login, password)
                 .withLogPasNamSur(login, password, name, surname)
                 .withAll(login, password, name, surname, email, accessLevel)
                 .build();
-        if(userDAO.getByLogin(login) == null){
+
             userDAO.create(user);
             return user;
         } else {

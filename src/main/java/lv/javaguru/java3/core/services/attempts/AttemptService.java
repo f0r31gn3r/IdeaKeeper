@@ -17,6 +17,8 @@ public interface AttemptService {
 
     Attempt get(Long attemptId);
 
+    Attempt get (String userLogin);
+
     Attempt updateFailAttempts(Attempt attempt);
 
     Attempt resetFailAttempts(Attempt attempt);

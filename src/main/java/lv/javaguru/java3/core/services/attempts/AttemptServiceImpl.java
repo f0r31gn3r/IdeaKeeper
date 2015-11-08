@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-class AttemptServiceImpl implements AttemptService {
+public class AttemptServiceImpl implements AttemptService {
 
     private static final int MAX_ATTEMPTS = 5;
 
@@ -40,6 +40,12 @@ class AttemptServiceImpl implements AttemptService {
     public Attempt get(Long attemptId) {
         return attemptDAO.getRequired(attemptId);
     }
+
+    @Override
+    public Attempt get(String userLogin) {
+        return attemptDAO.getAttemptByUserLogin(userLogin);
+    }
+
 
     @Override
     public Attempt updateFailAttempts(Attempt userAttempt) {

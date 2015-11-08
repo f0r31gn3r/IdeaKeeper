@@ -15,7 +15,7 @@ import static org.apache.commons.lang.StringUtils.containsAny;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 @Component
-class UserValidatorImpl implements UserValidator {
+public class UserValidatorImpl implements UserValidator {
 
     @Override
     public void validate(String login, String password, String name, String surname, String email, String accessLevel) {

@@ -13,15 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired private UserDAO userDAO;
     @Autowired private UserValidator userValidator;
     @Autowired private AttemptDAO attemptDAO;
     @Autowired private AttemptFactory attemptFactory;
     @Autowired private AttemptService attemptService;
-
-
 
     @Override
     public User update(Long userId,
@@ -46,6 +44,11 @@ class UserServiceImpl implements UserService {
     @Override
     public User get(Long userId) {
         return userDAO.getRequired(userId);
+    }
+
+    @Override
+    public User get(String login) {
+        return userDAO.getUserByLogin(login);
     }
 
 //	@Override

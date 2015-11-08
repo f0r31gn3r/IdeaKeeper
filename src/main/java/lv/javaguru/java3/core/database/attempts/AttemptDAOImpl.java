@@ -3,6 +3,7 @@ package lv.javaguru.java3.core.database.attempts;
 /**
  * Created by Anna on 02.11.2015.
  */
+
 import lv.javaguru.java3.core.database.AttemptDAO;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 import org.hibernate.criterion.Restrictions;

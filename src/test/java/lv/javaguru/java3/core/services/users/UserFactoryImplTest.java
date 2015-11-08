@@ -52,8 +52,9 @@ public class UserFactoryImplTest {
     @Test
     public void createShouldPersistUserAfterValidation() {
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
-        InOrder inOrder = inOrder(userValidator, userDAO);
+        InOrder inOrder = inOrder(userValidator, userDAO, userDAO);
         inOrder.verify(userValidator).validate(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
+        inOrder.verify(userDAO).getUserByLogin(LOGIN);
         inOrder.verify(userDAO).create(user);
     }
 

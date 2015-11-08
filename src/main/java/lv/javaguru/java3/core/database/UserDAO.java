@@ -8,8 +8,8 @@ import org.springframework.security.authentication.AuthenticationManager;
  */
 public interface UserDAO extends CRUDOperationDAO<User, Long>, AuthenticationManager {
 
-    User getByLogin(String login);
+    User getUserByLogin(String login);
 
-    String login(String login, String password);
+    //String login(String login, String password);
 
 }

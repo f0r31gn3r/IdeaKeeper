@@ -2,7 +2,6 @@ package lv.javaguru.java3.core.database.users;
 
 import lv.javaguru.java3.core.database.AttemptDAO;
 import lv.javaguru.java3.core.database.UserDAO;
-import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.services.attempts.AttemptFactory;
@@ -37,7 +36,7 @@ public class UserDAOImpl extends CRUDOperationDAOImpl<User, Long> implements Use
     @Autowired private AttemptFactory attemptFactory;
     @Autowired private AttemptService attemptService;
 
-    public User getByLogin(String login){
+    public User getUserByLogin(String login){
         return (User) getCurrentSession()
                 .createCriteria(User.class)
                 .add(Restrictions
@@ -110,35 +109,35 @@ public class UserDAOImpl extends CRUDOperationDAOImpl<User, Long> implements Use
         return authList;
     }
 
-    @Override
-    public String login(String login, String password) {
-
-        if(getByLogin(login) == null){ //if user with such login doesn't exist
-            return new String("User with such login doesn't exist");
-        }
-
-        User user = getByLogin(login);
-        Authentication request = new UsernamePasswordAuthenticationToken(login, password);
-
-        //if user hasn't tried to login yet, create him a record with attempts
-        if(attemptDAO.getAttemptByUserLogin(login) == null){
-            attemptFactory.create(user.getUserId(), login, 0, null);
-        }
-
-        Attempt attempt = attemptDAO.getAttemptByUserLogin(login);
-
-        try{
-            authenticate(request);
-            attemptService.resetFailAttempts(attempt);
-            return new String("Login attempt successful");
-        }catch(BadCredentialsException be){ //if login and pass don't match
-            attemptService.updateFailAttempts(attempt);
-            return new String("Login and pass don't match");
-        }catch(DisabledException de){ //if user is blocked
-            user.setAccessLevel(AccessLevel.BLOCKED.name());
-            update(user);
-            return new String("User is blocked");
-        }
-    }
+//    @Override
+//    public String login(String login, String password) {
+//
+//        if(getByLogin(login) == null){ //if user with such login doesn't exist
+//            return new String("User with such login doesn't exist");
+//        }
+//
+//        User user = getByLogin(login);
+//        Authentication request = new UsernamePasswordAuthenticationToken(login, password);
+//
+//        //if user hasn't tried to login yet, create him a record with attempts
+//        if(attemptDAO.getAttemptByUserLogin(login) == null){
+//            attemptFactory.create(user.getUserId(), login, 0, null);
+//        }
+//
+//        Attempt attempt = attemptDAO.getAttemptByUserLogin(login);
+//
+//        try{
+//            authenticate(request);
+//            attemptService.resetFailAttempts(attempt);
+//            return new String("Login attempt successful");
+//        }catch(BadCredentialsException be){ //if login and pass don't match
+//            attemptService.updateFailAttempts(attempt);
+//            return new String("Login and pass don't match");
+//        }catch(DisabledException de){ //if user is blocked
+//            user.setAccessLevel(AccessLevel.BLOCKED.name());
+//            update(user);
+//            return new String("User is blocked");
+//        }
+//    }
 
 }
