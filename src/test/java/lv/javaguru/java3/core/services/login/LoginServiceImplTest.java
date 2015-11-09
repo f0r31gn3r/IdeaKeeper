@@ -4,7 +4,6 @@ import lv.javaguru.java3.core.database.UserDAO;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.services.users.*;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -24,8 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
 
 /**
@@ -35,15 +33,12 @@ import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class LoginServiceImplTest {
 
-    @Mock    private UserDAO userDAO;
-    @Mock    private UserValidator userValidator;
-    @Mock    private Authentication auth;
-    //@Mock    private HttpServletRequest request;
-    @Mock    private HttpServletResponse response;
+    @Mock private UserDAO userDAO;
+    @Mock private UserValidator userValidator;
 
-    @InjectMocks    private UserFactory userFactory = new UserFactoryImpl();
-    @InjectMocks    private UserService userService = new UserServiceImpl();
-    @InjectMocks    private LoginService loginService = new LoginServiceImpl();
+    @InjectMocks	private UserFactory userFactory = new UserFactoryImpl();
+    @InjectMocks	private UserService userService = new UserServiceImpl();
+    @InjectMocks	private LoginService loginService = new LoginServiceImpl();
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
@@ -54,9 +49,10 @@ public class LoginServiceImplTest {
     private static final String ACCESSLEVEL = AccessLevel.USER.name();
     private static final String BLOCKEDACCESS = AccessLevel.BLOCKED.name();
 
-
     @Test
     public void testAuthenticateShouldBeSuccessful() {
+
+        Authentication auth = Mockito.mock(Authentication.class);
 
         //creating user
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
@@ -81,19 +77,21 @@ public class LoginServiceImplTest {
 
         //asserting correct authentication
         assertThat(loginService.authenticate(auth), is(new UsernamePasswordAuthenticationToken(
-                auth.getPrincipal(),
-                auth.getCredentials(),
-                loginService.getAuthorities(AccessLevel.USER.name())))
-                );
+                        auth.getPrincipal(),
+                        auth.getCredentials(),
+                        loginService.getAuthorities(AccessLevel.USER.name())))
+        );
         assertThat(a.getName(), is(user.getLogin()));
         assertThat(a.getCredentials(), is(user.getPassword()));
         assertThat(a.getAuthorities(), is(loginService.getAuthorities(user.getAccessLevel())));
-
     }
 
 
+    //If user with such login doesn't exist
     @Test(expected = NullPointerException.class)
     public void testAuthenticateShouldFailLoginNotExist() {
+
+        Authentication auth = Mockito.mock(Authentication.class);
 
         //creating authentication for user login, that doesn't exist
         auth = new UsernamePasswordAuthenticationToken(LOGIN, PASSWORD);
@@ -105,9 +103,10 @@ public class LoginServiceImplTest {
         loginService.authenticate(auth);
     }
 
-    //if password doesn't match
+    //If password doesn't match
     @Test(expected = BadCredentialsException.class)
     public void testAuthenticateShouldFailLoginPassIncorrect() {
+        Authentication auth = Mockito.mock(Authentication.class);
 
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
 
@@ -127,6 +126,7 @@ public class LoginServiceImplTest {
     //if user is blocked
     @Test(expected = DisabledException.class)
     public void testAuthenticateShouldFailUserBlocked() {
+        Authentication auth = Mockito.mock(Authentication.class);
 
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, BLOCKEDACCESS);
 
@@ -143,7 +143,7 @@ public class LoginServiceImplTest {
         inOrder.verify(userDAO).getUserByLogin(LOGIN);
     }
 
-    @Ignore
+
     @Test
     //tests sessions attributes set by successful authentication
     public void testOnAuthenticationSuccess() throws IOException, ServletException {
@@ -151,88 +151,122 @@ public class LoginServiceImplTest {
         HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
         HttpSession session = Mockito.mock(HttpSession.class);
         Mockito.when(req.getSession()).thenReturn(session);
+        HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+        Authentication auth = Mockito.mock(Authentication.class);
 
-        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, BLOCKEDACCESS);
+        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
         Authentication successfulAuthentication = new UsernamePasswordAuthenticationToken(
-                                                                user.getLogin(),
-                                                                user.getPassword(),
-                                                                loginService.getAuthorities(user.getAccessLevel()));
+                user.getLogin(),
+                user.getPassword(),
+                loginService.getAuthorities(user.getAccessLevel()));
         when(userDAO.getUserByLogin(LOGIN)).thenReturn(user);
 
-        loginService.onAuthenticationSuccess(req, response, successfulAuthentication);
+        loginService.onAuthenticationSuccess(req, resp, successfulAuthentication);
 
-        assertThat(req.getSession().getAttribute("login"), is(user.getLogin()));
+        verify(session, times(1)).setAttribute("login", user.getLogin());
+        verify(session, times(1)).setAttribute("name", user.getName());
+        verify(session, times(1)).setAttribute("surname", user.getSurname());
+        verify(session, times(1)).setAttribute("email", user.getEmail());
+        verify(session, times(1)).setAttribute("access_level", loginService.getAuthorities(user.getAccessLevel()));
+        verify(session, times(0)).setAttribute("password", user.getPassword());
+    }
+
+    @Test
+    //tests sessions attributes set by authentication failed by incorrect login
+    public void testOnAuthenticationFailByPassword() throws IOException, ServletException {
+
+        HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
+        HttpSession session = Mockito.mock(HttpSession.class);
+        Mockito.when(req.getSession()).thenReturn(session);
+        HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+        Authentication auth = Mockito.mock(Authentication.class);
+
+        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
+        Authentication unsuccessfulAuthentication = new UsernamePasswordAuthenticationToken(
+                user.getLogin(),
+                INCORRECTPASSWORD,
+                loginService.getAuthorities(user.getAccessLevel()));
+
+        when(userDAO.getUserByLogin(LOGIN)).thenReturn(user);
+        when(session.getAttribute("login_attempts")).thenReturn("1");
+
+        loginService.onAuthenticationFailByPassword(req, resp, LOGIN);
+
+        verify(session, times(1)).setAttribute("login", user.getLogin());
+        verify(session, times(0)).setAttribute("name", user.getName());
+        verify(session, times(0)).setAttribute("surname", user.getSurname());
+        verify(session, times(0)).setAttribute("email", user.getEmail());
+        verify(session, times(0)).setAttribute("access_level", loginService.getAuthorities(user.getAccessLevel()));
+        verify(session, times(0)).setAttribute("password", user.getPassword());
+        verify(session, times(1)).setAttribute("login_attempts", "2");
+
     }
 
     @Test
     public void testLoginShouldSuccess() throws IOException, ServletException {
-
         HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
         HttpSession session = Mockito.mock(HttpSession.class);
         Mockito.when(req.getSession()).thenReturn(session);
+        HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+        Authentication auth = Mockito.mock(Authentication.class);
 
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
         when(userDAO.getUserByLogin(LOGIN)).thenReturn(user);
 
         auth = new UsernamePasswordAuthenticationToken(LOGIN, PASSWORD);
 
-        String loginMsg = loginService.login(req, response, auth);
+        String loginMsg = loginService.login(req, resp, auth);
         assertThat(loginMsg, is("Login attempt successful"));
-
-        //TODO: test session attributes
     }
 
-    @Ignore
     @Test
     public void testLoginShouldFailLoginPassIncorrect() throws IOException, ServletException {
-
         HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
         HttpSession session = Mockito.mock(HttpSession.class);
         Mockito.when(req.getSession()).thenReturn(session);
+        HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+        Authentication auth = Mockito.mock(Authentication.class);
 
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
         when(userDAO.getUserByLogin(LOGIN)).thenReturn(user);
+        when(session.getAttribute("login_attempts")).thenReturn("1");
 
         auth = new UsernamePasswordAuthenticationToken(LOGIN, INCORRECTPASSWORD);
 
-        Mockito.when(req.getSession().getAttribute("login_attempts")).thenReturn(1);
-        String loginMsg = loginService.login(req, response, auth);
+        String loginMsg = loginService.login(req, resp, auth);
         assertThat(loginMsg, is("Login or/and pass don't match"));
-
-        //TODO: test session attributes
     }
 
     @Test
     public void testLoginShouldFailUserBlocked() throws IOException, ServletException {
-
         HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
         HttpSession session = Mockito.mock(HttpSession.class);
         Mockito.when(req.getSession()).thenReturn(session);
+        HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+        Authentication auth = Mockito.mock(Authentication.class);
 
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, BLOCKEDACCESS);
         when(userDAO.getUserByLogin(LOGIN)).thenReturn(user);
 
         auth = new UsernamePasswordAuthenticationToken(LOGIN, PASSWORD);
 
-        String loginMsg = loginService.login(req, response, auth);
+        String loginMsg = loginService.login(req, resp, auth);
         assertThat(loginMsg, is("User is blocked"));
-
-        //TODO: test session attributes
     }
 
     @Test
     public void testLoginShouldFailLoginNotExist() throws IOException, ServletException {
-
         HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
         HttpSession session = Mockito.mock(HttpSession.class);
         Mockito.when(req.getSession()).thenReturn(session);
+        HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+        Authentication auth = Mockito.mock(Authentication.class);
 
         auth = new UsernamePasswordAuthenticationToken(LOGIN, PASSWORD);
 
-        String loginMsg = loginService.login(req, response, auth);
+        String loginMsg = loginService.login(req, resp, auth);
         assertThat(loginMsg, is("User login doesn't exist"));
     }
-
 
 
 }

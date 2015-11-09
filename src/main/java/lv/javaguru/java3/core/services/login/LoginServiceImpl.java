@@ -96,16 +96,14 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public void onAuthenticationFailByPassword(HttpServletRequest request,
-                                     HttpServletResponse response, String login) throws IOException, ServletException {
+                                               HttpServletResponse response, String login) throws IOException, ServletException {
         //User user = (User) auth.getPrincipal();
-        int previousAttempts = (int) request.getSession().getAttribute("login_attempts");
+        int previousAttempts = Integer.parseInt(request.getSession().getAttribute("login_attempts").toString());
 
         if(previousAttempts < MAX_FAILED_LOGIN_ATTEMPTS_COUNT){
             request.getSession().setAttribute("login", login);
-            request.getSession().setAttribute("login_attempts", String.valueOf(previousAttempts)+1);
-            onAuthenticationFailByPassword(request, response, login);
-        } else {
-            //onAuthenticationFailByBlocking(request, response, login);
+            request.getSession().setAttribute("login_attempts", String.valueOf(previousAttempts+1));
+            //onAuthenticationFailByPassword(request, response, login);
         }
     }
 
