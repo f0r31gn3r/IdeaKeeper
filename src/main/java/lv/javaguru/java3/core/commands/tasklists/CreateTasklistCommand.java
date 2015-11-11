@@ -13,6 +13,7 @@ public class CreateTaskListCommand implements DomainCommand<CreateTaskListResult
     private Long taskId;
     private Date createdDate;
     private Date endDate;
+    private Long kva;
 
     public CreateTaskListCommand(Long userId,
                                  Long taskId,

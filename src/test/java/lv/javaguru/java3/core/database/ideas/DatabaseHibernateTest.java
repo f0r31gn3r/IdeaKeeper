@@ -37,4 +37,7 @@ public abstract class DatabaseHibernateTest {
     @Autowired
     protected AttemptDAO attemptDAO;
 
+    @Autowired
+    protected TaskListDAO taskListDAO;
+
 }
