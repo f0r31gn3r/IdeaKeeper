@@ -1,17 +1,17 @@
 package lv.javaguru.java3.core.commands.clients;
 
 import lv.javaguru.java3.core.commands.DomainCommandResult;
-import lv.javaguru.java3.core.domain.Client;
+import lv.javaguru.java3.core.dto.ClientDTO;
 
 public class GetClientResult implements DomainCommandResult {
 
-    private Client client;
+    private ClientDTO client;
 
-    public GetClientResult(Client client) {
+    public GetClientResult(ClientDTO client) {
         this.client = client;
     }
 
-    public Client getClient() {
+    public ClientDTO getClient() {
         return client;
     }
 

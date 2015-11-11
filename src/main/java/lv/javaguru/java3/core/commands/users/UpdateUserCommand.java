@@ -1,7 +1,7 @@
 package lv.javaguru.java3.core.commands.users;
 
 import lv.javaguru.java3.core.commands.DomainCommand;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Created by Anna on 27.10.2015.

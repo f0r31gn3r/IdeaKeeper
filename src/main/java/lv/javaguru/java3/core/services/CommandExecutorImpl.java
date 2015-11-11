@@ -31,7 +31,7 @@ public class CommandExecutorImpl implements CommandExecutor {
         }
     }
 
-    @Transactional("hibernateTX")
+    @Transactional()
     public <T extends DomainCommandResult> T execute(DomainCommand<T> domainCommand) {
         DomainCommandHandler service = commandServiceMap.get(domainCommand.getClass());
         if(service != null) {

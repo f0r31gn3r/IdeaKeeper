@@ -14,4 +14,6 @@ public interface IdeaService {
 
     Idea get(Long ideaId);
 
+    //List<Idea> getUserIdeas(Long userId);
+
 }

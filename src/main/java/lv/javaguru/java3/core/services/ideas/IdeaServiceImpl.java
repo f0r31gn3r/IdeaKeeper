@@ -34,4 +34,9 @@ public class IdeaServiceImpl implements IdeaService {
     public Idea get(Long ideaId) {
         return ideaDAO.getRequired(ideaId);
     }
+
+//    @Override
+//    public List<Idea> getUserIdeas(Long userId) {
+//        return ideaDAO.getIdeasByUserId(userId);
+//    }
 }

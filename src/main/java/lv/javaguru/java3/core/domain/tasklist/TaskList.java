@@ -11,22 +11,26 @@ import java.util.Date;
 @Table(name = "tasklists")
 public class TaskList {
 
-//    @Id
-//    @GeneratedValue(generator = "tasklist_seq", strategy = GenerationType.SEQUENCE)
-//    @SequenceGenerator(name = "tasklist_seq", sequenceName = "tasklist_seq", allocationSize = 1)
-
     @Id
+    @GeneratedValue(generator = "tasklist_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "tasklist_seq", sequenceName = "tasklist_seq", allocationSize = 1)
     @Column(name="tasklist_id",columnDefinition = "int(11)")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+//    @Id
+//    @Column(name="tasklist_id",columnDefinition = "int(11)")
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long taskListId;
 
     @Column(name="user_id", nullable = false, columnDefinition = "int(11)")
+    //@Column(name="user_id", nullable = false)
     private Long userId;
 
     @Column(name="task_id", nullable = false, columnDefinition = "int(11)")
+    //@Column(name="task_id", nullable = false)
     private Long taskId;
 
     @Column(name="created_date", nullable = false, columnDefinition="DATETIME")
+    //@Column(name="created_date", nullable = false, columnDefinition="DATETIME")
     private Date createdDate;
 
     @Column(name="end_date", columnDefinition="DATETIME")

@@ -4,9 +4,9 @@ package lv.javaguru.java3.core.database.users;
  * Created by Anna on 27.10.2015.
  */
 
-import lv.javaguru.java3.core.database.DatabaseHibernateTest;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +51,7 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
         assertThat(userFromDb, is(notNullValue()));
     }
 
+    @Ignore
     @Test
     @Transactional
     public void testGetUserByLogin() {
@@ -63,6 +64,7 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
         assertThat(userDAO.getUserByLogin(LOGIN), is(notNullValue()));
     }
 
+    @Ignore
     @Test
     @Transactional
     public void testGetAll() {

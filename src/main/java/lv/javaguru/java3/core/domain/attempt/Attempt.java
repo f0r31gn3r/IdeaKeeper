@@ -11,26 +11,30 @@ import java.util.Date;
 @Table(name="attempts")
 public class Attempt {
 
-//    @Id
-//    @GeneratedValue(generator = "attempts_seq", strategy = GenerationType.SEQUENCE)
-//    @SequenceGenerator(name = "attempts_seq", sequenceName = "attempts_seq", allocationSize = 1)
-//    @Column(name="attempt_id", nullable = false)
-
     @Id
-    @Column(name="attempt_id", columnDefinition = "int(11)")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "attempts_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "attempts_seq", sequenceName = "attempts_seq", allocationSize = 1)
+    @Column(name="attempt_id", nullable = false)
+
+//    @Id
+//    @Column(name="attempt_id", columnDefinition = "int(11)")
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long attemptId;
 
     @Column(name="user_id", columnDefinition = "int(11)", nullable = false)
+    //@Column(name="user_id", nullable = false)
     private Long userId;
 
     @Column(name="login", columnDefinition = "CHAR(50)")
+    //@Column(name="login")
     private String login;
 
     @Column(name="attempts_count", columnDefinition = "int(1)")
+    //@Column(name="attempts_count")
     private int attempts;
 
     @Column(name = "last_modified", columnDefinition="DATETIME")
+    //@Column(name = "last_modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
 

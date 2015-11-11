@@ -10,23 +10,26 @@ import javax.persistence.*;
 @Table(name="ideas")
 public class Idea {
 
-//    @Id
-//    @GeneratedValue(generator = "ideas_seq", strategy = GenerationType.SEQUENCE)
-//    @SequenceGenerator(name = "ideas_seq", sequenceName = "ideas_seq", allocationSize = 1)
-//    @Column(name="idea_id", nullable = false)
-
     @Id
-    @Column(name="idea_id",columnDefinition = "int(11)")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "ideas_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "ideas_seq", sequenceName = "ideas_seq", allocationSize = 1)
+    @Column(name="idea_id", nullable = false)
+
+//    @Id
+//    @Column(name="idea_id",columnDefinition = "int(11)")
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ideaId;
 
     @Column(name="title", columnDefinition = "CHAR(50)")
+    //@Column(name="title")
     private String title;
 
     @Column(name="description", columnDefinition = "CHAR(50)")
+    //@Column(name="description")
     private String description;
 
     @Column(name="user_id",columnDefinition = "int(11)", nullable = false)
+    //@Column(name="user_id", nullable = false)
     private Long userId;
 
     public Long getIdeaId() {

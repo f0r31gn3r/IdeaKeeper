@@ -1,6 +1,5 @@
 package lv.javaguru.java3.core.database.ideas;
 
-import lv.javaguru.java3.core.database.DatabaseHibernateTest;
 import lv.javaguru.java3.core.domain.idea.Idea;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
@@ -68,5 +67,38 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(notNullValue()));
     }
+
+//    @Test
+//    @Transactional
+//    public void testGetIdeasByUserId() {
+//        User user1 = createUser()
+//                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+//                .build();
+//        userDAO.create(user1);
+//
+//        User user2 = createUser()
+//                .withAll(LOGIN+"2", PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+//                .build();
+//        userDAO.create(user2);
+//
+//        Idea idea1 = createIdea()
+//                .withAll(TITLE, DESCRIPTION, user1.getUserId())
+//                .build();
+//        ideaDAO.create(idea1);
+//
+//        Idea idea2 = createIdea()
+//                .withAll(TITLE, DESCRIPTION, user1.getUserId())
+//                .build();
+//        ideaDAO.create(idea2);
+//
+////        Idea idea3 = createIdea()
+////                .withAll(TITLE, DESCRIPTION, user2.getUserId())
+////                .build();
+////        ideaDAO.create(idea3);
+//
+//        List<Idea> userIdeas = ideaDAO.getIdeasByUserId(user1.getUserId());
+//
+//        assertThat(userIdeas.size(), is(2));
+//    }
 
 }

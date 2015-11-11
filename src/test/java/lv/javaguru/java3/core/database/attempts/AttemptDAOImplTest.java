@@ -4,7 +4,6 @@ package lv.javaguru.java3.core.database.attempts;
  * Created by Anna on 02.11.2015.
  */
 
-import lv.javaguru.java3.core.database.DatabaseHibernateTest;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.user.User;
 import org.junit.Ignore;
