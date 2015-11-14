@@ -7,7 +7,6 @@ import lv.javaguru.java3.core.commands.DomainCommand;
 
 import java.util.Date;
 
-@Deprecated
 public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> {
 
     private Long userId;
@@ -28,7 +27,6 @@ public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> 
         this.attempts = attempts;
         this.lastModified = lastModified;
     }
-
 
     public Long getUserId() {
         return userId;
@@ -68,6 +66,7 @@ public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
+
 
 
 

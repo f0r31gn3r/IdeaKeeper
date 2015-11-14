@@ -1,6 +1,7 @@
 package lv.javaguru.java3.core.database.clients;
 
 import lv.javaguru.java3.core.domain.Client;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,17 @@ public class ClientDAOImplTest extends DatabaseHibernateTest {
         clientDAO.create(client);
         Client clientFromDb = clientDAO.getById(client.getId());
         assertThat(clientFromDb, is(notNullValue()));
+    }
+
+    @Ignore
+    @Test
+    @Transactional
+    public void testGetAllClients() {
+        Client client = createClient()
+                .withLogin("login")
+                .withPassword("password").build();
+        clientDAO.create(client);
+        assertThat(clientDAO.getAll().size(), is(1));
     }
 
 }

@@ -1,4 +1,5 @@
-package lv.javaguru.java3.core.services.attempts.handlers;
+package lv.javaguru.java3.core.commands.attempts;
+
 
 /**
  * Created by Anna on 02.11.2015.
@@ -6,18 +7,21 @@ package lv.javaguru.java3.core.services.attempts.handlers;
 import lv.javaguru.java3.core.commands.attempts.UpdateAttemptCommand;
 import lv.javaguru.java3.core.commands.attempts.UpdateAttemptResult;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
+import lv.javaguru.java3.core.dto.attempt.AttemptDTO;
 import lv.javaguru.java3.core.services.DomainCommandHandler;
 import lv.javaguru.java3.core.services.attempts.AttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Deprecated
+
 @Component
 class UpdateAttemptCommandHandler
         implements DomainCommandHandler<UpdateAttemptCommand, UpdateAttemptResult> {
 
     @Autowired
     private AttemptService attemptService;
+    @Autowired private AttemptConverter attemptConverter;
+
 
 
     @Override
@@ -29,8 +33,8 @@ class UpdateAttemptCommandHandler
                 command.getAttempts(),
                 command.getLastModified()
         );
-        return new UpdateAttemptResult(attempt);
-    }
+        AttemptDTO attemptDTO = attemptConverter.convert(attempt);
+        return new UpdateAttemptResult(attemptDTO);    }
 
     @Override
     public Class getCommandType() {

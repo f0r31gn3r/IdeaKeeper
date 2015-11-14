@@ -8,7 +8,7 @@ import lv.javaguru.java3.core.domain.attempt.Attempt;
 
 import java.util.Date;;
 
-@Deprecated
+
 
 public interface AttemptService {
 

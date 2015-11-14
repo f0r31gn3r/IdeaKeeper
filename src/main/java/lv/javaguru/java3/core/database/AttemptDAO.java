@@ -6,7 +6,6 @@ import lv.javaguru.java3.core.domain.attempt.Attempt;
  * Created by Anna on 02.11.2015.
  */
 
-@Deprecated
 public interface AttemptDAO extends CRUDOperationDAO<Attempt, Long>{
 
 //    void updateFailAttempts(String login);

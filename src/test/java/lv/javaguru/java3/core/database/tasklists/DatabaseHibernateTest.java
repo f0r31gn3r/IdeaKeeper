@@ -1,7 +1,7 @@
-package lv.javaguru.java3.core.database.ideas;
+package lv.javaguru.java3.core.database.tasklists;
 
 import lv.javaguru.java3.config.Application;
-import lv.javaguru.java3.core.database.*;
+import lv.javaguru.java3.core.database.TaskListDAO;
 import org.hibernate.SessionFactory;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
@@ -21,9 +21,6 @@ public abstract class DatabaseHibernateTest {
 	protected SessionFactory sessionFactory;
 
     @Autowired
-    protected IdeaDAO ideaDAO;
-
-    @Autowired
-    protected UserDAO userDAO;
+    protected TaskListDAO taskListDAO;
 
 }

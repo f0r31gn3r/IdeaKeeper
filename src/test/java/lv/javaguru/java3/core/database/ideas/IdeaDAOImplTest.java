@@ -4,7 +4,6 @@ import lv.javaguru.java3.core.domain.idea.Idea;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
 import org.junit.Test;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import static lv.javaguru.java3.core.domain.idea.IdeaBuilder.createIdea;
@@ -16,7 +15,6 @@ import static org.junit.Assert.assertThat;
  * Created by Anna on 29.10.2015.
  */
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class IdeaDAOImplTest extends DatabaseHibernateTest {
 
     private static final String LOGIN = "login";

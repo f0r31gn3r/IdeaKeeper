@@ -6,20 +6,20 @@ import javax.persistence.*;
 @Table(name="clients")
 public class Client {
 
-    @Id
-    @GeneratedValue(generator = "clients_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "clients_seq", sequenceName = "clients_seq", allocationSize = 1)
-    @Column(name="id", nullable = false)
-
 //    @Id
-//    @Column(name="id")
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(generator = "clients_seq", strategy = GenerationType.SEQUENCE)
+//    @SequenceGenerator(name = "clients_seq", sequenceName = "clients_seq", allocationSize = 1)
+//    @Column(name="id", nullable = false)
+
+    @Id
+    @Column(name="id", columnDefinition = "int(11)")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="login", nullable = false)
+    @Column(name="login", columnDefinition = "CHAR(50)", nullable = false)
     private String login;
 
-    @Column(name="password", nullable = false)
+    @Column(name="password", columnDefinition = "CHAR(50)", nullable = false)
     private String password;
 
 

@@ -6,7 +6,6 @@ import lv.javaguru.java3.core.commands.DomainCommand;
  * Created by Anna on 27.10.2015.
  */
 public class CreateUserCommand implements DomainCommand<CreateUserResult> {
-
     private String login;
     private String password;
     private String name;

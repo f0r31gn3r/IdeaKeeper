@@ -4,15 +4,12 @@ package lv.javaguru.java3.core.services.attempts;
  * Created by Anna on 02.11.2015.
  */
 
-import org.junit.Ignore;
-
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-@Deprecated @Ignore
 public class AttemptValidatorImplTest {
 
     private AttemptValidator validator = new AttemptValidatorImpl();

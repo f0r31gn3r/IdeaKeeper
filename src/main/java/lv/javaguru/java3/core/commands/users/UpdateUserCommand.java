@@ -9,6 +9,7 @@ import lv.javaguru.java3.core.commands.DomainCommand;
 public class UpdateUserCommand implements DomainCommand<UpdateUserResult> {
 
     private Long userId;
+
     private String login;
     private String password;
     private String name;

@@ -6,19 +6,19 @@ package lv.javaguru.java3.core.domain.attempt;
 import javax.persistence.*;
 import java.util.Date;
 
-@Deprecated
+
 @Entity
 @Table(name="attempts")
 public class Attempt {
 
-    @Id
-    @GeneratedValue(generator = "attempts_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "attempts_seq", sequenceName = "attempts_seq", allocationSize = 1)
-    @Column(name="attempt_id", nullable = false)
-
 //    @Id
-//    @Column(name="attempt_id", columnDefinition = "int(11)")
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(generator = "attempts_seq", strategy = GenerationType.SEQUENCE)
+//    @SequenceGenerator(name = "attempts_seq", sequenceName = "attempts_seq", allocationSize = 1)
+//    @Column(name="attempt_id", nullable = false)
+
+    @Id
+    @Column(name="attempt_id", columnDefinition = "int(11)")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long attemptId;
 
     @Column(name="user_id", columnDefinition = "int(11)", nullable = false)

@@ -6,7 +6,6 @@ package lv.javaguru.java3.core.services.attempts;
 
 import lv.javaguru.java3.core.database.AttemptDAO;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -20,7 +19,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.inOrder;
 
-@Deprecated @Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class AttemptServiceImplTest {
 

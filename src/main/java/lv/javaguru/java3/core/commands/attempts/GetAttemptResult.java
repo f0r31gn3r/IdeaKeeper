@@ -1,22 +1,21 @@
 package lv.javaguru.java3.core.commands.attempts;
 
 import lv.javaguru.java3.core.commands.DomainCommandResult;
-import lv.javaguru.java3.core.domain.attempt.Attempt;
+import lv.javaguru.java3.core.dto.attempt.AttemptDTO;
 
 /**
  * Created by Anna on 02.11.2015.
  */
 
-@Deprecated
+
 public class GetAttemptResult implements DomainCommandResult {
+    private AttemptDTO attempt;
 
-    private Attempt attempt;
-
-    public GetAttemptResult(Attempt attempt) {
+    public GetAttemptResult(AttemptDTO attempt) {
         this.attempt = attempt;
     }
 
-    public Attempt getAttempt() {
+    public AttemptDTO getAttempt() {
         return attempt;
     }
 

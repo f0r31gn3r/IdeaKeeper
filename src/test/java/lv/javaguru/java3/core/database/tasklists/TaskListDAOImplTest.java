@@ -1,7 +1,5 @@
 package lv.javaguru.java3.core.database.tasklists;
 
-import junit.framework.TestCase;
-import lv.javaguru.java3.core.database.DatabaseHibernateTest;
 import lv.javaguru.java3.core.domain.tasklist.TaskList;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;

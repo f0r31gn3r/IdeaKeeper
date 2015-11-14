@@ -17,4 +17,5 @@ public class GetUserCommand implements DomainCommand<GetUserResult> {
         return userId;
     }
 
+
 }
