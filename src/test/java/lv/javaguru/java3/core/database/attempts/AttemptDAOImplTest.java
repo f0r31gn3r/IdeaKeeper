@@ -4,8 +4,10 @@ package lv.javaguru.java3.core.database.attempts;
  * Created by Anna on 02.11.2015.
  */
 
+import lv.javaguru.java3.core.database.DatabaseCleaner;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.user.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,13 @@ import static org.junit.Assert.assertThat;
 public class AttemptDAOImplTest extends DatabaseHibernateTest {
 
     private  SimpleDateFormat sdf =  new SimpleDateFormat ("dd.MM.yyyy hh:mm:ss");
+
+    private DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+
+    @Before
+    public void setUp() throws Exception {
+        databaseCleaner.cleanDatabase();
+    }
 
     @Test
     @Transactional
@@ -56,6 +65,29 @@ public class AttemptDAOImplTest extends DatabaseHibernateTest {
         attemptDAO.create(attempt);
         Attempt attemptFromDb = attemptDAO.getById(attempt.getAttemptId());
         assertThat(attemptFromDb, is(notNullValue()));
+    }
+
+    @Test
+    @Transactional
+    public void testDeleteAttempt() {
+        User user = createUser()
+                .withLogPas("login", "password")
+                .withLogPasNamSur("login", "password", "name", "surname")
+                .withAll("login", "password", "name", "surname", "email", "access")
+                .build();
+        userDAO.create(user);
+
+        Attempt attempt = createAttempt()
+                .withAll(user.getUserId(), "login", 2, new Date())
+                .build();
+        attemptDAO.create(attempt);
+        Attempt attemptFromDb = attemptDAO.getById(attempt.getAttemptId());
+        assertThat(attemptFromDb, is(notNullValue()));
+        attemptDAO.delete(attemptFromDb);
+        attemptFromDb = attemptDAO.getById(attempt.getAttemptId());
+        assertThat(attemptFromDb, is(nullValue()));
+
+
     }
 
 

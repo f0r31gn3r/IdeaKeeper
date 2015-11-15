@@ -43,11 +43,7 @@ CREATE TABLE IF NOT EXISTS `ideas` (
   `idea_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` CHAR(50),
   `description` CHAR(50),
-  `user_id` INT(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`idea_id`, `user_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  PRIMARY KEY (`idea_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

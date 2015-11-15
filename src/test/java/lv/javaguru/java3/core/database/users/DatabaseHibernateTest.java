@@ -1,6 +1,7 @@
 package lv.javaguru.java3.core.database.users;
 
 import lv.javaguru.java3.config.Application;
+import lv.javaguru.java3.core.database.IdeaDAO;
 import lv.javaguru.java3.core.database.UserDAO;
 import org.hibernate.SessionFactory;
 import org.junit.Ignore;
@@ -21,5 +22,8 @@ public abstract class DatabaseHibernateTest {
 
     @Autowired
     protected UserDAO userDAO;
+
+    @Autowired
+    protected IdeaDAO ideaDAO;
 
 }

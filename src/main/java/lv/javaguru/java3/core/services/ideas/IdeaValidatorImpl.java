@@ -13,7 +13,7 @@ import static org.apache.commons.lang.StringUtils.*;
 class IdeaValidatorImpl implements IdeaValidator {
 
     @Override
-    public void validate(String title, String description, Long userId) {
+    public void validate(String title, String description) {
         validateTitle(title);
         validateDescription(description);
     }

@@ -1,6 +1,7 @@
 package lv.javaguru.java3.core.commands.ideas;
 
 import lv.javaguru.java3.core.commands.DomainCommand;
+import lv.javaguru.java3.core.domain.user.User;
 
 /**
  * Created by Anna on 28.10.2015.
@@ -10,16 +11,16 @@ public class UpdateIdeaCommand implements DomainCommand<UpdateIdeaResult> {
     private Long ideaId;
     private String title;
     private String description;
-    private Long userId;
+    private User user;
 
     public UpdateIdeaCommand(Long ideaId,
                              String title,
                              String description,
-                             Long userId) {
+                             User user) {
         this.ideaId = ideaId;
         this.title = title;
         this.description = description;
-        this.userId = userId;
+        this.user = user;
     }
 
     public Long getIdeaId() {
@@ -34,7 +35,7 @@ public class UpdateIdeaCommand implements DomainCommand<UpdateIdeaResult> {
         return description;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 }

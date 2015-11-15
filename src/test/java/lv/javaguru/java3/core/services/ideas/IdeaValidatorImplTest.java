@@ -15,34 +15,32 @@ public class IdeaValidatorImplTest {
 
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
-    private static final Long USERID = 111L;
 
     @Test
     public void validateShouldFailIfTitleIsNull() {
-        validateShouldFail(null, DESCRIPTION, USERID, "Idea title must not be null");
+        validateShouldFail(null, DESCRIPTION, "Idea title must not be null");
     }
 
     @Test
     public void validateShouldFailIfDescriptionIsNull() {
-        validateShouldFail(TITLE, null, USERID, "Idea description must not be null");
+        validateShouldFail(TITLE, null, "Idea description must not be null");
     }
 
     @Test
     public void validateShouldFailIfTitleIsEmpty() {
-        validateShouldFail("", DESCRIPTION, USERID, "Idea title must not be empty");
+        validateShouldFail("", DESCRIPTION, "Idea title must not be empty");
     }
 
     @Test
     public void validateShouldFailIfDescriptionIsEmpty() {
-        validateShouldFail(TITLE, "", USERID, "Idea description must not be empty");
+        validateShouldFail(TITLE, "", "Idea description must not be empty");
     }
 
     private void validateShouldFail(String title,
                                     String description,
-                                    Long userId,
                                     String errorMessage) {
         try {
-            validator.validate(title, description, userId);
+            validator.validate(title, description);
             fail();
         } catch (Exception e) {
             assertThat(e.getMessage(), is(errorMessage));

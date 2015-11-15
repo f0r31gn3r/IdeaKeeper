@@ -4,10 +4,11 @@ package lv.javaguru.java3.core.domain.user;
  * Created by Anna on 26.10.2015.
  */
 
+import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.idea.Idea;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -48,17 +49,23 @@ public class User {
     //@Column(name="access_level")
     private String accessLevel;
 
-    @OneToMany(mappedBy = "ideaId", fetch = FetchType.LAZY,
-            cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Idea> ideas;
-
-    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY,
-            cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Activity> activities;
-
-//    @OneToMany(mappedBy = "attemptId", fetch = FetchType.LAZY,
+//    @OneToMany(mappedBy = "ideaId", fetch = FetchType.EAGER,
 //            cascade = CascadeType.REMOVE, orphanRemoval = true)
-//    private List<Attempt> attempts;
+
+   // @OneToMany(mappedBy = "ideaId", fetch = FetchType.EAGER,
+   //        cascade = CascadeType.REMOVE, orphanRemoval = true)
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Idea> ideas;
+
+//    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY,
+//            cascade = CascadeType.REMOVE, orphanRemoval = true)
+//    private List<Activity> activities;
+
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+        @OneToMany(mappedBy = "attemptId", fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Set<Attempt> attempts;
 
     public Long getUserId() {
         return userId;
@@ -116,27 +123,27 @@ public class User {
         this.accessLevel = accessLevel;
     }
 
-    public List<Idea> getIdeas() {
+    public Set<Idea> getIdeas() {
         return ideas;
     }
 
-    public void setIdeas(List<Idea> ideas) {
+    public void setIdeas(Set<Idea> ideas) {
         this.ideas = ideas;
     }
 
-    public List<Activity> getActivities() {
-        return activities;
+//    public List<Activity> getActivities() {
+//        return activities;
+//    }
+//
+//    public void setActivities(List<Activity> activities) {
+//        this.activities = activities;
+//    }
+//
+    public Set<Attempt> getAttempts() {
+        return attempts;
     }
 
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
+    public void setAttempts(Set<Attempt> attempts) {
+        this.attempts = attempts;
     }
-//
-//    public List<Attempt> getAttempts() {
-//        return attempts;
-//    }
-//
-//    public void setAttempts(List<Attempt> attempts) {
-//        this.attempts = attempts;
-//    }
 }

@@ -2,6 +2,7 @@ package lv.javaguru.java3.core.services.ideas;
 
 import lv.javaguru.java3.core.database.IdeaDAO;
 import lv.javaguru.java3.core.domain.idea.Idea;
+import lv.javaguru.java3.core.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +21,14 @@ public class IdeaServiceImpl implements IdeaService {
     public Idea update(Long ideaId,
                        String newTitle,
                        String newDescription,
-                       Long newUserId) {
-        ideaValidator.validate(newTitle, newDescription, newUserId);
+                       User newUser
+    ) {
+        ideaValidator.validate(newTitle, newDescription);
         Idea idea = get(ideaId);
 
         idea.setTitle(newTitle);
         idea.setDescription(newDescription);
-        idea.setUserId(newUserId);
+        idea.setUser(newUser);
         return idea;
     }
 
@@ -35,8 +37,4 @@ public class IdeaServiceImpl implements IdeaService {
         return ideaDAO.getRequired(ideaId);
     }
 
-//    @Override
-//    public List<Idea> getUserIdeas(Long userId) {
-//        return ideaDAO.getIdeasByUserId(userId);
-//    }
 }

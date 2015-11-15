@@ -25,7 +25,7 @@ class UpdateIdeaCommandHandler
                 command.getIdeaId(),
                 command.getTitle(),
                 command.getDescription(),
-                command.getUserId()
+                command.getUser()
         );
         return new UpdateIdeaResult(idea);
     }

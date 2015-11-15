@@ -4,6 +4,8 @@ package lv.javaguru.java3.core.domain.idea;
  * Created by Anna on 28.10.2015.
  */
 
+import lv.javaguru.java3.core.domain.user.User;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,16 +23,14 @@ public class Idea {
     private Long ideaId;
 
     @Column(name="title", columnDefinition = "CHAR(50)")
-    //@Column(name="title")
     private String title;
 
     @Column(name="description", columnDefinition = "CHAR(50)")
-    //@Column(name="description")
     private String description;
 
-    @Column(name="user_id",columnDefinition = "int(11)", nullable = false)
-    //@Column(name="user_id", nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
 
     public Long getIdeaId() {
         return ideaId;
@@ -56,11 +56,11 @@ public class Idea {
         this.description = description;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

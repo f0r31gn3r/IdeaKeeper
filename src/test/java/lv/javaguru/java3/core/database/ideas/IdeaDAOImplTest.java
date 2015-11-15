@@ -1,8 +1,10 @@
 package lv.javaguru.java3.core.database.ideas;
 
+import lv.javaguru.java3.core.database.DatabaseCleaner;
 import lv.javaguru.java3.core.domain.idea.Idea;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,13 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
 
+    private DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+
+    @Before
+    public void setUp() throws Exception {
+        databaseCleaner.cleanDatabase();
+    }
+
 
     @Test
     @Transactional
@@ -39,8 +48,8 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
         userDAO.create(user);
 
         Idea idea = createIdea()
-                .withTitle(TITLE, user.getUserId())
-                .withAll(TITLE, DESCRIPTION, user.getUserId())
+                .withTitle(TITLE, user)
+                .withAll(TITLE, DESCRIPTION, user)
                 .build();
         assertThat(idea.getIdeaId(), is(nullValue()));
         ideaDAO.create(idea);
@@ -52,18 +61,34 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     public void testGetIdeaById() {
         User user = createUser()
                 .withLogPas(LOGIN, PASSWORD)
-                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
-                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
         userDAO.create(user);
 
         Idea idea = createIdea()
-                .withTitle(TITLE, user.getUserId())
-                .withAll(TITLE, DESCRIPTION, user.getUserId())
+                .withAll(TITLE, DESCRIPTION, user)
                 .build();
         ideaDAO.create(idea);
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(notNullValue()));
+    }
+
+    @Test
+    @Transactional
+    public void testDeleteIdea() {
+        User user = createUser()
+                .withLogPas(LOGIN, PASSWORD)
+                .build();
+        userDAO.create(user);
+
+        Idea idea = createIdea()
+                .withAll(TITLE, DESCRIPTION, user)
+                .build();
+        ideaDAO.create(idea);
+        Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
+        assertThat(ideaFromDb, is(notNullValue()));
+        ideaDAO.delete(ideaFromDb);
+        ideaFromDb = ideaDAO.getById(idea.getIdeaId());
+        assertThat(ideaFromDb, is(nullValue()));
     }
 
 //    @Test

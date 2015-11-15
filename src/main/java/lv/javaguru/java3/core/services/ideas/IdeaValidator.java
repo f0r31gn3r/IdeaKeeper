@@ -5,6 +5,6 @@ package lv.javaguru.java3.core.services.ideas;
  */
 public interface IdeaValidator {
 
-    void validate(String title, String description, Long userId);
+    void validate(String title, String description);
 
 }

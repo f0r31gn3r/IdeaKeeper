@@ -5,13 +5,9 @@ package lv.javaguru.java3.core.services.ideas.handlers;
  */
 import lv.javaguru.java3.core.commands.ideas.CreateIdeaCommand;
 import lv.javaguru.java3.core.commands.ideas.CreateIdeaResult;
-import lv.javaguru.java3.core.commands.users.CreateUserCommand;
-import lv.javaguru.java3.core.commands.users.CreateUserResult;
 import lv.javaguru.java3.core.domain.idea.Idea;
-import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.services.DomainCommandHandler;
 import lv.javaguru.java3.core.services.ideas.IdeaFactory;
-import lv.javaguru.java3.core.services.users.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +24,7 @@ class CreateIdeaCommandHandler
         Idea idea = ideaFactory.create(
                 command.getTitle(),
                 command.getDescription(),
-                command.getUserId()
+                command.getUser()
         );
         return new CreateIdeaResult(idea);
     }
