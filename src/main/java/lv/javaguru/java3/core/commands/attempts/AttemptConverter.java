@@ -18,6 +18,5 @@ public class AttemptConverter {
                 .withAll(attempt.getLogin(), attempt.getAttempts(), attempt.getLastModified())
                 .build();
     }
-
 }
 

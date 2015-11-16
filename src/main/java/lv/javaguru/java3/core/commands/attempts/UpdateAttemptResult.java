@@ -24,6 +24,5 @@ public class UpdateAttemptResult implements DomainCommandResult {
         this.attempt = attempt;
     }
 
-
 }
 

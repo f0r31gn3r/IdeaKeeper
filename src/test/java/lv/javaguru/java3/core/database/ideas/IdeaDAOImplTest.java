@@ -44,9 +44,9 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testCreateIdeaWithAll() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogPas(LOGIN, PASSWORD)
+                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
 
         Idea idea = createIdea()
@@ -67,9 +67,9 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testGetIdeaById() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogPas(LOGIN, PASSWORD)
+                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
 
         Idea idea = createIdea()
@@ -91,9 +91,9 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testDeleteIdea() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogPas(LOGIN, PASSWORD)
+                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
+                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
                 .build();
 
         Idea idea = createIdea()
@@ -113,39 +113,4 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
         ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(nullValue()));
     }
-
-//    @Test
-//    @Transactional
-//    public void testGetIdeasByUserId() {
-//        User user1 = createUser()
-//                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
-//                .build();
-//        userDAO.create(user1);
-//
-//        User user2 = createUser()
-//                .withAll(LOGIN+"2", PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
-//                .build();
-//        userDAO.create(user2);
-//
-//        Idea idea1 = createIdea()
-//                .withAll(TITLE, DESCRIPTION, user1.getUserId())
-//                .build();
-//        ideaDAO.create(idea1);
-//
-//        Idea idea2 = createIdea()
-//                .withAll(TITLE, DESCRIPTION, user1.getUserId())
-//                .build();
-//        ideaDAO.create(idea2);
-//
-////        Idea idea3 = createIdea()
-////                .withAll(TITLE, DESCRIPTION, user2.getUserId())
-////                .build();
-////        ideaDAO.create(idea3);
-//
-//        List<Idea> userIdeas = ideaDAO.getIdeasByUserId(user1.getUserId());
-//
-//        assertThat(userIdeas.size(), is(2));
-//    }
-
-
 }

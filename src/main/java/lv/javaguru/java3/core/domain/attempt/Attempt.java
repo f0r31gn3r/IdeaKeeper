@@ -23,24 +23,17 @@ public class Attempt {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long attemptId;
 
-//    @Column(name="user_id", columnDefinition = "int(11)", nullable = false)
-//    //@Column(name="user_id", nullable = false)
-//    private Long userId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
 
     @Column(name="login", columnDefinition = "CHAR(50)")
-    //@Column(name="login")
     private String login;
 
     @Column(name="attempts_count", columnDefinition = "int(1)")
-    //@Column(name="attempts_count")
     private int attempts;
 
     @Column(name = "last_modified", columnDefinition="DATETIME")
-    //@Column(name = "last_modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
 
@@ -51,16 +44,6 @@ public class Attempt {
     public void setAttemptId(Long attemptId) {
         this.attemptId = attemptId;
     }
-
-//    public Long getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Long userId) {
-//        this.userId = userId;
-//    }
-
-
 
     public String getLogin() {
         return login;
@@ -93,7 +76,5 @@ public class Attempt {
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
-
-
 
 }

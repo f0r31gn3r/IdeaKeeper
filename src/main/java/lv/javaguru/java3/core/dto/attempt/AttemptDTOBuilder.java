@@ -8,8 +8,6 @@ public class AttemptDTOBuilder {
 
 	private Long attemptId;
 
-	//private Long userId;
-
 	private String login;
 
 	private int attempts;
@@ -26,7 +24,6 @@ public class AttemptDTOBuilder {
 		AttemptDTO attempt = new AttemptDTO();
 
 		attempt.setAttemptId(attemptId);
-		//attempt.setUserId(userId);
 		attempt.setLogin(login);
 		attempt.setAttempts(attempts);
 		attempt.setLastModified(lastModified);
@@ -36,16 +33,13 @@ public class AttemptDTOBuilder {
 
 	public AttemptDTOBuilder withId(Long id) {
 		this.attemptId = id;
-		this.user = user;
 		return this;
 	}
 
 	public AttemptDTOBuilder withAll(String login, int attempts, Date lastModified) {
-		//this.userId = userId;
 		this.login = login;
 		this.attempts = attempts;
 		this.lastModified = lastModified;
-		this.user = user;
 		return this;
 	}
 

@@ -9,8 +9,6 @@ public class AttemptDTO implements Serializable{
 
 	private Long attemptId;
 
-	//private Long userId;
-
 	private String login;
 
 	private int attempts;
@@ -26,14 +24,6 @@ public class AttemptDTO implements Serializable{
 	public void setAttemptId(Long attemptId) {
 		this.attemptId = attemptId;
 	}
-
-//	public Long getUserId() {
-//		return userId;
-//	}
-//
-//	public void setUserId(Long userId) {
-//		this.userId = userId;
-//	}
 
 	public String getLogin() {
 		return login;
@@ -66,8 +56,4 @@ public class AttemptDTO implements Serializable{
 	public void setUser(UserDTO user) {
 		this.user = user;
 	}
-
-
-
-
 }

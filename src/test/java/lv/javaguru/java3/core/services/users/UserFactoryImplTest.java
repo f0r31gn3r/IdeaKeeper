@@ -33,8 +33,6 @@ public class UserFactoryImplTest {
     private static final String EMAIL = "email@email.lv";
     private static final String ACCESSLEVEL = AccessLevel.USER.name();
 
-
-
     @Test
     public void createShouldInvokeValidator() {
         userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);

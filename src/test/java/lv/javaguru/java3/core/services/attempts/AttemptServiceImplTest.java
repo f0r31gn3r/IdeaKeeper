@@ -22,7 +22,6 @@ import static org.mockito.Mockito.inOrder;
 @RunWith(MockitoJUnitRunner.class)
 public class AttemptServiceImplTest {
 
-    //@Mock private AttemptValidator attemptValidator;
     @Mock private AttemptDAO attemptDAO;
 
     @InjectMocks
@@ -30,7 +29,6 @@ public class AttemptServiceImplTest {
     @InjectMocks
     private AttemptService attemptService = new AttemptServiceImpl();
 
-    private static final Long USERID = 5L;
     private static final String LOGIN = "login";
     private static final int ATTEMPTS = 1;
     private static final Date LASTMOD = new Date();

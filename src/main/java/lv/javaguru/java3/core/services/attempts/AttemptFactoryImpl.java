@@ -16,22 +16,17 @@ import static lv.javaguru.java3.core.domain.attempt.AttemptBuilder.createAttempt
 
 @Component
 public
-//class AttemptFactoryImpl extends DaoAuthenticationProvider implements AttemptFactory {
 class AttemptFactoryImpl implements AttemptFactory {
 
-
-    //@Autowired private AttemptValidator attemptValidator;
     @Autowired private AttemptDAO attemptDAO;
 
     @Override
     public Attempt create(String login, int attempts,	Date lastModified) {
-        //attemptValidator
         Attempt attempt = createAttempt()
                 .withAll(login, attempts, lastModified)
                 .build();
         attemptDAO.create(attempt);
         return attempt;
     }
-
 }
 

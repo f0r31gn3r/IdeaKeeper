@@ -8,9 +8,8 @@ import java.util.Date;
 
 
 public class AttemptBuilder {
-    private Long attemptId;
 
-    //private Long userId;
+    private Long attemptId;
 
     private String login;
 
@@ -26,7 +25,6 @@ public class AttemptBuilder {
         Attempt attempt = new Attempt();
 
         attempt.setAttemptId(attemptId);
-        //attempt.setUserId(userId);
         attempt.setLogin(login);
         attempt.setAttempts(attempts);
         attempt.setLastModified(lastModified);
@@ -34,7 +32,6 @@ public class AttemptBuilder {
     }
 
     public AttemptBuilder withAll(String login, int attempts, Date lastModified) {
-        //this.userId = userId;
         this.login = login;
         this.attempts = attempts;
         this.lastModified = lastModified;

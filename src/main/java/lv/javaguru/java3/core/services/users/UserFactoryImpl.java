@@ -32,8 +32,6 @@ public class UserFactoryImpl implements UserFactory {
         } else {
             return null;
         }
-
     }
-
 }
 

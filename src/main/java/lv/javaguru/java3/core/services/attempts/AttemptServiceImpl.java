@@ -22,12 +22,9 @@ public class AttemptServiceImpl implements AttemptService {
     }
 
     @Autowired private AttemptDAO attemptDAO;
-    //@Autowired private AttemptValidator attemptValidator;
-
 
     @Override
     public Attempt update(Long attemptId, String newLogin, int newAttempts,	Date newLastModified) {
-        //attemptValidator.validate();
         Attempt attempt = get(attemptId);
         attempt.setLogin(newLogin);
         attempt.setAttempts(newAttempts);
@@ -45,7 +42,6 @@ public class AttemptServiceImpl implements AttemptService {
     public Attempt get(String userLogin) {
         return attemptDAO.getAttemptByUserLogin(userLogin);
     }
-
 
     @Override
     public Attempt updateFailAttempts(Attempt userAttempt) {

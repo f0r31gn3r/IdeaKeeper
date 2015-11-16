@@ -8,5 +8,4 @@ import lv.javaguru.java3.core.domain.idea.Idea;
 
 public interface IdeaDAO extends CRUDOperationDAO<Idea, Long>{
 
-    //List<Idea> getIdeasByUserId(Long userId);
 }

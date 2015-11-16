@@ -29,7 +29,7 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
     private static final String PASSWORD = "password";
     private static final String NAME = "name";
     private static final String SURNAME = "surname";
-    private static final String EMAIL = "email";
+    private static final String EMAIL = "email@email.lv";
     private static final String ACCESSLEVEL = AccessLevel.USER.name();
 
     private DatabaseCleaner databaseCleaner = new DatabaseCleaner();

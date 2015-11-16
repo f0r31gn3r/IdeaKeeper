@@ -7,7 +7,6 @@ import lv.javaguru.java3.core.dto.attempt.AttemptDTO;
  * Created by Anna on 02.11.2015.
  */
 
-
 public class GetAttemptResult implements DomainCommandResult {
     private AttemptDTO attempt;
 

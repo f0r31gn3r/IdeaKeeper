@@ -63,7 +63,6 @@ public class UserBuilder {
         return this;
     }
 
-    //Added!!!
     public UserBuilder withAll(String login, String password, String name, String surname, String email, String accessLevel) {
         this.login = login;
         this.password = password;

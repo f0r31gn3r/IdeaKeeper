@@ -16,11 +16,8 @@ import org.springframework.stereotype.Component;
 class CreateAttemptCommandHandler
         implements DomainCommandHandler<CreateAttemptCommand, CreateAttemptResult> {
 
-    @Autowired
-    private AttemptFactory attemptFactory;
-    @Autowired
-    private AttemptConverter attemptConverter;
-
+    @Autowired  private AttemptFactory attemptFactory;
+    @Autowired  private AttemptConverter attemptConverter;
 
     @Override
     public CreateAttemptResult execute(CreateAttemptCommand command) {

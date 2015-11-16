@@ -20,47 +20,30 @@ public class User {
 //    @Column(name="user_id", nullable = false)
 
     @Id
-    //@Column(name="user_id",columnDefinition = "int(11)")
     @Column(name="user_id", columnDefinition = "int(11)")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
     @Column(name="login", columnDefinition = "CHAR(50)")
-    //@Column(name="login")
     private String login;
 
     @Column(name="password", columnDefinition = "CHAR(150)")
-    //@Column(name="password")
     private String password;
 
     @Column(name="name", columnDefinition = "CHAR(50)")
-    //@Column(name="name")
     private String name;
 
     @Column(name="surname", columnDefinition = "CHAR(50)")
-    //@Column(name="surname")
     private String surname;
 
     @Column(name="email", columnDefinition = "CHAR(50)")
-    //@Column(name="email")
     private String email;
 
     @Column(name="access_level", columnDefinition = "CHAR(50)")
-    //@Column(name="access_level")
     private String accessLevel;
-
-//    @OneToMany(mappedBy = "ideaId", fetch = FetchType.EAGER,
-//            cascade = CascadeType.REMOVE, orphanRemoval = true)
-
-   // @OneToMany(mappedBy = "ideaId", fetch = FetchType.EAGER,
-   //        cascade = CascadeType.REMOVE, orphanRemoval = true)
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Idea> ideas;
-
-//    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY,
-//            cascade = CascadeType.REMOVE, orphanRemoval = true)
-//    private List<Activity> activities;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Attempt> attempts;
@@ -129,14 +112,6 @@ public class User {
         this.ideas = ideas;
     }
 
-//    public List<Activity> getActivities() {
-//        return activities;
-//    }
-//
-//    public void setActivities(List<Activity> activities) {
-//        this.activities = activities;
-//    }
-//
     public Set<Attempt> getAttempts() {
         return attempts;
     }
