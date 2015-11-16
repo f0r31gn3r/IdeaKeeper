@@ -26,11 +26,10 @@ public class AttemptServiceImpl implements AttemptService {
 
 
     @Override
-    public Attempt update(Long attemptId, Long newUserId, String newLogin, int newAttempts,	Date newLastModified) {
+    public Attempt update(Long attemptId, String newLogin, int newAttempts,	Date newLastModified) {
         //attemptValidator.validate();
         Attempt attempt = get(attemptId);
         attempt.setLogin(newLogin);
-        attempt.setUserId(newUserId);
         attempt.setAttempts(newAttempts);
         attempt.setLastModified(newLastModified);
         attemptDAO.update(attempt);

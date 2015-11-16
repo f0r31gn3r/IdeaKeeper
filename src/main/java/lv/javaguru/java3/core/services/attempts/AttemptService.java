@@ -12,7 +12,7 @@ import java.util.Date;;
 
 public interface AttemptService {
 
-    Attempt update(Long attemptId, Long userId, String login, int attempts,	Date lastModified);
+    Attempt update(Long attemptId, String login, int attempts,	Date lastModified);
 
     Attempt get(Long attemptId);
 

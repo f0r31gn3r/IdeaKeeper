@@ -1,19 +1,23 @@
 package lv.javaguru.java3.core.dto.attempt;
 
+import lv.javaguru.java3.core.dto.user.UserDTO;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class AttemptDTO implements Serializable{
-	
-	 private Long attemptId;
 
-	 private Long userId;
+	private Long attemptId;
 
-	 private String login;
+	//private Long userId;
 
-	 private int attempts;
+	private String login;
 
-	 private Date lastModified;
+	private int attempts;
+
+	private Date lastModified;
+
+	private UserDTO user;
 
 	public Long getAttemptId() {
 		return attemptId;
@@ -23,13 +27,13 @@ public class AttemptDTO implements Serializable{
 		this.attemptId = attemptId;
 	}
 
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+//	public Long getUserId() {
+//		return userId;
+//	}
+//
+//	public void setUserId(Long userId) {
+//		this.userId = userId;
+//	}
 
 	public String getLogin() {
 		return login;
@@ -54,7 +58,16 @@ public class AttemptDTO implements Serializable{
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
 	}
-	 
-	 
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+
+
+
 
 }

@@ -11,6 +11,6 @@ import java.util.Date;
 
 public interface AttemptFactory {
 
-    Attempt create(Long userId, String login, int attempts,	Date lastModified);
+    Attempt create(String login, int attempts,	Date lastModified);
 
 }

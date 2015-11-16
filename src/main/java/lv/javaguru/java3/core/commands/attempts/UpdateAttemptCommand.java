@@ -12,17 +12,14 @@ public class UpdateAttemptCommand implements DomainCommand<UpdateAttemptResult> 
 
     private Long attemptId;
 
-    private Long userId;
-
     private String login;
 
     private int attempts;
 
     private Date lastModified;
 
-    public UpdateAttemptCommand(Long attemptId, Long userId, String login, int attempts, Date lastModified) {
+    public UpdateAttemptCommand(Long attemptId, String login, int attempts, Date lastModified) {
         this.attemptId = attemptId;
-        this.userId = userId;
         this.login = login;
         this.attempts = attempts;
         this.lastModified = lastModified;
@@ -60,12 +57,5 @@ public class UpdateAttemptCommand implements DomainCommand<UpdateAttemptResult> 
         this.lastModified = lastModified;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
 }

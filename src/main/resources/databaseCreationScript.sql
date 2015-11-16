@@ -65,15 +65,11 @@ DROP TABLE IF EXISTS `attempts` ;
 
 CREATE TABLE IF NOT EXISTS `attempts` (
   `attempt_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) UNSIGNED NOT NULL,
   `login` CHAR(50),
   `attempts_count` int(1),
   `last_modified` datetime,
 
-  PRIMARY KEY (`attempt_id`, `user_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  PRIMARY KEY (`attempt_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -90,3 +86,4 @@ CREATE TABLE IF NOT EXISTS `tasklists` (
   PRIMARY KEY (`tasklist_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+

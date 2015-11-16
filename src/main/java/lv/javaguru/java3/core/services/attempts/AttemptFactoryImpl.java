@@ -24,10 +24,10 @@ class AttemptFactoryImpl implements AttemptFactory {
     @Autowired private AttemptDAO attemptDAO;
 
     @Override
-    public Attempt create(Long userId, String login, int attempts,	Date lastModified) {
+    public Attempt create(String login, int attempts,	Date lastModified) {
         //attemptValidator
         Attempt attempt = createAttempt()
-                .withAll(userId, login, attempts, lastModified)
+                .withAll(login, attempts, lastModified)
                 .build();
         attemptDAO.create(attempt);
         return attempt;

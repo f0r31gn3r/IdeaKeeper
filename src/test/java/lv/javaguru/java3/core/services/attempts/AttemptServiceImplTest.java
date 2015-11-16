@@ -39,10 +39,9 @@ public class AttemptServiceImplTest {
 
     @Test
     public void resetShouldResetFailedAttemptsCount() {
-        Attempt attempt = attemptFactory.create(USERID, LOGIN, ATTEMPTS, LASTMOD);
+        Attempt attempt = attemptFactory.create(LOGIN, ATTEMPTS, LASTMOD);
 
         Attempt modAttempt = attemptService.resetFailAttempts(attempt);
-        assertThat(modAttempt.getUserId(), is(USERID));
         assertThat(modAttempt.getLogin(), is(LOGIN));
         assertThat(modAttempt.getAttempts(), is(0));
         assertThat(modAttempt.getLastModified(), is(new Date()));
@@ -51,10 +50,9 @@ public class AttemptServiceImplTest {
     @Test
     public void updateShouldIncreaseFailedAttemptsCount() {
         Date refreshDate = new Date();
-        Attempt attempt = attemptFactory.create(USERID, LOGIN, ATTEMPTS, LASTMOD);
+        Attempt attempt = attemptFactory.create(LOGIN, ATTEMPTS, LASTMOD);
 
         Attempt modAttempt = attemptService.updateFailAttempts(attempt);
-        assertThat(modAttempt.getUserId(), is(USERID));
         assertThat(modAttempt.getLogin(), is(LOGIN));
         assertThat(modAttempt.getAttempts(), is(ATTEMPTS + 1));
         assertThat(modAttempt.getLastModified(), is(refreshDate));

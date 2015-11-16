@@ -40,9 +40,8 @@ public class AttemptFactoryImplTest {
 
     @Test
     public void createShouldReturnNewClient() {
-        Attempt attempt = attemptFactory.create(USERID, LOGIN, ATTEMPTS, LASTMOD);
+        Attempt attempt = attemptFactory.create(LOGIN, ATTEMPTS, LASTMOD);
 
-        assertThat(attempt.getUserId(), is(USERID));
         assertThat(attempt.getLogin(), is(LOGIN));
         assertThat(attempt.getAttempts(), is(ATTEMPTS));
         assertThat(attempt.getLastModified(), is(LASTMOD));

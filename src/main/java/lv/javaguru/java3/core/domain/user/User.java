@@ -62,9 +62,7 @@ public class User {
 //            cascade = CascadeType.REMOVE, orphanRemoval = true)
 //    private List<Activity> activities;
 
-    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-        @OneToMany(mappedBy = "attemptId", fetch = FetchType.LAZY,
-            cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Attempt> attempts;
 
     public Long getUserId() {

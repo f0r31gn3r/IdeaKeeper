@@ -9,8 +9,6 @@ import java.util.Date;
 
 public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> {
 
-    private Long userId;
-
     private String login;
 
     private int attempts;
@@ -18,24 +16,22 @@ public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> 
     private Date lastModified;
 
 
-    public CreateAttemptCommand(Long userId,
-                                String login,
+    public CreateAttemptCommand(String login,
                                 int attempts,
                                 Date lastModified) {
-        this.userId = userId;
         this.login = login;
         this.attempts = attempts;
         this.lastModified = lastModified;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+//    public Long getUserId() {
+//        return userId;
+//    }
+//
+//
+//    public void setUserId(Long userId) {
+//        this.userId = userId;
+//    }
 
 
     public String getLogin() {
@@ -66,8 +62,4 @@ public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
-
-
-
-
 }

@@ -25,7 +25,6 @@ class CreateAttemptCommandHandler
     @Override
     public CreateAttemptResult execute(CreateAttemptCommand command) {
         Attempt attempt = attemptFactory.create(
-                command.getUserId(),
                 command.getLogin(),
                 command.getAttempts(),
                 command.getLastModified()

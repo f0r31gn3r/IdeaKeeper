@@ -28,7 +28,6 @@ class UpdateAttemptCommandHandler
     public UpdateAttemptResult execute(UpdateAttemptCommand command) {
         Attempt attempt = attemptService.update(
                 command.getAttemptId(),
-                command.getUserId(),
                 command.getLogin(),
                 command.getAttempts(),
                 command.getLastModified()
