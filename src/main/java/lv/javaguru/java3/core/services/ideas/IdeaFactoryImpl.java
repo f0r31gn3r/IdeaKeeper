@@ -6,7 +6,6 @@ package lv.javaguru.java3.core.services.ideas;
 
 import lv.javaguru.java3.core.database.IdeaDAO;
 import lv.javaguru.java3.core.domain.idea.Idea;
-import lv.javaguru.java3.core.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +18,11 @@ class IdeaFactoryImpl implements IdeaFactory {
     @Autowired private IdeaDAO ideaDAO;
 
     @Override
-    public Idea create(String title, String description, User user) {
+    public Idea create(String title, String description) {
         ideaValidator.validate(title, description);
         Idea idea = createIdea()
-                .withTitle(title, user)
-                .withAll(title, description, user)
+                .withTitle(title)
+                .withAll(title, description)
                 .build();
         ideaDAO.create(idea);
         return idea;

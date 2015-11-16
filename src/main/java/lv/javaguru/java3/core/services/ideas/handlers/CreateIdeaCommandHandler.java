@@ -23,8 +23,7 @@ class CreateIdeaCommandHandler
     public CreateIdeaResult execute(CreateIdeaCommand command) {
         Idea idea = ideaFactory.create(
                 command.getTitle(),
-                command.getDescription(),
-                command.getUser()
+                command.getDescription()
         );
         return new CreateIdeaResult(idea);
     }

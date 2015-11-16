@@ -47,7 +47,7 @@ public class IdeaFactoryImplTest {
     @Test
     public void createShouldInvokeValidator() {
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
-        ideaFactory.create(TITLE, DESCRIPTION, user);
+        ideaFactory.create(TITLE, DESCRIPTION);
         verify(ideaValidator).validate(TITLE, DESCRIPTION);
     }
 
@@ -56,13 +56,13 @@ public class IdeaFactoryImplTest {
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
         doThrow(new IllegalArgumentException())
                 .when(ideaValidator).validate(TITLE, DESCRIPTION);
-        ideaFactory.create(TITLE, DESCRIPTION, user);
+        ideaFactory.create(TITLE, DESCRIPTION);
     }
 
     @Test
     public void createShouldPersistUserAfterValidation() {
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
-        Idea idea = ideaFactory.create(TITLE, DESCRIPTION, user);
+        Idea idea = ideaFactory.create(TITLE, DESCRIPTION);
         InOrder inOrder = inOrder(ideaValidator, ideaDAO);
         inOrder.verify(ideaValidator).validate(TITLE, DESCRIPTION);
         inOrder.verify(ideaDAO).create(idea);
@@ -71,7 +71,7 @@ public class IdeaFactoryImplTest {
     @Test
     public void createShouldReturnNewIdea() {
         User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
-        Idea idea = ideaFactory.create(TITLE, DESCRIPTION, user);
+        Idea idea = ideaFactory.create(TITLE, DESCRIPTION);
         assertThat(idea.getTitle(), is(TITLE));
         assertThat(idea.getDescription(), is(DESCRIPTION));
     }

@@ -105,7 +105,7 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
         assertThat(userFromDb, is(notNullValue()));
 
         Idea idea = createIdea()
-                .withAll(TITLE, DESCRIPTION, user)
+                .withAll(TITLE, DESCRIPTION)
                 .build();
         ideaDAO.create(idea);
 

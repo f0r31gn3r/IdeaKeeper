@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static lv.javaguru.java3.core.domain.idea.IdeaBuilder.createIdea;
 import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
 import static org.hamcrest.CoreMatchers.*;
@@ -41,17 +44,21 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testCreateIdeaWithAll() {
         User user = createUser()
-                .withLogPas(LOGIN, PASSWORD)
-                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
-                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .withLogPas("login", "password")
+                .withLogPasNamSur("login", "password", "name", "surname")
+                .withAll("login", "password", "name", "surname", "email", "access")
                 .build();
-        userDAO.create(user);
 
         Idea idea = createIdea()
-                .withTitle(TITLE, user)
-                .withAll(TITLE, DESCRIPTION, user)
+                .withTitle(TITLE)
+                .withAll(TITLE, DESCRIPTION)
                 .build();
-        assertThat(idea.getIdeaId(), is(nullValue()));
+        idea.setUser(user);
+        Set<Idea> userIdeas = new HashSet<Idea>();
+
+        user.setIdeas(userIdeas);
+        user.getIdeas().add(idea);
+        userDAO.create(user);
         ideaDAO.create(idea);
         assertThat(idea.getIdeaId(), is(notNullValue()));
     }
@@ -60,13 +67,21 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testGetIdeaById() {
         User user = createUser()
-                .withLogPas(LOGIN, PASSWORD)
+                .withLogPas("login", "password")
+                .withLogPasNamSur("login", "password", "name", "surname")
+                .withAll("login", "password", "name", "surname", "email", "access")
                 .build();
-        userDAO.create(user);
 
         Idea idea = createIdea()
-                .withAll(TITLE, DESCRIPTION, user)
+                .withTitle(TITLE)
+                .withAll(TITLE, DESCRIPTION)
                 .build();
+        idea.setUser(user);
+        Set<Idea> userIdeas = new HashSet<Idea>();
+
+        user.setIdeas(userIdeas);
+        user.getIdeas().add(idea);
+        userDAO.create(user);
         ideaDAO.create(idea);
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(notNullValue()));
@@ -76,13 +91,21 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testDeleteIdea() {
         User user = createUser()
-                .withLogPas(LOGIN, PASSWORD)
+                .withLogPas("login", "password")
+                .withLogPasNamSur("login", "password", "name", "surname")
+                .withAll("login", "password", "name", "surname", "email", "access")
                 .build();
-        userDAO.create(user);
 
         Idea idea = createIdea()
-                .withAll(TITLE, DESCRIPTION, user)
+                .withTitle(TITLE)
+                .withAll(TITLE, DESCRIPTION)
                 .build();
+        idea.setUser(user);
+        Set<Idea> userIdeas = new HashSet<Idea>();
+
+        user.setIdeas(userIdeas);
+        user.getIdeas().add(idea);
+        userDAO.create(user);
         ideaDAO.create(idea);
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(notNullValue()));
@@ -123,5 +146,6 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
 //
 //        assertThat(userIdeas.size(), is(2));
 //    }
+
 
 }

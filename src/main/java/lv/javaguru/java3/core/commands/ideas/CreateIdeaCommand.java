@@ -10,18 +10,15 @@ public class CreateIdeaCommand implements DomainCommand<CreateIdeaResult> {
 
     private String title;
     private String description;
-    private User user;
 
-    public CreateIdeaCommand(String title, String description, User user) {
+    public CreateIdeaCommand(String title, String description) {
         this.title = title;
         this.description = description;
-        this.user = user;
     }
 
     public CreateIdeaCommand(String title, User user) {
 
         this.title = title;
-        this.user = user;
     }
 
     public String getTitle() {
@@ -32,7 +29,4 @@ public class CreateIdeaCommand implements DomainCommand<CreateIdeaResult> {
         return description;
     }
 
-    public User getUser() {
-        return user;
-    }
 }

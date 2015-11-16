@@ -1,7 +1,5 @@
 package lv.javaguru.java3.core.domain.idea;
 
-import lv.javaguru.java3.core.domain.user.User;
-
 /**
  * Created by Anna on 28.10.2015.
  */
@@ -13,8 +11,6 @@ public class IdeaBuilder {
 
     private String description;
 
-    private User user;
-
     public static IdeaBuilder createIdea() {
         return new IdeaBuilder();
     }
@@ -25,20 +21,17 @@ public class IdeaBuilder {
         idea.setIdeaId(ideaId);
         idea.setTitle(title);
         idea.setDescription(description);
-        idea.setUser(user);
         return idea;
     }
 
-    public IdeaBuilder withTitle(String title, User user) {
+    public IdeaBuilder withTitle(String title) {
         this.title = title;
-        this.user = user;
         return this;
     }
 
-    public IdeaBuilder withAll(String title, String description, User user) {
+    public IdeaBuilder withAll(String title, String description) {
         this.title = title;
         this.description = description;
-        this.user = user;
         return this;
     }
 }
