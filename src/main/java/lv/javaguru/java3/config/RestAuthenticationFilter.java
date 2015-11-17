@@ -1,19 +1,23 @@
-package lv.javaguru.java3.core.services.login;
+package lv.javaguru.java3.config;
 /**
  * Created by Anna on 16.11.2015.
  */
 
+import lv.javaguru.java3.core.services.login.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+	@Configuration
 	public class RestAuthenticationFilter implements javax.servlet.Filter {
 		public static final String AUTHENTICATION_HEADER = "Authorization";
 
-		@Autowired	AuthenticationService authenticationService;
+		@Autowired
+		AuthenticationService authenticationService;
 		@Override
 		public void doFilter(ServletRequest request, ServletResponse response,
 				FilterChain filter) throws IOException, ServletException {

@@ -10,7 +10,6 @@ import java.util.Base64;
 import java.util.StringTokenizer;
 
 @Component
-
 public class AuthenticationService {
 	public boolean authenticate(String authCredentials) {
 
