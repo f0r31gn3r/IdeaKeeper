@@ -45,5 +45,16 @@ public class UserServiceImpl implements UserService {
         return userDAO.getUserByLogin(login);
     }
 
+    @Override
+    public int delete(Long userId) {
+        User user = get(userId);
+        if(user != null){
+            userDAO.delete(user);
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
 }
 

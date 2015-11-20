@@ -18,4 +18,7 @@ public interface UserService {
     User get(Long userId);
 
     User get(String login);
+
+    int delete(Long userId);
+
 }

@@ -6,8 +6,8 @@ package lv.javaguru.java3.core.database.attempts;
 
 import lv.javaguru.java3.core.database.DatabaseCleaner;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
+import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +25,14 @@ import static org.junit.Assert.assertThat;
 public class AttemptDAOImplTest extends DatabaseHibernateTest {
 
     private  SimpleDateFormat sdf =  new SimpleDateFormat ("dd.MM.yyyy hh:mm:ss");
-
     private DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
+    private static final String NAME = "name";
+    private static final String SURNAME = "surname";
+    private static final String EMAIL = "email@email.lv";
+    private static final String ACCESSLEVEL = AccessLevel.USER.name();
 
     @Before
     public void setUp() throws Exception {
@@ -38,13 +44,19 @@ public class AttemptDAOImplTest extends DatabaseHibernateTest {
     public void testCreateAttempt() {
 
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogin(LOGIN)
+                .withPassword(PASSWORD)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withAccessLevel(ACCESSLEVEL)
                 .build();
 
         Attempt attempt = createAttempt()
-                .withAll("login", 3, new Date())
+                .withLogin(user.getLogin())
+                .withAttempts(2)
+                .withDate(new Date())
+                .withUser(user)
                 .build();
 
         attempt.setUser(user);
@@ -60,13 +72,19 @@ public class AttemptDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testGetAttemptById() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogin(LOGIN)
+                .withPassword(PASSWORD)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withAccessLevel(ACCESSLEVEL)
                 .build();
 
         Attempt attempt = createAttempt()
-                .withAll("login", 3, new Date())
+                .withLogin(user.getLogin())
+                .withAttempts(2)
+                .withDate(new Date())
+                .withUser(user)
                 .build();
 
         attempt.setUser(user);
@@ -83,13 +101,19 @@ public class AttemptDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testDeleteAttempt() {
         User user = createUser()
-                .withLogPas("login", "password")
-                .withLogPasNamSur("login", "password", "name", "surname")
-                .withAll("login", "password", "name", "surname", "email", "access")
+                .withLogin(LOGIN)
+                .withPassword(PASSWORD)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withAccessLevel(ACCESSLEVEL)
                 .build();
 
         Attempt attempt = createAttempt()
-                .withAll("login", 3, new Date())
+                .withLogin(user.getLogin())
+                .withAttempts(2)
+                .withDate(new Date())
+                .withUser(user)
                 .build();
 
         attempt.setUser(user);

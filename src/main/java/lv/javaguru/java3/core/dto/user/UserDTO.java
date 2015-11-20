@@ -3,20 +3,20 @@ package lv.javaguru.java3.core.dto.user;
 import java.io.Serializable;
 
 public class UserDTO implements Serializable{
-	
-    private Long userId;
 
-    private String login;
+	private Long userId;
 
-    private String password;
-    
-    private String name;
+	private String login;
 
-    private String surname;
+	private String password;
 
-    private String email;
+	private String name;
 
-    private String accessLevel;
+	private String surname;
+
+	private String email;
+
+	private String accessLevel;
 
 	public Long getUserId() {
 		return userId;

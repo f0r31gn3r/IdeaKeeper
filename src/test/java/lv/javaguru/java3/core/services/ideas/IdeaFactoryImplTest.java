@@ -4,9 +4,8 @@ import lv.javaguru.java3.core.database.IdeaDAO;
 import lv.javaguru.java3.core.database.UserDAO;
 import lv.javaguru.java3.core.domain.idea.Idea;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
-import lv.javaguru.java3.core.services.users.UserFactory;
-import lv.javaguru.java3.core.services.users.UserFactoryImpl;
-import lv.javaguru.java3.core.services.users.UserValidator;
+import lv.javaguru.java3.core.domain.user.User;
+import lv.javaguru.java3.core.services.users.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -28,9 +27,12 @@ public class IdeaFactoryImplTest {
     @Mock   private UserValidator userValidator;
     @Mock   private IdeaDAO ideaDAO;
     @Mock   private UserDAO userDAO;
+    //@Mock   private UserService userService;
+
 
     @InjectMocks    private IdeaFactory ideaFactory = new IdeaFactoryImpl();
     @InjectMocks    private UserFactory userFactory = new UserFactoryImpl();
+
 
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
@@ -43,28 +45,43 @@ public class IdeaFactoryImplTest {
 
     @Test
     public void createShouldInvokeValidator() {
-        ideaFactory.create(TITLE, DESCRIPTION);
+        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
+        doReturn(user)
+                .when(userDAO).getById(user.getUserId());
+        ideaFactory.create(TITLE, DESCRIPTION, user.getUserId());
         verify(ideaValidator).validate(TITLE, DESCRIPTION);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void createShouldFailIfValidationFail() {
+        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
+        doReturn(user)
+                .when(userDAO).getById(user.getUserId());
         doThrow(new IllegalArgumentException())
                 .when(ideaValidator).validate(TITLE, DESCRIPTION);
-        ideaFactory.create(TITLE, DESCRIPTION);
+        ideaFactory.create(TITLE, DESCRIPTION, user.getUserId());
     }
 
     @Test
-    public void createShouldPersistUserAfterValidation() {
-        Idea idea = ideaFactory.create(TITLE, DESCRIPTION);
-        InOrder inOrder = inOrder(ideaValidator, ideaDAO);
+    public void createShouldPersistIdeaAfterValidation() {
+        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
+        doReturn(user)
+                .when(userDAO).getById(user.getUserId());
+
+        Idea idea = ideaFactory.create(TITLE, DESCRIPTION, user.getUserId());
+        InOrder inOrder = inOrder( ideaValidator, ideaDAO);
+
+        //inOrder.verify(userDAO.getById(user.getUserId()));
         inOrder.verify(ideaValidator).validate(TITLE, DESCRIPTION);
         inOrder.verify(ideaDAO).create(idea);
     }
 
     @Test
     public void createShouldReturnNewIdea() {
-        Idea idea = ideaFactory.create(TITLE, DESCRIPTION);
+        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
+        doReturn(user)
+                .when(userDAO).getById(user.getUserId());
+        Idea idea = ideaFactory.create(TITLE, DESCRIPTION, user.getUserId());
         assertThat(idea.getTitle(), is(TITLE));
         assertThat(idea.getDescription(), is(DESCRIPTION));
     }

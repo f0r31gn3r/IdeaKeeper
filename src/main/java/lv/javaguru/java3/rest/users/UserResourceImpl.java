@@ -1,23 +1,14 @@
 package lv.javaguru.java3.rest.users;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-
+import lv.javaguru.java3.core.commands.users.*;
+import lv.javaguru.java3.core.dto.user.UserDTO;
+import lv.javaguru.java3.core.services.CommandExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lv.javaguru.java3.core.commands.users.CreateUserCommand;
-import lv.javaguru.java3.core.commands.users.CreateUserResult;
-import lv.javaguru.java3.core.commands.users.GetUserCommand;
-import lv.javaguru.java3.core.commands.users.GetUserResult;
-import lv.javaguru.java3.core.dto.user.UserDTO;
-import lv.javaguru.java3.core.services.CommandExecutor;
+import javax.ws.rs.*;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Component
 @Path("/users")
@@ -52,5 +43,30 @@ public class UserResourceImpl {
         GetUserResult result = commandExecutor.execute(command);
         return result.getUser();
     }
+
+    @DELETE
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/{userId}")
+    public int delete(@PathParam("userId") Long userId) {
+        DeleteUserCommand command = new DeleteUserCommand(userId);
+        DeleteUserResult result = commandExecutor.execute(command);
+        return result.getResult();
+    }
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    public UserDTO update(UserDTO userDTO) {
+        UpdateUserCommand command = new UpdateUserCommand(
+                userDTO.getUserId(),
+                userDTO.getLogin(), userDTO.getPassword(),
+                userDTO.getName(), userDTO.getSurname(),
+                userDTO.getEmail(), userDTO.getAccessLevel()
+        );
+        UpdateUserResult result = commandExecutor.execute(command);
+        return result.getUser();
+    }
+
 
 }

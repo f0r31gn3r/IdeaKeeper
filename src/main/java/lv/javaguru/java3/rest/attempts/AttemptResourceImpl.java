@@ -28,8 +28,10 @@ public class AttemptResourceImpl {
     @Produces(APPLICATION_JSON)
     public AttemptDTO create(AttemptDTO attemptDTO) {
         CreateAttemptCommand command = new CreateAttemptCommand(
-        		attemptDTO.getLogin(),
-        		attemptDTO.getAttempts(), attemptDTO.getLastModified()
+                attemptDTO.getLogin(),
+                attemptDTO.getAttempts(),
+                attemptDTO.getLastModified(),
+                attemptDTO.getUserDTO().getUserId()
         );
         CreateAttemptResult result = commandExecutor.execute(command);
         return result.getAttempt();

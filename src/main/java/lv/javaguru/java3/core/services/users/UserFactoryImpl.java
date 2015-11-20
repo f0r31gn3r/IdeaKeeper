@@ -22,10 +22,13 @@ public class UserFactoryImpl implements UserFactory {
         userValidator.validate(login, password, name, surname, email, accessLevel);
         if(userDAO.getUserByLogin(login) == null){
             User user = createUser()
-                .withLogPas(login, password)
-                .withLogPasNamSur(login, password, name, surname)
-                .withAll(login, password, name, surname, email, accessLevel)
-                .build();
+                    .withLogin(login)
+                    .withPassword(password)
+                    .withName(name)
+                    .withSurname(surname)
+                    .withEmail(email)
+                    .withAccessLevel(accessLevel)
+                    .build();
 
             userDAO.create(user);
             return user;

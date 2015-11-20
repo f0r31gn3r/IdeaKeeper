@@ -15,7 +15,7 @@ public class AttemptDTO implements Serializable{
 
 	private Date lastModified;
 
-	private UserDTO user;
+	private UserDTO userDTO;
 
 	public Long getAttemptId() {
 		return attemptId;
@@ -49,11 +49,11 @@ public class AttemptDTO implements Serializable{
 		this.lastModified = lastModified;
 	}
 
-	public UserDTO getUser() {
-		return user;
+	public UserDTO getUserDTO() {
+		return userDTO;
 	}
 
-	public void setUser(UserDTO user) {
-		this.user = user;
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 }

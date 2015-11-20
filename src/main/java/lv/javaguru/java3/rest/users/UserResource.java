@@ -7,7 +7,7 @@ import javax.ws.rs.*;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public interface UserResource {
-	
+
 
     @POST
     @Consumes(APPLICATION_JSON)
@@ -21,10 +21,17 @@ public interface UserResource {
     @Path("/users/{userId}")
     UserDTO get(@PathParam("userId") Long userId);
 
-    @GET
+    @DELETE
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/users/{login}")
-    UserDTO getByLogin(@PathParam("login") Long userId);
-    
+    @Path("/users/{userId}")
+    int delete(@PathParam("userId") Long userId);
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/users")
+    UserDTO update(UserDTO userDTO);
+
+
 }

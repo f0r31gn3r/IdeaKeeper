@@ -24,7 +24,7 @@ public class Attempt {
     private Long attemptId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name="login", columnDefinition = "CHAR(50)")

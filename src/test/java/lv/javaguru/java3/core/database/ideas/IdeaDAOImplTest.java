@@ -44,14 +44,18 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testCreateIdeaWithAll() {
         User user = createUser()
-                .withLogPas(LOGIN, PASSWORD)
-                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
-                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .withLogin(LOGIN)
+                .withPassword(PASSWORD)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withAccessLevel(ACCESSLEVEL)
                 .build();
 
         Idea idea = createIdea()
                 .withTitle(TITLE)
-                .withAll(TITLE, DESCRIPTION)
+                .withDescription(DESCRIPTION)
+                .withUser(user)
                 .build();
         idea.setUser(user);
         Set<Idea> userIdeas = new HashSet<Idea>();
@@ -67,14 +71,18 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testGetIdeaById() {
         User user = createUser()
-                .withLogPas(LOGIN, PASSWORD)
-                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
-                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .withLogin(LOGIN)
+                .withPassword(PASSWORD)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withAccessLevel(ACCESSLEVEL)
                 .build();
 
         Idea idea = createIdea()
                 .withTitle(TITLE)
-                .withAll(TITLE, DESCRIPTION)
+                .withDescription(DESCRIPTION)
+                .withUser(user)
                 .build();
         idea.setUser(user);
         Set<Idea> userIdeas = new HashSet<Idea>();
@@ -91,14 +99,18 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Transactional
     public void testDeleteIdea() {
         User user = createUser()
-                .withLogPas(LOGIN, PASSWORD)
-                .withLogPasNamSur(LOGIN, PASSWORD, NAME, SURNAME)
-                .withAll(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL)
+                .withLogin(LOGIN)
+                .withPassword(PASSWORD)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withAccessLevel(ACCESSLEVEL)
                 .build();
 
         Idea idea = createIdea()
                 .withTitle(TITLE)
-                .withAll(TITLE, DESCRIPTION)
+                .withDescription(DESCRIPTION)
+                .withUser(user)
                 .build();
         idea.setUser(user);
         Set<Idea> userIdeas = new HashSet<Idea>();
@@ -113,4 +125,5 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
         ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(nullValue()));
     }
+
 }

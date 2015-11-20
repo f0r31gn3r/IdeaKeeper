@@ -15,12 +15,16 @@ public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> 
 
     private Date lastModified;
 
+    private Long userId;
+
     public CreateAttemptCommand(String login,
                                 int attempts,
-                                Date lastModified) {
+                                Date lastModified,
+                                Long userId) {
         this.login = login;
         this.attempts = attempts;
         this.lastModified = lastModified;
+        this.userId = userId;
     }
 
     public String getLogin() {
@@ -45,5 +49,13 @@ public class CreateAttemptCommand implements DomainCommand<CreateAttemptResult> 
 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

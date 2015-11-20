@@ -5,6 +5,7 @@ package lv.javaguru.java3.core.services.attempts;
  */
 
 import lv.javaguru.java3.core.database.AttemptDAO;
+import lv.javaguru.java3.core.database.UserDAO;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,14 +20,23 @@ public
 class AttemptFactoryImpl implements AttemptFactory {
 
     @Autowired private AttemptDAO attemptDAO;
+    @Autowired private UserDAO userDAO;
 
     @Override
-    public Attempt create(String login, int attempts,	Date lastModified) {
-        Attempt attempt = createAttempt()
-                .withAll(login, attempts, lastModified)
-                .build();
-        attemptDAO.create(attempt);
-        return attempt;
+    public Attempt create(String login, int attempts, Date lastModified, Long userId) {
+        if(userDAO.getById(userId) != null){
+            Attempt attempt = createAttempt()
+                    .withLogin(login)
+                    .withAttempts(attempts)
+                    .withDate(lastModified)
+                    .withUser(userDAO.getById(userId))
+                    .build();
+            attemptDAO.create(attempt);
+            return attempt;
+        } else {
+            return null;
+        }
+
     }
 }
 

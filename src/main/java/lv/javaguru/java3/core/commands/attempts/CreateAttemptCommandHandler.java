@@ -24,10 +24,11 @@ class CreateAttemptCommandHandler
         Attempt attempt = attemptFactory.create(
                 command.getLogin(),
                 command.getAttempts(),
-                command.getLastModified()
+                command.getLastModified(),
+                command.getUserId()
         );
         AttemptDTO attemptDTO = attemptConverter.convert(attempt);
-		return new CreateAttemptResult(attemptDTO);    }
+        return new CreateAttemptResult(attemptDTO);    }
 
     @Override
     public Class getCommandType() {

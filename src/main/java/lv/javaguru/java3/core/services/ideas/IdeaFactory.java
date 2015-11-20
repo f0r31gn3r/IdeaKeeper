@@ -7,6 +7,6 @@ import lv.javaguru.java3.core.domain.idea.Idea;
  */
 public interface IdeaFactory {
 
-    Idea create(String title, String description);
+    Idea create(String title, String description, Long userId);
 
 }

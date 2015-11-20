@@ -49,26 +49,37 @@ public class UserBuilder {
         return user;
     }
 
-    public UserBuilder withLogPas(String login, String password) {
+    public UserBuilder withId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public UserBuilder withLogin(String login) {
         this.login = login;
+        return this;
+    }
+
+    public UserBuilder withPassword(String password) {
         this.password = password;
         return this;
     }
 
-    public UserBuilder withLogPasNamSur(String login, String password, String name, String surname) {
-        this.login = login;
-        this.password = password;
+    public UserBuilder withName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public UserBuilder withSurname (String surname) {
         this.surname = surname;
         return this;
     }
 
-    public UserBuilder withAll(String login, String password, String name, String surname, String email, String accessLevel) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
+    public UserBuilder withEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public UserBuilder withAccessLevel(String accessLevel) {
         this.accessLevel = accessLevel;
         return this;
     }

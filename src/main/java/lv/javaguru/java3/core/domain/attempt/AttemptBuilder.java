@@ -1,5 +1,7 @@
 package lv.javaguru.java3.core.domain.attempt;
 
+import lv.javaguru.java3.core.domain.user.User;
+
 import java.util.Date;
 
 /**
@@ -17,6 +19,8 @@ public class AttemptBuilder {
 
     private Date lastModified;
 
+    private User user;
+
     public static AttemptBuilder createAttempt() {
         return new AttemptBuilder();
     }
@@ -28,13 +32,33 @@ public class AttemptBuilder {
         attempt.setLogin(login);
         attempt.setAttempts(attempts);
         attempt.setLastModified(lastModified);
+        attempt.setUser(user);
+
         return attempt;
     }
 
-    public AttemptBuilder withAll(String login, int attempts, Date lastModified) {
+    public AttemptBuilder withId(Long attemptId) {
+        this.attemptId = attemptId;
+        return this;
+    }
+
+    public AttemptBuilder withLogin(String login) {
         this.login = login;
+        return this;
+    }
+
+    public AttemptBuilder withAttempts(int attempts) {
         this.attempts = attempts;
+        return this;
+    }
+
+    public AttemptBuilder withDate(Date lastModified) {
         this.lastModified = lastModified;
+        return this;
+    }
+
+    public AttemptBuilder withUser(User user) {
+        this.user = user;
         return this;
     }
 }

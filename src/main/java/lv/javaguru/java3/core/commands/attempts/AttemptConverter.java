@@ -15,7 +15,10 @@ public class AttemptConverter {
     public AttemptDTO convert(Attempt attempt) {
         return createAttemptDTO()
                 .withId(attempt.getAttemptId())
-                .withAll(attempt.getLogin(), attempt.getAttempts(), attempt.getLastModified())
+                .withLogin(attempt.getLogin())
+                .withAttempts(attempt.getAttempts())
+                .withDate(attempt.getLastModified())
+                .withUser(attempt.getUser())
                 .build();
     }
 }

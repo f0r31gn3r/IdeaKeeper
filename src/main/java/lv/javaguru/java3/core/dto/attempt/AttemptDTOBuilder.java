@@ -1,5 +1,6 @@
 package lv.javaguru.java3.core.dto.attempt;
 
+import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 
 import java.util.Date;
@@ -14,7 +15,9 @@ public class AttemptDTOBuilder {
 
 	private Date lastModified;
 
-	private UserDTO user;
+	private User user;
+
+	private UserDTO userDTO;
 
 	public static AttemptDTOBuilder createAttemptDTO() {
 		return new AttemptDTOBuilder();
@@ -27,19 +30,37 @@ public class AttemptDTOBuilder {
 		attempt.setLogin(login);
 		attempt.setAttempts(attempts);
 		attempt.setLastModified(lastModified);
-		attempt.setUser(user);
+		attempt.setUserDTO(userDTO);
 		return attempt;
 	}
 
-	public AttemptDTOBuilder withId(Long id) {
-		this.attemptId = id;
+	public AttemptDTOBuilder withId(Long attemptId) {
+		this.attemptId = attemptId;
 		return this;
 	}
 
-	public AttemptDTOBuilder withAll(String login, int attempts, Date lastModified) {
+	public AttemptDTOBuilder withLogin(String login) {
 		this.login = login;
+		return this;
+	}
+
+	public AttemptDTOBuilder withAttempts(int attempts) {
 		this.attempts = attempts;
+		return this;
+	}
+
+	public AttemptDTOBuilder withDate(Date lastModified) {
 		this.lastModified = lastModified;
+		return this;
+	}
+
+	public AttemptDTOBuilder withUser(User user) {
+		this.user = user;
+		return this;
+	}
+
+	public AttemptDTOBuilder withUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 		return this;
 	}
 
