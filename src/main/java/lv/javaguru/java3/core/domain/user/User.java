@@ -42,10 +42,10 @@ public class User {
     @Column(name="access_level", columnDefinition = "CHAR(50)")
     private String accessLevel;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Idea> ideas;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Attempt> attempts;
 
     public Long getUserId() {

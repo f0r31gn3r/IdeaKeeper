@@ -16,6 +16,7 @@ public class ClientResourceImplTest extends RESTResourceTest {
 
     @Test
     public void createClientTest() {
+
         ClientDTO client = clientResource.create(
                 createClientDTO()
                         .withLogin(LOGIN)

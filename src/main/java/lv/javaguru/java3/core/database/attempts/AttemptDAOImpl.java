@@ -9,7 +9,11 @@ import lv.javaguru.java3.core.domain.attempt.Attempt;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+
 @Component
+@Transactional
+
 class AttemptDAOImpl extends CRUDOperationDAOImpl<Attempt, Long> implements AttemptDAO {
 
     @Override

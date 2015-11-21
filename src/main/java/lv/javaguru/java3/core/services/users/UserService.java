@@ -21,4 +21,6 @@ public interface UserService {
 
     int delete(Long userId);
 
+    User blockUser (User user);
+
 }

@@ -10,11 +10,14 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by Anna on 26.10.2015.
  */
 
 @Component
+@Transactional
 public class UserDAOImpl extends CRUDOperationDAOImpl<User, Long> implements UserDAO {
 
     int maxFailedLoginAttempt = 5;
@@ -31,5 +34,13 @@ public class UserDAOImpl extends CRUDOperationDAOImpl<User, Long> implements Use
                 .add(Restrictions
                         .eq("login", login))
                 .uniqueResult();
+
+//        List<User> allUsers = getAll();
+//        for(User u : allUsers){
+//            if(u.getLogin().equals(login)){
+//                return u;
+//            }
+//        }
+//        return null;
     }
 }

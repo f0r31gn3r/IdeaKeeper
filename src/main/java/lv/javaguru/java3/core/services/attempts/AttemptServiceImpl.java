@@ -17,10 +17,6 @@ public class AttemptServiceImpl implements AttemptService {
 
     private static final int MAX_ATTEMPTS = 5;
 
-    public static int getMaxAttempts() {
-        return MAX_ATTEMPTS;
-    }
-
     @Autowired private AttemptDAO attemptDAO;
 
     @Override
@@ -45,19 +41,22 @@ public class AttemptServiceImpl implements AttemptService {
 
     @Override
     public Attempt updateFailAttempts(Attempt userAttempt) {
-        Date refreshDate = new Date();
-        userAttempt.setAttempts(userAttempt.getAttempts() + 1);
-        userAttempt.setLastModified(refreshDate);
-        attemptDAO.update(userAttempt);
-        return userAttempt;
+//        Date refreshDate = new Date();
+//        userAttempt.setAttempts(userAttempt.getAttempts() + 1);
+//        userAttempt.setLastModified(refreshDate);
+//        attemptDAO.update(userAttempt);
+//        return userAttempt;
+        return update(userAttempt.getAttemptId(), userAttempt.getLogin(), userAttempt.getAttempts() +1, new Date());
     }
 
     @Override
-    public Attempt resetFailAttempts(Attempt attempt) {
-        attempt.setAttempts(0);
-        attempt.setLastModified(new Date());
-        attemptDAO.update(attempt);
-        return attempt;
+    public Attempt resetFailAttempts(Attempt userAttempt) {
+//        attempt.setAttempts(0);
+//        attempt.setLastModified(new Date());
+//        attemptDAO.update(attempt);
+//        return attempt;
+        return update(userAttempt.getAttemptId(), userAttempt.getLogin(), 0, new Date());
+
     }
 
 }

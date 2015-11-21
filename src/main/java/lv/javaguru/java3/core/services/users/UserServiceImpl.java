@@ -5,6 +5,7 @@ package lv.javaguru.java3.core.services.users;
  */
 
 import lv.javaguru.java3.core.database.UserDAO;
+import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -54,6 +55,11 @@ public class UserServiceImpl implements UserService {
         } else {
             return -1;
         }
+    }
+
+    @Override
+    public User blockUser(User user) {
+        return update(user.getUserId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), AccessLevel.BLOCKED.name());
     }
 
 }
