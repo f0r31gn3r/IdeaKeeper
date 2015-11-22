@@ -33,5 +33,25 @@ public interface UserResource {
     @Path("/users")
     UserDTO update(UserDTO userDTO);
 
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/users/block/{userId}")
+    UserDTO block(@PathParam("userId") Long userId);
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/users/unblock/{userId}")
+    UserDTO unblock(@PathParam("userId") Long userId);
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/users/setvip/{userId}")
+    UserDTO setVip(@PathParam("userId") Long userId);
+
+
+
 
 }

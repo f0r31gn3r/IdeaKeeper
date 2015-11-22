@@ -9,13 +9,14 @@ import lv.javaguru.java3.core.domain.attempt.Attempt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
 @Component
 public class AttemptServiceImpl implements AttemptService {
 
-    private static final int MAX_ATTEMPTS = 5;
+    final long ONE_MINUTE_IN_MILLIS = 60000;
 
     @Autowired private AttemptDAO attemptDAO;
 
@@ -41,22 +42,22 @@ public class AttemptServiceImpl implements AttemptService {
 
     @Override
     public Attempt updateFailAttempts(Attempt userAttempt) {
-//        Date refreshDate = new Date();
-//        userAttempt.setAttempts(userAttempt.getAttempts() + 1);
-//        userAttempt.setLastModified(refreshDate);
-//        attemptDAO.update(userAttempt);
-//        return userAttempt;
-        return update(userAttempt.getAttemptId(), userAttempt.getLogin(), userAttempt.getAttempts() +1, new Date());
+        return update(userAttempt.getAttemptId(), userAttempt.getLogin(), userAttempt.getAttempts() +1, new Date());    }
+
+    @Override
+    public Attempt resetBySuccessfulLogin(Attempt userAttempt) {
+        return update(userAttempt.getAttemptId(), userAttempt.getLogin(), 0, userAttempt.getLastModified());
     }
 
     @Override
-    public Attempt resetFailAttempts(Attempt userAttempt) {
-//        attempt.setAttempts(0);
-//        attempt.setLastModified(new Date());
-//        attemptDAO.update(attempt);
-//        return attempt;
-        return update(userAttempt.getAttemptId(), userAttempt.getLogin(), 0, new Date());
+    public Attempt resetByTime(Attempt userAttempt) {
+        Calendar date = Calendar.getInstance();
+        long t = date.getTimeInMillis();
 
+        if(userAttempt.getLastModified().getTime() < (t-30*ONE_MINUTE_IN_MILLIS) ){
+            userAttempt = update(userAttempt.getAttemptId(), userAttempt.getLogin(), 0, userAttempt.getLastModified());
+        }
+        return userAttempt;
     }
 
 }

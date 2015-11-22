@@ -62,5 +62,16 @@ public class UserServiceImpl implements UserService {
         return update(user.getUserId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), AccessLevel.BLOCKED.name());
     }
 
+    @Override
+    public User unblockUser(User user) {
+        return update(user.getUserId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), AccessLevel.USER.name());
+    }
+
+    @Override
+    public User setStatusVIP(User user) {
+        return update(user.getUserId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), AccessLevel.VIP.name());
+    }
+
+
 }
 

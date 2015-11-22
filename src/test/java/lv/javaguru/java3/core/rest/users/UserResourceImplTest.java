@@ -132,4 +132,64 @@ public class UserResourceImplTest extends RESTResourceTest{
         assertThat(updatedUser.getSurname(), is(NEWSURNAME));
     }
 
+    @Test
+    public void blockUserTest() {
+        UserDTO user = userResource.create(
+                createUserDTO()
+                        .withLogin(LOGIN)
+                        .withPassword(PASSWORD)
+                        .withName(NAME)
+                        .withSurname(SURNAME)
+                        .withEmail(EMAIL)
+                        .withAccessLevel(ACCESSLEVEL)
+                        .build()
+        );
+        assertThat(user, is(notNullValue()));
+        assertThat(user.getUserId(), is(notNullValue()));
+
+        UserDTO updatedUser = userResource.block(user.getUserId());
+
+        assertThat(updatedUser.getAccessLevel(), is(AccessLevel.BLOCKED.name()));
+    }
+
+    @Test
+    public void unblockUserTest() {
+        UserDTO user = userResource.create(
+                createUserDTO()
+                        .withLogin(LOGIN)
+                        .withPassword(PASSWORD)
+                        .withName(NAME)
+                        .withSurname(SURNAME)
+                        .withEmail(EMAIL)
+                        .withAccessLevel(AccessLevel.BLOCKED.name())
+                        .build()
+        );
+        assertThat(user, is(notNullValue()));
+        assertThat(user.getUserId(), is(notNullValue()));
+
+        UserDTO updatedUser = userResource.unblock(user.getUserId());
+
+        assertThat(updatedUser.getAccessLevel(), is(AccessLevel.USER.name()));
+    }
+
+    @Test
+    public void setVipUserTest() {
+        UserDTO user = userResource.create(
+                createUserDTO()
+                        .withLogin(LOGIN)
+                        .withPassword(PASSWORD)
+                        .withName(NAME)
+                        .withSurname(SURNAME)
+                        .withEmail(EMAIL)
+                        .withAccessLevel(AccessLevel.BLOCKED.name())
+                        .build()
+        );
+        assertThat(user, is(notNullValue()));
+        assertThat(user.getUserId(), is(notNullValue()));
+
+        UserDTO updatedUser = userResource.setVip(user.getUserId());
+
+        assertThat(updatedUser.getAccessLevel(), is(AccessLevel.VIP.name()));
+    }
+
 }

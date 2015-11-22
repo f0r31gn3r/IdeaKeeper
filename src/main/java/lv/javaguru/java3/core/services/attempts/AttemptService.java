@@ -20,5 +20,7 @@ public interface AttemptService {
 
     Attempt updateFailAttempts(Attempt attempt);
 
-    Attempt resetFailAttempts(Attempt attempt);
+    Attempt resetBySuccessfulLogin(Attempt attempt);
+
+    Attempt resetByTime(Attempt attempt);
 }

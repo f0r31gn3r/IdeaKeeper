@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static lv.javaguru.java3.core.dto.attempt.AttemptDTOBuilder.createAttemptDTO;
@@ -35,6 +36,11 @@ public class AttemptResourceImplTest extends RESTResourceTest {
     @InjectMocks    private UserFactory userFactory = new UserFactoryImpl();
     @InjectMocks    private AttemptFactory attemptFactory = new AttemptFactoryImpl();
     @Autowired UserConverter userConverter;
+
+    Calendar date = Calendar.getInstance();
+    long t = date.getTimeInMillis();
+    final long ONE_MINUTE_IN_MILLIS = 60000;
+
 
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
@@ -110,6 +116,101 @@ public class AttemptResourceImplTest extends RESTResourceTest {
         AttemptDTO oldAttempt = attemptResource.get(newAttempt.getAttemptId());
         assertThat(newAttempt.getAttemptId(), is(oldAttempt.getAttemptId()));
         assertThat(newAttempt.getLogin(), is(oldAttempt.getLogin()));
+    }
+
+    @Test
+    public void updateFailedAttemptsTest() {
+
+        Date current = new Date();
+
+        UserDTO user = userResource.create(
+                createUserDTO()
+                        .withLogin(LOGIN)
+                        .withPassword(PASSWORD)
+                        .withName(NAME)
+                        .withSurname(SURNAME)
+                        .withEmail(EMAIL)
+                        .withAccessLevel(ACCESSLEVEL)
+                        .build()
+        );
+        assertThat(user, is(notNullValue()));
+        assertThat(user.getUserId(), is(notNullValue()));
+
+        AttemptDTO newAttempt = attemptResource.create(
+                createAttemptDTO()
+                        .withLogin(user.getLogin())
+                        .withAttempts(1)
+                        .withDate(new Date(t-10*ONE_MINUTE_IN_MILLIS))
+                        .withUserDTO(user)
+                        .build()
+        );
+        assertThat(newAttempt, is(notNullValue()));
+        AttemptDTO updatedAttempt = attemptResource.failed(user.getLogin());
+
+        assertThat(updatedAttempt.getAttempts(), is(2));
+        assertThat(updatedAttempt.getLastModified(), is(current));
+    }
+
+    @Test
+    public void resetAttemptsByTimeTest() {
+
+        UserDTO user = userResource.create(
+                createUserDTO()
+                        .withLogin(LOGIN)
+                        .withPassword(PASSWORD)
+                        .withName(NAME)
+                        .withSurname(SURNAME)
+                        .withEmail(EMAIL)
+                        .withAccessLevel(ACCESSLEVEL)
+                        .build()
+        );
+        assertThat(user, is(notNullValue()));
+        assertThat(user.getUserId(), is(notNullValue()));
+
+        AttemptDTO newAttempt = attemptResource.create(
+                createAttemptDTO()
+                        .withLogin(user.getLogin())
+                        .withAttempts(2)
+                        .withDate(new Date(t-50*ONE_MINUTE_IN_MILLIS))
+                        .withUserDTO(user)
+                        .build()
+        );
+        assertThat(newAttempt, is(notNullValue()));
+        AttemptDTO updatedAttempt = attemptResource.resetByTime(user.getLogin());
+
+        assertThat(updatedAttempt.getAttempts(), is(0));
+        assertThat(updatedAttempt.getLastModified(), is(newAttempt.getLastModified()));
+    }
+
+    @Test
+    public void resetAttemptsByLoginTest() {
+
+        UserDTO user = userResource.create(
+                createUserDTO()
+                        .withLogin(LOGIN)
+                        .withPassword(PASSWORD)
+                        .withName(NAME)
+                        .withSurname(SURNAME)
+                        .withEmail(EMAIL)
+                        .withAccessLevel(ACCESSLEVEL)
+                        .build()
+        );
+        assertThat(user, is(notNullValue()));
+        assertThat(user.getUserId(), is(notNullValue()));
+
+        AttemptDTO newAttempt = attemptResource.create(
+                createAttemptDTO()
+                        .withLogin(user.getLogin())
+                        .withAttempts(2)
+                        .withDate(new Date())
+                        .withUserDTO(user)
+                        .build()
+        );
+        assertThat(newAttempt, is(notNullValue()));
+        AttemptDTO updatedAttempt = attemptResource.resetByLogin(user.getLogin());
+
+        assertThat(updatedAttempt.getAttempts(), is(0));
+        assertThat(updatedAttempt.getLastModified(), is(newAttempt.getLastModified()));
     }
 
 }

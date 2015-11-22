@@ -23,4 +23,8 @@ public interface UserService {
 
     User blockUser (User user);
 
+    User unblockUser (User user);
+
+    User setStatusVIP (User user);
+
 }

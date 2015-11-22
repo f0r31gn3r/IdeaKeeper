@@ -61,7 +61,7 @@ package lv.javaguru.java3.core.services.login;
 //
 //            if(userFromDB.getPassword().equals(password)){
 //                if(userAttempt != null){
-//                    attemptService.resetFailAttempts(userAttempt);
+//                    attemptService.resetBySuccessfulLogin(userAttempt);
 //                }
 //                authenticationStatus = true;
 //            } else {

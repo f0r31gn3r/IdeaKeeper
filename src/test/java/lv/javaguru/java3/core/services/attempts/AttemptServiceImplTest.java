@@ -51,7 +51,7 @@ public class AttemptServiceImplTest {
 //    public void resetShouldResetFailedAttemptsCount() {
 //        Attempt attempt = attemptFactory.create(LOGIN, ATTEMPTS, LASTMOD);
 //
-//        Attempt modAttempt = attemptService.resetFailAttempts(attempt);
+//        Attempt modAttempt = attemptService.resetBySuccessfulLogin(attempt);
 //        assertThat(modAttempt.getLogin(), is(LOGIN));
 //        assertThat(modAttempt.getAttempts(), is(0));
 //        assertThat(modAttempt.getLastModified(), is(new Date()));

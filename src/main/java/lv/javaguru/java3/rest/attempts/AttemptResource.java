@@ -1,15 +1,10 @@
 package lv.javaguru.java3.rest.attempts;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-
 import lv.javaguru.java3.core.dto.attempt.AttemptDTO;
+
+import javax.ws.rs.*;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public interface AttemptResource {
 	
@@ -24,5 +19,23 @@ public interface AttemptResource {
     @Produces(APPLICATION_JSON)
     @Path("/attempts/{attemptId}")
     AttemptDTO get(@PathParam("attemptId") Long attemptId);
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/attempts/failed/{userLogin}")
+    AttemptDTO failed(@PathParam("userLogin") String userLogin);
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/attempts/reset_by_time/{userLogin}")
+    AttemptDTO resetByTime(@PathParam("userLogin") String userLogin);
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/attempts/reset_by_login/{userLogin}")
+    AttemptDTO resetByLogin(@PathParam("userLogin") String userLogin);
 
 }

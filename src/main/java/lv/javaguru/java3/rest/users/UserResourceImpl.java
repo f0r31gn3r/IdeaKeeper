@@ -1,8 +1,10 @@
 package lv.javaguru.java3.rest.users;
 
 import lv.javaguru.java3.core.commands.users.*;
+import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 import lv.javaguru.java3.core.services.CommandExecutor;
+import lv.javaguru.java3.core.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,8 @@ public class UserResourceImpl {
     public UserResourceImpl(CommandExecutor commandExecutor) {
         this.commandExecutor = commandExecutor;
     }
+
+    @Autowired  UserService userService;
 
     @POST
     @Consumes(APPLICATION_JSON)
@@ -58,6 +62,63 @@ public class UserResourceImpl {
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
     public UserDTO update(UserDTO userDTO) {
+        UpdateUserCommand command = new UpdateUserCommand(
+                userDTO.getUserId(),
+                userDTO.getLogin(), userDTO.getPassword(),
+                userDTO.getName(), userDTO.getSurname(),
+                userDTO.getEmail(), userDTO.getAccessLevel()
+        );
+        UpdateUserResult result = commandExecutor.execute(command);
+        return result.getUser();
+    }
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/block/{userId}")
+    public UserDTO block(@PathParam("userId") Long userId) {
+        User user = userService.get(userId);
+        user = userService.blockUser(user);
+        UserDTO userDTO = new UserConverter().convert(user);
+
+        UpdateUserCommand command = new UpdateUserCommand(
+                userDTO.getUserId(),
+                userDTO.getLogin(), userDTO.getPassword(),
+                userDTO.getName(), userDTO.getSurname(),
+                userDTO.getEmail(), userDTO.getAccessLevel()
+        );
+        UpdateUserResult result = commandExecutor.execute(command);
+        return result.getUser();
+    }
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/unblock/{userId}")
+    public UserDTO unblock(@PathParam("userId") Long userId) {
+        User user = userService.get(userId);
+        user = userService.unblockUser(user);
+        UserDTO userDTO = new UserConverter().convert(user);
+
+        UpdateUserCommand command = new UpdateUserCommand(
+                userDTO.getUserId(),
+                userDTO.getLogin(), userDTO.getPassword(),
+                userDTO.getName(), userDTO.getSurname(),
+                userDTO.getEmail(), userDTO.getAccessLevel()
+        );
+        UpdateUserResult result = commandExecutor.execute(command);
+        return result.getUser();
+    }
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/setvip/{userId}")
+    public UserDTO setVip(@PathParam("userId") Long userId) {
+        User user = userService.get(userId);
+        user = userService.setStatusVIP(user);
+        UserDTO userDTO = new UserConverter().convert(user);
+
         UpdateUserCommand command = new UpdateUserCommand(
                 userDTO.getUserId(),
                 userDTO.getLogin(), userDTO.getPassword(),
