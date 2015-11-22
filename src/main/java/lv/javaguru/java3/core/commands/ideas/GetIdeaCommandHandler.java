@@ -1,14 +1,10 @@
-package lv.javaguru.java3.core.services.ideas.handlers;
+package lv.javaguru.java3.core.commands.ideas;
 
-import lv.javaguru.java3.core.commands.ideas.GetIdeaCommand;
-import lv.javaguru.java3.core.commands.ideas.GetIdeaResult;
-import lv.javaguru.java3.core.commands.users.GetUserCommand;
-import lv.javaguru.java3.core.commands.users.GetUserResult;
+import lv.javaguru.java3.core.commands.attempts.GetAttemptResult;
 import lv.javaguru.java3.core.domain.idea.Idea;
-import lv.javaguru.java3.core.domain.user.User;
+import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 import lv.javaguru.java3.core.services.DomainCommandHandler;
 import lv.javaguru.java3.core.services.ideas.IdeaService;
-import lv.javaguru.java3.core.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +17,15 @@ class GetIdeaCommandHandler
 
     @Autowired
     private IdeaService ideaService;
+    @Autowired  private IdeaConverter ideaConverter;
+
 
 
     @Override
     public GetIdeaResult execute(GetIdeaCommand command) {
         Idea idea = ideaService.get(command.getIdeaId());
-        return new GetIdeaResult(idea);
+        IdeaDTO ideaDTO = ideaConverter.convert(idea);
+        return new GetIdeaResult(ideaDTO);
     }
 
     @Override

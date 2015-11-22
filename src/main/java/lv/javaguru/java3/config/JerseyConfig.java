@@ -2,6 +2,7 @@ package lv.javaguru.java3.config;
 
 import lv.javaguru.java3.rest.attempts.AttemptResourceImpl;
 import lv.javaguru.java3.rest.clients.ClientResourceImpl;
+import lv.javaguru.java3.rest.ideas.IdeaResourceImpl;
 import lv.javaguru.java3.rest.login.LoginResourceImpl;
 import lv.javaguru.java3.rest.users.UserResourceImpl;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -16,6 +17,8 @@ public class JerseyConfig extends ResourceConfig {
         register(UserResourceImpl.class);
         register(AttemptResourceImpl.class);
         register(LoginResourceImpl.class);
+        register(IdeaResourceImpl.class);
+
 
     }
 

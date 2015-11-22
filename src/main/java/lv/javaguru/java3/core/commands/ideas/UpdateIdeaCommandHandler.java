@@ -1,8 +1,7 @@
-package lv.javaguru.java3.core.services.ideas.handlers;
+package lv.javaguru.java3.core.commands.ideas;
 
-import lv.javaguru.java3.core.commands.ideas.UpdateIdeaCommand;
-import lv.javaguru.java3.core.commands.ideas.UpdateIdeaResult;
 import lv.javaguru.java3.core.domain.idea.Idea;
+import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 import lv.javaguru.java3.core.services.DomainCommandHandler;
 import lv.javaguru.java3.core.services.ideas.IdeaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,8 @@ class UpdateIdeaCommandHandler
     @Autowired
     private IdeaService ideaService;
 
+    @Autowired private IdeaConverter ideaConverter;
+
 
     @Override
     public UpdateIdeaResult execute(UpdateIdeaCommand command) {
@@ -26,7 +27,8 @@ class UpdateIdeaCommandHandler
                 command.getTitle(),
                 command.getDescription()
         );
-        return new UpdateIdeaResult(idea);
+        IdeaDTO ideaDTO = ideaConverter.convert(idea);
+        return new UpdateIdeaResult(ideaDTO);
     }
 
     @Override

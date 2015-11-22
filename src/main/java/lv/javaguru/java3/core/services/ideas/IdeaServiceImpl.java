@@ -15,7 +15,6 @@ public class IdeaServiceImpl implements IdeaService {
     @Autowired private IdeaDAO ideaDAO;
     @Autowired private IdeaValidator ideaValidator;
 
-
     @Override
     public Idea update(Long ideaId,
                        String newTitle,

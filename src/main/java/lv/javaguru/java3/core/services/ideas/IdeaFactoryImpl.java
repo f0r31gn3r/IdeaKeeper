@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import static lv.javaguru.java3.core.domain.idea.IdeaBuilder.createIdea;
 
 @Component
-class IdeaFactoryImpl implements IdeaFactory {
+public class IdeaFactoryImpl implements IdeaFactory {
 
     @Autowired private IdeaValidator ideaValidator;
     @Autowired private IdeaDAO ideaDAO;

@@ -7,6 +7,8 @@ import feign.jaxrs.JAXRSContract;
 import lv.javaguru.java3.config.Application;
 import lv.javaguru.java3.rest.attempts.AttemptResource;
 import lv.javaguru.java3.rest.clients.ClientResource;
+import lv.javaguru.java3.rest.ideas.IdeaResource;
+import lv.javaguru.java3.rest.login.LoginResource;
 import lv.javaguru.java3.rest.users.UserResource;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.io.IOException;
 
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,10 +32,11 @@ public class RESTResourceTest {
     protected ClientResource clientResource;
     protected UserResource userResource;
     protected AttemptResource attemptResource;
-
+    protected LoginResource loginResource;
+    protected IdeaResource ideaResource;
 
     @Before
-    public void init() {
+    public void init() throws IOException {
         String url = "http://localhost:" + port;
 
         clientResource = Feign.builder()
@@ -50,6 +55,18 @@ public class RESTResourceTest {
                 .decoder(new JacksonDecoder())
                 .contract(new JAXRSContract())
                 .target(AttemptResource.class, url);
+
+        loginResource = Feign.builder()
+                .encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder())
+                .contract(new JAXRSContract())
+                .target(LoginResource.class, url);
+
+        ideaResource = Feign.builder()
+                .encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder())
+                .contract(new JAXRSContract())
+                .target(IdeaResource.class, url);
     }
 
 }

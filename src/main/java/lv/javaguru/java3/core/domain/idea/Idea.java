@@ -28,8 +28,8 @@ public class Idea {
     @Column(name="description", columnDefinition = "CHAR(50)")
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Long getIdeaId() {

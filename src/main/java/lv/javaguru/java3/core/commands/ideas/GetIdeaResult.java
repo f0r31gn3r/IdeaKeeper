@@ -1,20 +1,20 @@
 package lv.javaguru.java3.core.commands.ideas;
 
 import lv.javaguru.java3.core.commands.DomainCommandResult;
-import lv.javaguru.java3.core.domain.idea.Idea;
+import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 
 /**
  * Created by Anna on 28.10.2015.
  */
 public class GetIdeaResult implements DomainCommandResult {
 
-    private Idea idea;
+    private IdeaDTO idea;
 
-    public GetIdeaResult(Idea idea) {
+    public GetIdeaResult(IdeaDTO idea) {
         this.idea = idea;
     }
 
-    public Idea getIdea() {
+    public IdeaDTO getIdea() {
         return idea;
     }
 
