@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import static lv.javaguru.java3.core.domain.attempt.AttemptBuilder.createAttempt;
 import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
@@ -60,11 +58,10 @@ public class AttemptDAOImplTest extends DatabaseHibernateTest {
                 .build();
 
         attempt.setUser(user);
-        Set<Attempt> userAttempts = new HashSet<Attempt>();
-        user.setAttempts(userAttempts);
-        user.getAttempts().add(attempt);
-        userDAO.create(user);
+        user.setAttempt(attempt);
         attemptDAO.create(attempt);
+        userDAO.create(user);
+
         assertThat(attempt.getAttemptId(), is(notNullValue()));
     }
 
@@ -88,11 +85,9 @@ public class AttemptDAOImplTest extends DatabaseHibernateTest {
                 .build();
 
         attempt.setUser(user);
-        Set<Attempt> userAttempts = new HashSet<Attempt>();
-        user.setAttempts(userAttempts);
-        user.getAttempts().add(attempt);
-        userDAO.create(user);
+        user.setAttempt(attempt);
         attemptDAO.create(attempt);
+        userDAO.create(user);
         Attempt attemptFromDb = attemptDAO.getById(attempt.getAttemptId());
         assertThat(attemptFromDb, is(notNullValue()));
     }
@@ -117,11 +112,9 @@ public class AttemptDAOImplTest extends DatabaseHibernateTest {
                 .build();
 
         attempt.setUser(user);
-        Set<Attempt> userAttempts = new HashSet<Attempt>();
-        user.setAttempts(userAttempts);
-        user.getAttempts().add(attempt);
-        userDAO.create(user);
+        user.setAttempt(attempt);
         attemptDAO.create(attempt);
+        userDAO.create(user);
         Attempt attemptFromDb = attemptDAO.getById(attempt.getAttemptId());
         assertThat(attemptFromDb, is(notNullValue()));
         attemptDAO.delete(attemptFromDb);

@@ -45,8 +45,8 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Idea> ideas;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<Attempt> attempts;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Attempt attempt;
 
     public Long getUserId() {
         return userId;
@@ -112,11 +112,11 @@ public class User {
         this.ideas = ideas;
     }
 
-    public Set<Attempt> getAttempts() {
-        return attempts;
+    public Attempt getAttempt() {
+        return attempt;
     }
 
-    public void setAttempts(Set<Attempt> attempts) {
-        this.attempts = attempts;
+    public void setAttempt(Attempt attempt) {
+        this.attempt = attempt;
     }
 }

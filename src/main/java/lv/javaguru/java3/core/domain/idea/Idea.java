@@ -28,7 +28,7 @@ public class Idea {
     @Column(name="description", columnDefinition = "CHAR(50)")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

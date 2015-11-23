@@ -5,6 +5,7 @@ package lv.javaguru.java3.core.database.users;
  */
 
 import lv.javaguru.java3.core.database.DatabaseCleaner;
+import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.idea.Idea;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
@@ -12,9 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static lv.javaguru.java3.core.domain.attempt.AttemptBuilder.createAttempt;
 import static lv.javaguru.java3.core.domain.idea.IdeaBuilder.createIdea;
 import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
 import static org.hamcrest.CoreMatchers.*;
@@ -128,12 +131,21 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
                 .withUser(user)
                 .build();
 
+        Attempt attempt = createAttempt()
+                .withLogin(user.getLogin())
+                .withAttempts(2)
+                .withDate(new Date())
+                .withUser(user)
+                .build();
+
         Set<Idea> ideas = new HashSet<Idea>();
 
         ideas.add(idea);
         ideas.add(idea2);
         user.setIdeas(ideas);
+        user.setAttempt(attempt);
 
+        attemptDAO.create(attempt);
         ideaDAO.create(idea);
         ideaDAO.create(idea2);
         userDAO.create(user);
@@ -146,6 +158,10 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
 
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(nullValue()));
+        Idea idea2FromDb = ideaDAO.getById(idea2.getIdeaId());
+        assertThat(idea2FromDb, is(nullValue()));
+        Attempt attemptFromDb = attemptDAO.getById(attempt.getAttemptId());
+        assertThat(attemptFromDb, is(nullValue()));
     }
 
     @Test
@@ -185,10 +201,44 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
 
         User userFromDb = userDAO.getById(user.getUserId());
         assertThat(userFromDb, is(notNullValue()));
+        Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
+        assertThat(ideaFromDb, is(notNullValue()));
+        Idea idea2FromDb = ideaDAO.getById(idea2.getIdeaId());
+        assertThat(idea2FromDb, is(notNullValue()));
 
         Set<Idea> userIdeas = userFromDb.getIdeas();
-
         assertThat(userIdeas.size(), is(2));
+    }
+
+    @Test
+    @Transactional
+    public void testGetUserAttempts() {
+
+        User user = createUser()
+                .withLogin(LOGIN)
+                .withPassword(PASSWORD)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withAccessLevel(ACCESSLEVEL)
+                .build();
+
+        Attempt attempt = createAttempt()
+                .withLogin(user.getLogin())
+                .withAttempts(2)
+                .withDate(new Date())
+                .withUser(user)
+                .build();
+
+        user.setAttempt(attempt);
+        attemptDAO.create(attempt);
+        userDAO.create(user);
+
+
+        User userFromDb = userDAO.getById(user.getUserId());
+        assertThat(userFromDb, is(notNullValue()));
+        Attempt attemptFromDb = userFromDb.getAttempt();
+        assertThat(attemptFromDb, is(notNullValue()));
     }
 
 
