@@ -2,13 +2,16 @@ package lv.javaguru.java3.core.rest.users;
 
 import lv.javaguru.java3.core.database.DatabaseCleaner;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
+import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 import lv.javaguru.java3.core.rest.RESTResourceTest;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Set;
 
+import static lv.javaguru.java3.core.dto.idea.IdeaDTOBuilder.createIdeaDTO;
 import static lv.javaguru.java3.core.dto.user.UserDTOBuilder.createUserDTO;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -31,6 +34,9 @@ public class UserResourceImplTest extends RESTResourceTest{
     private static final String EMAIL = "email@email.lv";
     private static final String ACCESSLEVEL = AccessLevel.USER.name();
     private DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+
+    private static final String TITLE = "title";
+    private static final String DESCRIPTION = "description";
 
 
     @Before
@@ -190,6 +196,42 @@ public class UserResourceImplTest extends RESTResourceTest{
         UserDTO updatedUser = userResource.setVip(user.getUserId());
 
         assertThat(updatedUser.getAccessLevel(), is(AccessLevel.VIP.name()));
+    }
+
+    @Test
+    public void getUserIdeasTest() {
+
+        UserDTO user = userResource.create(
+                createUserDTO()
+                        .withLogin(LOGIN)
+                        .withPassword(PASSWORD)
+                        .withName(NAME)
+                        .withSurname(SURNAME)
+                        .withEmail(EMAIL)
+                        .withAccessLevel(ACCESSLEVEL)
+                        .build()
+        );
+        assertThat(user, is(notNullValue()));
+        assertThat(user.getUserId(), is(notNullValue()));
+
+        IdeaDTO idea1 = ideaResource.create(
+                createIdeaDTO()
+                        .withTitle(TITLE)
+                        .withDescription(DESCRIPTION)
+                        .withUserDTO(user)
+                        .build()
+        );
+
+        IdeaDTO idea2 = ideaResource.create(
+                createIdeaDTO()
+                        .withTitle(TITLE)
+                        .withDescription(DESCRIPTION)
+                        .withUserDTO(user)
+                        .build()
+        );
+
+        Set<IdeaDTO> userIdeas = userResource.getUserIdeas(user.getUserId());
+        assertThat(userIdeas.size(), is(2));
     }
 
 }

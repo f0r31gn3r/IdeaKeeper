@@ -42,7 +42,7 @@ public class User {
     @Column(name="access_level", columnDefinition = "CHAR(50)")
     private String accessLevel;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Idea> ideas;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")

@@ -9,9 +9,11 @@ import lv.javaguru.java3.core.domain.idea.Idea;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static lv.javaguru.java3.core.domain.idea.IdeaBuilder.createIdea;
 import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
@@ -101,7 +103,6 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
         assertThat(userDAO.getAll().size(), is(1));
     }
 
-    @Ignore
     @Test
     @Transactional
     public void testDeleteUser() {
@@ -114,27 +115,80 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
                 .withEmail(EMAIL)
                 .withAccessLevel(ACCESSLEVEL)
                 .build();
-        userDAO.create(user);
-
-        User userFromDb = userDAO.getById(user.getUserId());
-        assertThat(userFromDb, is(notNullValue()));
 
         Idea idea = createIdea()
                 .withTitle(TITLE)
                 .withDescription(DESCRIPTION)
                 .withUser(user)
                 .build();
+
+        Idea idea2 = createIdea()
+                .withTitle(TITLE)
+                .withDescription(DESCRIPTION)
+                .withUser(user)
+                .build();
+
+        Set<Idea> ideas = new HashSet<Idea>();
+
+        ideas.add(idea);
+        ideas.add(idea2);
+        user.setIdeas(ideas);
+
         ideaDAO.create(idea);
+        ideaDAO.create(idea2);
+        userDAO.create(user);
+
+        User userFromDb = userDAO.getById(user.getUserId());
+        userDAO.delete(userFromDb);
+
+        userFromDb = userDAO.getById(user.getUserId());
+        assertThat(userFromDb, is(nullValue()));
 
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
-        assertThat(ideaFromDb, is(notNullValue()));
-
-        userDAO.delete(userFromDb);
-        userFromDb = userDAO.getById(user.getUserId());
-        ideaFromDb = ideaDAO.getById(idea.getIdeaId());
-
-        assertThat(userFromDb, is(nullValue()));
         assertThat(ideaFromDb, is(nullValue()));
+    }
+
+    @Test
+    @Transactional
+    public void testGetUserIdeas() {
+
+        User user = createUser()
+                .withLogin(LOGIN)
+                .withPassword(PASSWORD)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withAccessLevel(ACCESSLEVEL)
+                .build();
+
+        Idea idea = createIdea()
+                .withTitle(TITLE)
+                .withDescription(DESCRIPTION)
+                .withUser(user)
+                .build();
+
+        Idea idea2 = createIdea()
+                .withTitle(TITLE)
+                .withDescription(DESCRIPTION)
+                .withUser(user)
+                .build();
+
+        Set<Idea> ideas = new HashSet<Idea>();
+
+        ideas.add(idea);
+        ideas.add(idea2);
+        user.setIdeas(ideas);
+
+        ideaDAO.create(idea);
+        ideaDAO.create(idea2);
+        userDAO.create(user);
+
+        User userFromDb = userDAO.getById(user.getUserId());
+        assertThat(userFromDb, is(notNullValue()));
+
+        Set<Idea> userIdeas = userFromDb.getIdeas();
+
+        assertThat(userIdeas.size(), is(2));
     }
 
 

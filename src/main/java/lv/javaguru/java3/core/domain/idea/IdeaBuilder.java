@@ -25,6 +25,7 @@ public class IdeaBuilder {
         idea.setIdeaId(ideaId);
         idea.setTitle(title);
         idea.setDescription(description);
+        idea.setUser(user);
         return idea;
     }
 

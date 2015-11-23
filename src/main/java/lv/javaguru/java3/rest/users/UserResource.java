@@ -1,8 +1,10 @@
 package lv.javaguru.java3.rest.users;
 
+import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 
 import javax.ws.rs.*;
+import java.util.Set;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -51,7 +53,11 @@ public interface UserResource {
     @Path("/users/setvip/{userId}")
     UserDTO setVip(@PathParam("userId") Long userId);
 
-
+    @GET
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/users/get_ideas/{userId}")
+    Set<IdeaDTO> getUserIdeas(@PathParam("userId") Long userId);
 
 
 }

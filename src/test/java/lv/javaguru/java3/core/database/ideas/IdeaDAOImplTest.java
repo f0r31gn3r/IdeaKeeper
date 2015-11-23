@@ -57,13 +57,14 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
                 .withDescription(DESCRIPTION)
                 .withUser(user)
                 .build();
-        idea.setUser(user);
-        Set<Idea> userIdeas = new HashSet<Idea>();
 
-        user.setIdeas(userIdeas);
-        user.getIdeas().add(idea);
-        userDAO.create(user);
+        Set<Idea> ideas = new HashSet<Idea>();
+
+        ideas.add(idea);
+        user.setIdeas(ideas);
+
         ideaDAO.create(idea);
+        userDAO.create(user);
         assertThat(idea.getIdeaId(), is(notNullValue()));
     }
 
@@ -84,13 +85,14 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
                 .withDescription(DESCRIPTION)
                 .withUser(user)
                 .build();
-        idea.setUser(user);
-        Set<Idea> userIdeas = new HashSet<Idea>();
 
-        user.setIdeas(userIdeas);
-        user.getIdeas().add(idea);
-        userDAO.create(user);
+        Set<Idea> ideas = new HashSet<Idea>();
+
+        ideas.add(idea);
+        user.setIdeas(ideas);
+
         ideaDAO.create(idea);
+        userDAO.create(user);
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(notNullValue()));
     }
@@ -98,6 +100,7 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
     @Test
     @Transactional
     public void testDeleteIdea() {
+
         User user = createUser()
                 .withLogin(LOGIN)
                 .withPassword(PASSWORD)
@@ -112,13 +115,15 @@ public class IdeaDAOImplTest extends DatabaseHibernateTest {
                 .withDescription(DESCRIPTION)
                 .withUser(user)
                 .build();
-        idea.setUser(user);
-        Set<Idea> userIdeas = new HashSet<Idea>();
 
-        user.setIdeas(userIdeas);
-        user.getIdeas().add(idea);
-        userDAO.create(user);
+        Set<Idea> ideas = new HashSet<Idea>();
+
+        ideas.add(idea);
+        user.setIdeas(ideas);
+
         ideaDAO.create(idea);
+        userDAO.create(user);
+
         Idea ideaFromDb = ideaDAO.getById(idea.getIdeaId());
         assertThat(ideaFromDb, is(notNullValue()));
         ideaDAO.delete(ideaFromDb);

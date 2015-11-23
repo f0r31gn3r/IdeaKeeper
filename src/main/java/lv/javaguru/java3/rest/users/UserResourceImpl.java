@@ -1,7 +1,10 @@
 package lv.javaguru.java3.rest.users;
 
+import lv.javaguru.java3.core.commands.ideas.IdeaConverter;
 import lv.javaguru.java3.core.commands.users.*;
+import lv.javaguru.java3.core.domain.idea.Idea;
 import lv.javaguru.java3.core.domain.user.User;
+import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 import lv.javaguru.java3.core.services.CommandExecutor;
 import lv.javaguru.java3.core.services.users.UserService;
@@ -9,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -127,6 +132,27 @@ public class UserResourceImpl {
         );
         UpdateUserResult result = commandExecutor.execute(command);
         return result.getUser();
+    }
+
+    @GET
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/get_ideas/{userId}")
+    public Set<IdeaDTO> getUserIdeas(@PathParam("userId") Long userId) {
+        Set<IdeaDTO> resultSetDTO = new HashSet<IdeaDTO>();
+        Set<Idea> resultSet = new HashSet<Idea>();
+        User user = userService.get(userId);
+
+        if(user.getIdeas() != null){
+            resultSet = user.getIdeas();
+        } else{
+            return resultSetDTO;
+        }
+
+        for(Idea i:resultSet){
+            resultSetDTO.add(new IdeaConverter().convert(i));
+        }
+        return resultSetDTO;
     }
 
 
