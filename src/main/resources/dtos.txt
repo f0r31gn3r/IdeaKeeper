@@ -1,0 +1,15 @@
+{
+    "login": "user",
+    "password": "user",
+    "name": "name",
+    "surname": "surname",
+    "email": "email@email.lv",
+    "accessLevel": "USER"
+}
+
+
+{
+    "title":"title",
+    "description":"description",
+    "userId":2
+}

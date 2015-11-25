@@ -1,89 +1,131 @@
 /*GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;*/
 
+-- MySQL Workbench Forward Engineering
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema javaee_idea_keeper
+-- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `javaee_idea_keeper` ;
 
+-- -----------------------------------------------------
+-- Schema javaee_idea_keeper
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `javaee_idea_keeper` DEFAULT CHARACTER SET utf8 ;
-USE `javaee_idea_keeper`;
+USE `javaee_idea_keeper` ;
+
+-- -----------------------------------------------------
+-- Table `javaee_idea_keeper`.`activities0`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `javaee_idea_keeper`.`activities0` ;
+
+CREATE TABLE IF NOT EXISTS `javaee_idea_keeper`.`activities0` (
+  `activity_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  PRIMARY KEY (`activity_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
-DROP TABLE IF EXISTS `clients` ;
+-- -----------------------------------------------------
+-- Table `javaee_idea_keeper`.`users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `javaee_idea_keeper`.`users` ;
 
-CREATE TABLE IF NOT EXISTS `clients` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `login` CHAR(50),
-  `password` CHAR(50),
+CREATE TABLE IF NOT EXISTS `javaee_idea_keeper`.`users` (
+  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `access_level` CHAR(50) NULL DEFAULT NULL,
+  `email` CHAR(50) NULL DEFAULT NULL,
+  `login` CHAR(50) NULL DEFAULT NULL,
+  `name` CHAR(50) NULL DEFAULT NULL,
+  `password` CHAR(150) NULL DEFAULT NULL,
+  `surname` CHAR(50) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+INSERT INTO `javaee_idea_keeper`.`users` VALUES (2, 'USER','email@email.lv', 'user', 'name', 'user','surname');
+
+
+
+-- -----------------------------------------------------
+-- Table `javaee_idea_keeper`.`attempts`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `javaee_idea_keeper`.`attempts` ;
+
+CREATE TABLE IF NOT EXISTS `javaee_idea_keeper`.`attempts` (
+  `attempt_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `attempts_count` INT(1) NULL DEFAULT NULL,
+  `last_modified` DATETIME NULL DEFAULT NULL,
+  `login` CHAR(50) NULL DEFAULT NULL,
+  `user_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`attempt_id`),
+  INDEX `FK_rx9t2dq47ubovynv4m75fiuls` (`user_id` ASC),
+  CONSTRAINT `FK_rx9t2dq47ubovynv4m75fiuls`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `javaee_idea_keeper`.`users` (`user_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `javaee_idea_keeper`.`clients`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `javaee_idea_keeper`.`clients` ;
+
+CREATE TABLE IF NOT EXISTS `javaee_idea_keeper`.`clients` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `login` CHAR(50) NOT NULL,
+  `password` CHAR(50) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
-DROP TABLE IF EXISTS `users` ;
+-- -----------------------------------------------------
+-- Table `javaee_idea_keeper`.`ideas`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `javaee_idea_keeper`.`ideas` ;
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `login` CHAR(50),
-  `password` CHAR(150),
-  `name` CHAR(50),
-  `surname` CHAR(50),
-  `email` CHAR(50),
-  `access_level` CHAR(50),
-
-  PRIMARY KEY (`user_id`))
+CREATE TABLE IF NOT EXISTS `javaee_idea_keeper`.`ideas` (
+  `idea_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `description` CHAR(50) NULL DEFAULT NULL,
+  `title` CHAR(50) NULL DEFAULT NULL,
+  `user_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`idea_id`),
+  INDEX `FK_n2wlf9nq1cc1nnvxthv2jtx4s` (`user_id` ASC),
+  CONSTRAINT `FK_n2wlf9nq1cc1nnvxthv2jtx4s`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `javaee_idea_keeper`.`users` (`user_id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
-DROP TABLE IF EXISTS `ideas` ;
+-- -----------------------------------------------------
+-- Table `javaee_idea_keeper`.`tasklists`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `javaee_idea_keeper`.`tasklists` ;
 
-CREATE TABLE IF NOT EXISTS `ideas` (
-  `idea_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` CHAR(50),
-  `description` CHAR(50),
-  PRIMARY KEY (`idea_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
-DROP TABLE IF EXISTS `activities0` ;
-
-CREATE TABLE IF NOT EXISTS `activities0` (
-  `activity_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`activity_id`, `user_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
-DROP TABLE IF EXISTS `attempts` ;
-
-CREATE TABLE IF NOT EXISTS `attempts` (
-  `attempt_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `login` CHAR(50),
-  `attempts_count` int(1),
-  `last_modified` datetime,
-
-  PRIMARY KEY (`attempt_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
-DROP TABLE IF EXISTS `tasklists` ;
-
-CREATE TABLE IF NOT EXISTS `tasklists` (
-  `tasklist_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) UNSIGNED NOT NULL,
-  `task_id` INT(11) UNSIGNED NOT NULL,
-  `created_date` datetime NOT NULL,
-  `end_date` datetime,
-
+CREATE TABLE IF NOT EXISTS `javaee_idea_keeper`.`tasklists` (
+  `tasklist_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `created_date` DATETIME NOT NULL,
+  `end_date` DATETIME NULL DEFAULT NULL,
+  `task_id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
   PRIMARY KEY (`tasklist_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 

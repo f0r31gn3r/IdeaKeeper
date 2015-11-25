@@ -18,6 +18,8 @@ public class IdeaDTOBuilder {
 
     private UserDTO userDTO;
 
+    private Long userId;
+
     public static IdeaDTOBuilder createIdeaDTO() {
         return new IdeaDTOBuilder();
     }
@@ -28,7 +30,9 @@ public class IdeaDTOBuilder {
         idea.setIdeaId(ideaId);
         idea.setTitle(title);
         idea.setDescription(description);
+        idea.setUserId(userId);
         idea.setUserDTO(userDTO);
+
         return idea;
     }
 

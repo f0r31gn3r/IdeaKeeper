@@ -17,6 +17,8 @@ public class IdeaDTO implements Serializable {
 
     private UserDTO userDTO;
 
+    private Long userId;
+
     public Long getIdeaId() {
         return ideaId;
     }
@@ -47,5 +49,13 @@ public class IdeaDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
