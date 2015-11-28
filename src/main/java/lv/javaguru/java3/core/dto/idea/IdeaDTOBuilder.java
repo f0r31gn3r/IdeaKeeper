@@ -1,5 +1,6 @@
 package lv.javaguru.java3.core.dto.idea;
 
+import lv.javaguru.java3.core.commands.users.UserConverter;
 import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 
@@ -30,8 +31,14 @@ public class IdeaDTOBuilder {
         idea.setIdeaId(ideaId);
         idea.setTitle(title);
         idea.setDescription(description);
-        idea.setUserId(userId);
-        idea.setUserDTO(userDTO);
+
+        if(user != null){
+            idea.setUserId(user.getUserId());
+            idea.setUserDTO(new UserConverter().convert(user));
+        } else {
+            idea.setUserId(userId);
+            idea.setUserDTO(userDTO);
+        }
 
         return idea;
     }

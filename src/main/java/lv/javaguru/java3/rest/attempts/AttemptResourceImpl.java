@@ -31,11 +31,16 @@ public class AttemptResourceImpl {
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
     public AttemptDTO create(AttemptDTO attemptDTO) {
+
+        Long id = attemptDTO.getUserId();
+        if(id==null){
+            id = attemptDTO.getUserDTO().getUserId();
+        }
         CreateAttemptCommand command = new CreateAttemptCommand(
                 attemptDTO.getLogin(),
                 attemptDTO.getAttempts(),
                 attemptDTO.getLastModified(),
-                attemptDTO.getUserDTO().getUserId()
+                id
         );
         CreateAttemptResult result = commandExecutor.execute(command);
         return result.getAttempt();

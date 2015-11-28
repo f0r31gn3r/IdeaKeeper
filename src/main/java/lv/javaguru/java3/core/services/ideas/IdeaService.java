@@ -12,4 +12,6 @@ public interface IdeaService {
                 String description);
 
     Idea get(Long ideaId);
+
+    int delete(Long ideaId);
 }

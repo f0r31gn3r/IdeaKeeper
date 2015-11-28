@@ -17,6 +17,8 @@ public class AttemptDTO implements Serializable{
 
 	private UserDTO userDTO;
 
+	private Long userId;
+
 	public Long getAttemptId() {
 		return attemptId;
 	}
@@ -55,5 +57,13 @@ public class AttemptDTO implements Serializable{
 
 	public void setUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

@@ -1,5 +1,6 @@
 package lv.javaguru.java3.core.dto.attempt;
 
+import lv.javaguru.java3.core.commands.users.UserConverter;
 import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 
@@ -19,6 +20,8 @@ public class AttemptDTOBuilder {
 
 	private UserDTO userDTO;
 
+	private Long userId;
+
 	public static AttemptDTOBuilder createAttemptDTO() {
 		return new AttemptDTOBuilder();
 	}
@@ -30,7 +33,13 @@ public class AttemptDTOBuilder {
 		attempt.setLogin(login);
 		attempt.setAttempts(attempts);
 		attempt.setLastModified(lastModified);
-		attempt.setUserDTO(userDTO);
+		if(user != null){
+			attempt.setUserId(user.getUserId());
+			attempt.setUserDTO(new UserConverter().convert(user));
+		} else {
+			attempt.setUserId(userId);
+			attempt.setUserDTO(userDTO);
+		}
 		return attempt;
 	}
 

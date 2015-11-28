@@ -19,7 +19,7 @@ public class JerseyConfig extends ResourceConfig {
         register(LoginResourceImpl.class);
         register(IdeaResourceImpl.class);
 
-
+        register(CORSResponseFilter.class);
     }
 
 }

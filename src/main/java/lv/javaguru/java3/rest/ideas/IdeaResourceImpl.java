@@ -1,9 +1,6 @@
 package lv.javaguru.java3.rest.ideas;
 
-import lv.javaguru.java3.core.commands.ideas.CreateIdeaCommand;
-import lv.javaguru.java3.core.commands.ideas.CreateIdeaResult;
-import lv.javaguru.java3.core.commands.ideas.GetIdeaCommand;
-import lv.javaguru.java3.core.commands.ideas.GetIdeaResult;
+import lv.javaguru.java3.core.commands.ideas.*;
 import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 import lv.javaguru.java3.core.services.CommandExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +30,14 @@ public class IdeaResourceImpl {
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
     public IdeaDTO create(IdeaDTO ideaDTO) {
+        Long id = ideaDTO.getUserId();
+        if(id==null){
+            id = ideaDTO.getUserDTO().getUserId();
+        }
         CreateIdeaCommand command = new CreateIdeaCommand(
                 ideaDTO.getTitle(),
                 ideaDTO.getDescription(),
-                ideaDTO.getUserDTO().getUserId()
+                id
         );
         CreateIdeaResult result = commandExecutor.execute(command);
         return result.getIdea();
@@ -52,5 +53,14 @@ public class IdeaResourceImpl {
         return result.getIdea();
     }
 
+    @DELETE
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/{ideaId}")
+    public int delete(@PathParam("ideaId") Long ideaId) {
+        DeleteIdeaCommand command = new DeleteIdeaCommand(ideaId);
+        DeleteIdeaResult result = commandExecutor.execute(command);
+        return result.getResult();
+    }
 
 }

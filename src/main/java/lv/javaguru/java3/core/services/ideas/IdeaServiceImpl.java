@@ -33,4 +33,15 @@ public class IdeaServiceImpl implements IdeaService {
         return ideaDAO.getRequired(ideaId);
     }
 
+    @Override
+    public int delete(Long ideaId) {
+        Idea idea = get(ideaId);
+        if(idea != null){
+            ideaDAO.delete(idea);
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
 }
