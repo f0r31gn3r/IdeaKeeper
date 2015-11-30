@@ -1,4 +1,4 @@
-package lv.javaguru.java3.core.services.login;
+package lv.javaguru.java3.core.services.authentication;
 
 import lv.javaguru.java3.core.database.UserDAO;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
@@ -10,10 +10,7 @@ import lv.javaguru.java3.core.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.Base64;
 import java.util.Date;
-import java.util.StringTokenizer;
 
 /**
  * Created by Anna on 22.11.2015.
@@ -28,28 +25,30 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Autowired   private AttemptFactory attemptFactory;
     @Autowired   private UserService userService;
 
+    public static String state = new String("NOT");
+
     @Override
-    public boolean authenticate(String authCredentials) {
+    public boolean authenticate(String username, String password) {
         boolean authenticationStatus = false;
 
-        if (null == authCredentials)
-            return false;
-        final String encodedUserPassword = authCredentials.replaceFirst("Basic"
-                + " ", "");
-        String usernameAndPassword = null;
-        try {
-            byte[] decodedBytes = Base64.getDecoder().decode(
-                    encodedUserPassword);
-            usernameAndPassword = new String(decodedBytes, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        final StringTokenizer tokenizer = new StringTokenizer(
-                usernameAndPassword, ":");
-
-        //--------USERNAME AND PASSWORD GOT---------------
-        final String username = tokenizer.nextToken();
-        final String password = tokenizer.nextToken();
+//        if (null == authCredentials)
+//            return false;
+//        final String encodedUserPassword = authCredentials.replaceFirst("Basic"
+//                + " ", "");
+//        String usernameAndPassword = null;
+//        try {
+//            byte[] decodedBytes = Base64.getDecoder().decode(
+//                    encodedUserPassword);
+//            usernameAndPassword = new String(decodedBytes, "UTF-8");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        final StringTokenizer tokenizer = new StringTokenizer(
+//                usernameAndPassword, ":");
+//
+//        //--------USERNAME AND PASSWORD GOT---------------
+//        final String username = tokenizer.nextToken();
+//        final String password = tokenizer.nextToken();
 
         //--------IF USER WITH SUCH USERNAME EXISTS---------
         if(userService.get(username) != null){
@@ -75,7 +74,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 if(userAttempt != null){
                     attemptService.resetBySuccessfulLogin(userAttempt);
                 }
-                authenticationStatus = true;
+                state = "OK";
+                return true;
             } else {
                 //IF USER HASN'T TRIED TO LOGIN EARLIER, CREATE ATTEMPTS RECORD FOR HIM
                 if(userAttempt == null){
@@ -84,7 +84,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
                 //UPDATE FAILED ATTEMPTS
                 attemptService.updateFailAttempts(userAttempt);
-                authenticationStatus = false;
+                return false;
             }
         }
 //        if(username.equals("user") && password.equals("user")){
@@ -92,6 +92,16 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 //		}
 //
         return authenticationStatus;
+    }
+
+    @Override
+    public String getState() {
+        return state;
+    }
+
+    @Override
+    public void setState(String inputState) {
+        state = inputState;
     }
 
 

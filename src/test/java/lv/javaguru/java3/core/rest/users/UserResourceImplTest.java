@@ -25,7 +25,7 @@ public class UserResourceImplTest extends RESTResourceTest{
 //    @Mock
 //    private AuthenticationService authenticationService = new AuthenticationService();
 
-    private static final String LOGIN = "login";
+    private static final String LOGIN = "authentication";
     private static final String LOGIN1 = "login1";
     private static final String PASSWORD = "password";
     private static final String NAME = "name";

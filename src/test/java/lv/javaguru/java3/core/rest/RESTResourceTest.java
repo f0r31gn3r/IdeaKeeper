@@ -8,7 +8,7 @@ import lv.javaguru.java3.config.Application;
 import lv.javaguru.java3.rest.attempts.AttemptResource;
 import lv.javaguru.java3.rest.clients.ClientResource;
 import lv.javaguru.java3.rest.ideas.IdeaResource;
-import lv.javaguru.java3.rest.login.LoginResource;
+import lv.javaguru.java3.rest.authentication.AuthenticationResource;
 import lv.javaguru.java3.rest.users.UserResource;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -32,7 +32,7 @@ public class RESTResourceTest {
     protected ClientResource clientResource;
     protected UserResource userResource;
     protected AttemptResource attemptResource;
-    protected LoginResource loginResource;
+    protected AuthenticationResource authenticationResource;
     protected IdeaResource ideaResource;
 
     @Before
@@ -56,11 +56,11 @@ public class RESTResourceTest {
                 .contract(new JAXRSContract())
                 .target(AttemptResource.class, url);
 
-        loginResource = Feign.builder()
+        authenticationResource = Feign.builder()
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
                 .contract(new JAXRSContract())
-                .target(LoginResource.class, url);
+                .target(AuthenticationResource.class, url);
 
         ideaResource = Feign.builder()
                 .encoder(new JacksonEncoder())

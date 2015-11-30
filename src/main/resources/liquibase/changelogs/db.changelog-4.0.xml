@@ -46,12 +46,12 @@
     </changeSet>
     
     <!--changeSet id = "18" author="anna" context="main">
-        <addForeignKeyConstraint baseColumnNames="login"
+        <addForeignKeyConstraint baseColumnNames="authentication"
                                  baseTableName="attempts"
                                  constraintName="fk_attempt_login"
                                  onDelete="CASCADE"
                                  onUpdate="RESTRICT"
-                                 referencedColumnNames="login"
+                                 referencedColumnNames="authentication"
                                  referencedTableName="users"/>
     </changeSet-->
 

@@ -13,3 +13,8 @@
     "description":"description",
     "userId":2
 }
+
+{
+    "login": "user",
+    "password": "user"
+}

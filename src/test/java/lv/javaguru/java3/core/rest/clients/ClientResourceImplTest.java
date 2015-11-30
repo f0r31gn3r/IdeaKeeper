@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 
 public class ClientResourceImplTest extends RESTResourceTest {
 
-    private static final String LOGIN = "login";
+    private static final String LOGIN = "authentication";
     private static final String PASSWORD = "password";
 
     @Test
