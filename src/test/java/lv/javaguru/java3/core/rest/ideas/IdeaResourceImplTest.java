@@ -40,7 +40,7 @@ public class IdeaResourceImplTest extends RESTResourceTest {
 
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
-    private static final String LOGIN = "authentication";
+    private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
     private static final String NAME = "name";
     private static final String SURNAME = "surname";

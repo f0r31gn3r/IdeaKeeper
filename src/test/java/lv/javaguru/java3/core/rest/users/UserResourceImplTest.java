@@ -19,13 +19,7 @@ import static org.junit.Assert.assertThat;
 
 public class UserResourceImplTest extends RESTResourceTest{
 
-    public static final String AUTHENTICATION_HEADER = "Authorization";
-    private static final String BASIC_AUTH = "BASIC";
-
-//    @Mock
-//    private AuthenticationService authenticationService = new AuthenticationService();
-
-    private static final String LOGIN = "authentication";
+    private static final String LOGIN = "login";
     private static final String LOGIN1 = "login1";
     private static final String PASSWORD = "password";
     private static final String NAME = "name";
@@ -42,29 +36,10 @@ public class UserResourceImplTest extends RESTResourceTest{
     @Before
     public void setUp() throws Exception {
         databaseCleaner.cleanDatabase();
-
-//        AuthenticationService authenticationService = Mockito.mock(AuthenticationService.class);
-//
-//        HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
-//
-//        String authCredentials = req
-//                .getHeader(AUTHENTICATION_HEADER);
-//
-//        doReturn(true)
-//                .when(authenticationService).authenticate(authCredentials);
     }
 
     @Test
     public void createUserTest() throws IOException {
-
-//        HttpClient httpclient = Mockito.mock(HttpClient.class);
-//        HttpPost httppost = Mockito.mock(HttpPost.class);
-//
-//        when(httpclient.execute(httppost).getStatusLine().getStatusCode()).thenReturn(200);
-//
-//        HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
-//        resp.setStatus(Response.Status.OK.getStatusCode());
-
         UserDTO user = userResource.create(
                 createUserDTO()
                         .withLogin(LOGIN)

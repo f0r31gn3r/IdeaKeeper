@@ -25,30 +25,10 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Autowired   private AttemptFactory attemptFactory;
     @Autowired   private UserService userService;
 
-    public static String state = new String("NOT");
+    public static String state = new String("");
 
     @Override
     public boolean authenticate(String username, String password) {
-        boolean authenticationStatus = false;
-
-//        if (null == authCredentials)
-//            return false;
-//        final String encodedUserPassword = authCredentials.replaceFirst("Basic"
-//                + " ", "");
-//        String usernameAndPassword = null;
-//        try {
-//            byte[] decodedBytes = Base64.getDecoder().decode(
-//                    encodedUserPassword);
-//            usernameAndPassword = new String(decodedBytes, "UTF-8");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        final StringTokenizer tokenizer = new StringTokenizer(
-//                usernameAndPassword, ":");
-//
-//        //--------USERNAME AND PASSWORD GOT---------------
-//        final String username = tokenizer.nextToken();
-//        final String password = tokenizer.nextToken();
 
         //--------IF USER WITH SUCH USERNAME EXISTS---------
         if(userService.get(username) != null){
@@ -58,11 +38,13 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
             //IF USER IS ALREADY BLOCKED
             if(userFromDB.getAccessLevel().equals(AccessLevel.BLOCKED.name())){
+                state = AuthenticationStatus.BLOCKED.getValue();
                 return false;
             }
 
             //IF THIS USER HAS FAILED LOGIN MORE, THAN 3 TIMES, BLOCK HIM
             if(userAttempt != null && userAttempt.getAttempts() >= MAX_ATTEMPTS){
+                state = AuthenticationStatus.BLOCKED.getValue();
                 userService.blockUser(userFromDB);
                 return false;
             }
@@ -74,7 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 if(userAttempt != null){
                     attemptService.resetBySuccessfulLogin(userAttempt);
                 }
-                state = "OK";
+                state = AuthenticationStatus.SUCCESSFUL_LOGIN.getValue();
                 return true;
             } else {
                 //IF USER HASN'T TRIED TO LOGIN EARLIER, CREATE ATTEMPTS RECORD FOR HIM
@@ -83,15 +65,14 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 }
 
                 //UPDATE FAILED ATTEMPTS
+                state = AuthenticationStatus.PASS_FAILED.getValue();
                 attemptService.updateFailAttempts(userAttempt);
                 return false;
             }
+        } else {
+            state = AuthenticationStatus.USERNAME_FAILED.getValue();
+            return false;
         }
-//        if(username.equals("user") && password.equals("user")){
-//			authenticationStatus=true;
-//		}
-//
-        return authenticationStatus;
     }
 
     @Override

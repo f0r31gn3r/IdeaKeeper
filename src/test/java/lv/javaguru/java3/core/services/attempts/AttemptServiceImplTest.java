@@ -8,6 +8,7 @@ import lv.javaguru.java3.core.database.AttemptDAO;
 import lv.javaguru.java3.core.database.UserDAO;
 import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
+import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.services.users.UserFactory;
 import lv.javaguru.java3.core.services.users.UserFactoryImpl;
 import lv.javaguru.java3.core.services.users.UserValidator;
@@ -18,6 +19,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Date;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -46,42 +53,40 @@ public class AttemptServiceImplTest {
     private static final String EMAIL = "email@email.lv";
     private static final String ACCESSLEVEL = AccessLevel.USER.name();
 
+    private static final int ATTEMPTS = 2;
+    private static final Date LASTMOD = new Date();
 
-//    @Test
-//    public void resetShouldResetFailedAttemptsCount() {
-//        Attempt attempt = attemptFactory.create(LOGIN, ATTEMPTS, LASTMOD);
-//
-//        Attempt modAttempt = attemptService.resetBySuccessfulLogin(attempt);
-//        assertThat(modAttempt.getLogin(), is(LOGIN));
-//        assertThat(modAttempt.getAttempts(), is(0));
-//        assertThat(modAttempt.getLastModified(), is(new Date()));
-//    }
-//
-//    @Test
-//    public void updateShouldIncreaseFailedAttemptsCount() {
-//        Date refreshDate = new Date();
-//        Attempt attempt = attemptFactory.create(LOGIN, ATTEMPTS, LASTMOD);
-//
-//        Attempt modAttempt = attemptService.updateFailAttempts(attempt);
-//        assertThat(modAttempt.getLogin(), is(LOGIN));
-//        assertThat(modAttempt.getAttempts(), is(ATTEMPTS + 1));
-//        assertThat(modAttempt.getLastModified(), is(refreshDate));
-//    }
 
-//    @Test
-//    public void updateShouldCreateNewAttempt() {
-//        Date refreshDate = new Date();
-//
-//        Attempt modAttempt = attemptService.updateFailAttempts(null);
-//        assertThat(modAttempt.getAttempts(), is(1));
-//        assertThat(modAttempt.getLastModified(), is(refreshDate));
-//    }
+    @Test
+    public void resetShouldResetFailedAttemptsCount() {
+        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
+        doReturn(user)
+                .when(userDAO).getById(user.getUserId());
+        Attempt attempt = attemptFactory.create(LOGIN, ATTEMPTS, LASTMOD, user.getUserId());
+        doReturn(attempt)
+                .when(attemptDAO).getRequired(attempt.getAttemptId());
+        Attempt modAttempt = attemptService.resetBySuccessfulLogin(attempt);
 
-//    @Test(expected=LockedException.class)
-//    public void updateShouldBlockUser() {
-//        Attempt attempt = attemptFactory.create(USERID, LOGIN, 5, LASTMOD);
-//        Attempt modAttempt = attemptService.updateFailAttempts(attempt);
-//    }
+        assertThat(modAttempt.getLogin(), is(LOGIN));
+        assertThat(modAttempt.getAttempts(), is(0));
+    }
+
+    @Test
+    public void updateShouldIncreaseFailedAttemptsCount() {
+        User user = userFactory.create(LOGIN, PASSWORD, NAME, SURNAME, EMAIL, ACCESSLEVEL);
+        doReturn(user)
+                .when(userDAO).getById(user.getUserId());
+
+        Attempt attempt = attemptFactory.create(LOGIN, ATTEMPTS, LASTMOD, user.getUserId());
+        doReturn(attempt)
+                .when(attemptDAO).getRequired(attempt.getAttemptId());
+
+        Attempt modAttempt = attemptService.updateFailAttempts(attempt);
+        assertThat(modAttempt.getLogin(), is(LOGIN));
+        assertThat(modAttempt.getAttempts(), is(ATTEMPTS + 1));
+        assertTrue(Math.abs(modAttempt.getLastModified().getTime() - new Date().getTime()) < 1500);
+
+    }
 
     @Test
     public void getShouldReturnCreatedAttempt() {

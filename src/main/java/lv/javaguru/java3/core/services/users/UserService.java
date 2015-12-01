@@ -27,4 +27,6 @@ public interface UserService {
 
     User setStatusVIP (User user);
 
+    //TODO: impossible to delete user, who is logged in
+
 }
