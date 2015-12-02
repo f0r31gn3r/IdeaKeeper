@@ -14,19 +14,19 @@ public interface UserResource {
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/users")
+    @Path("/users/create")
     UserDTO create(UserDTO userDTO);
 
     @GET
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/users/{userId}")
+    @Path("/users/get/{userId}")
     UserDTO get(@PathParam("userId") Long userId);
 
     @DELETE
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/users/{userId}")
+    @Path("/users/delete/{userId}")
     int delete(@PathParam("userId") Long userId);
 
     @PUT

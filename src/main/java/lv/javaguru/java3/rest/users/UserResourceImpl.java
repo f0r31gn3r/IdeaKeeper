@@ -7,6 +7,7 @@ import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 import lv.javaguru.java3.core.services.CommandExecutor;
+import lv.javaguru.java3.core.services.authentication.AuthenticationService;
 import lv.javaguru.java3.core.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Component
 @Path("/users")
 public class UserResourceImpl {
-	
-	private CommandExecutor commandExecutor;
+
+    private CommandExecutor commandExecutor;
 
     @Autowired
     public UserResourceImpl(CommandExecutor commandExecutor) {
@@ -29,11 +30,14 @@ public class UserResourceImpl {
     }
 
     @Autowired  UserService userService;
+    @Autowired  AuthenticationService authenticationService;
 
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
+    @Path("/create")
     public UserDTO create(UserDTO userDTO) {
+        //if(authenticationService.getAccessLevel().equals(AccessLevel.VIP.name())){
         CreateUserCommand command = new CreateUserCommand(
                 userDTO.getLogin(), userDTO.getPassword(),
                 userDTO.getName(), userDTO.getSurname(),
@@ -41,12 +45,13 @@ public class UserResourceImpl {
         );
         CreateUserResult result = commandExecutor.execute(command);
         return result.getUser();
+        //} else return null;
     }
 
     @GET
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/{userId}")
+    @Path("/get/{userId}")
     public UserDTO get(@PathParam("userId") Long userId) {
         GetUserCommand command = new GetUserCommand(userId);
         GetUserResult result = commandExecutor.execute(command);
@@ -56,7 +61,7 @@ public class UserResourceImpl {
     @DELETE
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/{userId}")
+    @Path("/delete/{userId}")
     public int delete(@PathParam("userId") Long userId) {
         DeleteUserCommand command = new DeleteUserCommand(userId);
         DeleteUserResult result = commandExecutor.execute(command);
@@ -154,6 +159,5 @@ public class UserResourceImpl {
         }
         return resultSetDTO;
     }
-
 
 }

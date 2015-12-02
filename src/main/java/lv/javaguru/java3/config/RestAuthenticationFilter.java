@@ -17,8 +17,6 @@ import java.io.IOException;
 @Configuration
 @Profile("prod")
 public class RestAuthenticationFilter implements javax.servlet.Filter {
-	//public static final String AUTHENTICATION_HEADER = "Authorization";
-
 	@Autowired
 	AuthenticationService authenticationService;
 
@@ -26,15 +24,25 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 						 FilterChain filter) throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
+			String requestType = ((HttpServletRequest) request).getPathInfo();
+			System.out.println("requested path:" + "[" + requestType + "]");
 
-			if(((HttpServletRequest) request).getPathInfo().contains("login")){
+			//if user wants to login
+			if(requestType.contains("login")){
 				filter.doFilter(request, response);
-			} else if(((HttpServletRequest) request).getPathInfo().contains("logout")){
+
+				//if user wants to logout
+			} else if(requestType.contains("logout")){
 				authenticationService.setState(AuthenticationStatus.LOGOUT.getValue());
 				filter.doFilter(request, response);
-			}else if (authenticationService.getState().equals(AuthenticationStatus.SUCCESSFUL_LOGIN.getValue())) {
+
+				//if user calls operation excepting deletion (not allowed)
+			}else if (authenticationService.getState().equals(AuthenticationStatus.SUCCESSFUL_LOGIN.getValue())
+					&& !requestType.contains("delete")) {
 				filter.doFilter(request, response);
-			} else {
+
+				//if something goes wrong
+			}else {
 				if (response instanceof HttpServletResponse) {
 					HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 					httpServletResponse

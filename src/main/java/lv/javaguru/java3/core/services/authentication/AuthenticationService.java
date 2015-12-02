@@ -14,5 +14,12 @@ public interface AuthenticationService {
 
    void setState(String state);
 
+   String getUserLogin();
+
+   void setUserLogin(String userLogin);
+
+   String getAccessLevel();
+
+   void setAccessLevel(String accessLevel);
 
 }

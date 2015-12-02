@@ -26,6 +26,7 @@ public class AuthenticationResourceImpl {
 	@Path("/login")
 	public String login(UserDTO userDTO) {
 		authenticationService.authenticate(userDTO.getLogin(), userDTO.getPassword());
+
 		if(authenticationService.getState().equals(AuthenticationStatus.SUCCESSFUL_LOGIN.getValue())){
 			return "Welcome!";
 		} else if(authenticationService.getState().equals(AuthenticationStatus.BLOCKED.getValue())){

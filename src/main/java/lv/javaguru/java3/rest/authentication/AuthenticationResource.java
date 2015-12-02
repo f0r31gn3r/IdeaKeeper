@@ -12,7 +12,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public interface AuthenticationResource {
 
-	@POST
+    @POST
     @Consumes(APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/authentication/login")

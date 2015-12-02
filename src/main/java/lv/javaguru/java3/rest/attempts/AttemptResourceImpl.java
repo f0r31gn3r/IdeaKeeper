@@ -30,6 +30,7 @@ public class AttemptResourceImpl {
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
+    @Path("/create")
     public AttemptDTO create(AttemptDTO attemptDTO) {
 
         Long id = attemptDTO.getUserId();
@@ -49,7 +50,7 @@ public class AttemptResourceImpl {
     @GET
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/{attemptId}")
+    @Path("/get/{attemptId}")
     public AttemptDTO get(@PathParam("attemptId") Long attemptId) {
         GetAttemptCommand command = new GetAttemptCommand(attemptId);
         GetAttemptResult result = commandExecutor.execute(command);
@@ -59,7 +60,7 @@ public class AttemptResourceImpl {
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/failed/{userLogin}")
+    @Path("/modify/failed/{userLogin}")
     public AttemptDTO failed(@PathParam("userLogin") String userLogin) {
         Attempt userAttempt = attemptService.get(userLogin);
         userAttempt = attemptService.updateFailAttempts(userAttempt);
@@ -67,10 +68,10 @@ public class AttemptResourceImpl {
         AttemptDTO attemptDTO = new AttemptConverter().convert(userAttempt);
 
         UpdateAttemptCommand command = new UpdateAttemptCommand(
-                                                attemptDTO.getAttemptId(),
-                                                attemptDTO.getLogin(),
-                                                attemptDTO.getAttempts(),
-                                                attemptDTO.getLastModified()
+                attemptDTO.getAttemptId(),
+                attemptDTO.getLogin(),
+                attemptDTO.getAttempts(),
+                attemptDTO.getLastModified()
         );
 
         UpdateAttemptResult result = commandExecutor.execute(command);
@@ -80,7 +81,7 @@ public class AttemptResourceImpl {
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/reset_by_time/{userLogin}")
+    @Path("/modify/reset_by_time/{userLogin}")
     public AttemptDTO resetByTime(@PathParam("userLogin") String userLogin) {
         Attempt userAttempt = attemptService.get(userLogin);
         userAttempt = attemptService.resetByTime(userAttempt);
@@ -101,7 +102,7 @@ public class AttemptResourceImpl {
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/reset_by_login/{userLogin}")
+    @Path("/modify/reset_by_login/{userLogin}")
     public AttemptDTO resetByLogin(@PathParam("userLogin") String userLogin) {
         Attempt userAttempt = attemptService.get(userLogin);
         userAttempt = attemptService.resetBySuccessfulLogin(userAttempt);

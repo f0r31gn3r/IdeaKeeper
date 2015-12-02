@@ -26,6 +26,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Autowired   private UserService userService;
 
     public static String state = new String("");
+    public static String userLogin = new String("");
+    private static String accessLevel = new String("");
 
     @Override
     public boolean authenticate(String username, String password) {
@@ -38,13 +40,15 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
             //IF USER IS ALREADY BLOCKED
             if(userFromDB.getAccessLevel().equals(AccessLevel.BLOCKED.name())){
-                state = AuthenticationStatus.BLOCKED.getValue();
+                //state = AuthenticationStatus.BLOCKED.getValue();
+                setState(AuthenticationStatus.BLOCKED.getValue());
                 return false;
             }
 
             //IF THIS USER HAS FAILED LOGIN MORE, THAN 3 TIMES, BLOCK HIM
             if(userAttempt != null && userAttempt.getAttempts() >= MAX_ATTEMPTS){
-                state = AuthenticationStatus.BLOCKED.getValue();
+                //state = AuthenticationStatus.BLOCKED.getValue();
+                setState(AuthenticationStatus.BLOCKED.getValue());
                 userService.blockUser(userFromDB);
                 return false;
             }
@@ -56,7 +60,10 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 if(userAttempt != null){
                     attemptService.resetBySuccessfulLogin(userAttempt);
                 }
-                state = AuthenticationStatus.SUCCESSFUL_LOGIN.getValue();
+                //state = AuthenticationStatus.SUCCESSFUL_LOGIN.getValue();
+                setState(AuthenticationStatus.SUCCESSFUL_LOGIN.getValue());
+                userLogin = userFromDB.getLogin();
+                accessLevel = userFromDB.getAccessLevel();
                 return true;
             } else {
                 //IF USER HASN'T TRIED TO LOGIN EARLIER, CREATE ATTEMPTS RECORD FOR HIM
@@ -65,12 +72,14 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 }
 
                 //UPDATE FAILED ATTEMPTS
-                state = AuthenticationStatus.PASS_FAILED.getValue();
+                //state = AuthenticationStatus.PASS_FAILED.getValue();
+                setState(AuthenticationStatus.PASS_FAILED.getValue());
                 attemptService.updateFailAttempts(userAttempt);
                 return false;
             }
         } else {
-            state = AuthenticationStatus.USERNAME_FAILED.getValue();
+            //state = AuthenticationStatus.USERNAME_FAILED.getValue();
+            setState(AuthenticationStatus.USERNAME_FAILED.getValue());
             return false;
         }
     }
@@ -85,5 +94,23 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         state = inputState;
     }
 
+    @Override
+    public String getUserLogin() {
+        return userLogin;
+    }
 
+    @Override
+    public String getAccessLevel() {
+        return accessLevel;
+    }
+
+    @Override
+    public void setUserLogin(String inputLogin) {
+        userLogin = inputLogin;
+    }
+
+    @Override
+    public void setAccessLevel(String inputAccessLevel) {
+        accessLevel = inputAccessLevel;
+    }
 }

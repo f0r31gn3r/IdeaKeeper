@@ -7,35 +7,35 @@ import javax.ws.rs.*;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public interface AttemptResource {
-	
-	@POST
+
+    @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/attempts")
+    @Path("/attempts/create")
     AttemptDTO create(AttemptDTO attemptDTO);
 
     @GET
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/attempts/{attemptId}")
+    @Path("/attempts/get/{attemptId}")
     AttemptDTO get(@PathParam("attemptId") Long attemptId);
 
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/attempts/failed/{userLogin}")
+    @Path("/attempts/modify/failed/{userLogin}")
     AttemptDTO failed(@PathParam("userLogin") String userLogin);
 
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/attempts/reset_by_time/{userLogin}")
+    @Path("/attempts/modify/reset_by_time/{userLogin}")
     AttemptDTO resetByTime(@PathParam("userLogin") String userLogin);
 
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/attempts/reset_by_login/{userLogin}")
+    @Path("/attempts/modify/reset_by_login/{userLogin}")
     AttemptDTO resetByLogin(@PathParam("userLogin") String userLogin);
 
 }

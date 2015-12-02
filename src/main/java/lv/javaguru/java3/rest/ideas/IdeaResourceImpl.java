@@ -29,6 +29,7 @@ public class IdeaResourceImpl {
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
+    @Path("/create")
     public IdeaDTO create(IdeaDTO ideaDTO) {
         Long id = ideaDTO.getUserId();
         if(id==null){
@@ -46,7 +47,7 @@ public class IdeaResourceImpl {
     @GET
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/{ideaId}")
+    @Path("/get/{ideaId}")
     public IdeaDTO get(@PathParam("ideaId") Long ideaId) {
         GetIdeaCommand command = new GetIdeaCommand(ideaId);
         GetIdeaResult result = commandExecutor.execute(command);
@@ -56,7 +57,7 @@ public class IdeaResourceImpl {
     @DELETE
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/{ideaId}")
+    @Path("/delete/{ideaId}")
     public int delete(@PathParam("ideaId") Long ideaId) {
         DeleteIdeaCommand command = new DeleteIdeaCommand(ideaId);
         DeleteIdeaResult result = commandExecutor.execute(command);

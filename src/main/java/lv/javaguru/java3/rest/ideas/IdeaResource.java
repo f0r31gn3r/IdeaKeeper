@@ -14,18 +14,18 @@ public interface IdeaResource {
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/ideas")
+    @Path("/ideas/create")
     IdeaDTO create(IdeaDTO ideaDTO);
 
     @GET
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/ideas/{ideaId}")
+    @Path("/ideas/get/{ideaId}")
     IdeaDTO get(@PathParam("ideaId") Long ideaId);
 
     @DELETE
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/ideas/{ideaId}")
+    @Path("/ideas/delete/{ideaId}")
     int delete(@PathParam("ideaId") Long ideaId);
 }
