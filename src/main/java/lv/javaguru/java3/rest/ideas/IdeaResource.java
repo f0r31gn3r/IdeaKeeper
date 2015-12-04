@@ -28,4 +28,11 @@ public interface IdeaResource {
     @Produces(APPLICATION_JSON)
     @Path("/ideas/delete/{ideaId}")
     int delete(@PathParam("ideaId") Long ideaId);
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/ideas/update/{ideaId}")
+    int updateDescription(@PathParam("ideaId") Long ideaId, IdeaDTO ideaDTO);
+
 }

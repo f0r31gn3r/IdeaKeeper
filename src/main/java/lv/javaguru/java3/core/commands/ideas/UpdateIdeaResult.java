@@ -14,7 +14,7 @@ public class UpdateIdeaResult implements DomainCommandResult {
         this.idea = idea;
     }
 
-    public IdeaDTO getUser() {
+    public IdeaDTO getIdea() {
         return idea;
     }
 

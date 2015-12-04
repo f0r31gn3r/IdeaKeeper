@@ -64,4 +64,25 @@ public class IdeaResourceImpl {
         return result.getResult();
     }
 
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    @Path("/update/{ideaId}")
+    public IdeaDTO updateDescription(@PathParam("ideaId") Long ideaId, IdeaDTO ideaDTO) {
+        GetIdeaCommand command = new GetIdeaCommand(ideaId);
+        GetIdeaResult result = commandExecutor.execute(command);
+        IdeaDTO ideaDTOfromDB = result.getIdea();
+
+        String newDescription = ideaDTO.getDescription();
+        ideaDTOfromDB.setDescription(newDescription);
+
+        UpdateIdeaCommand updateCommand = new UpdateIdeaCommand(
+                ideaDTOfromDB.getIdeaId(),
+                ideaDTOfromDB.getTitle(),
+                ideaDTOfromDB.getDescription());
+
+        UpdateIdeaResult updateResult = commandExecutor.execute(updateCommand);
+        return updateResult.getIdea();
+    }
+
 }
