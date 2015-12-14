@@ -7,8 +7,11 @@ import lv.javaguru.java3.rest.authentication.AuthenticationResourceImpl;
 import lv.javaguru.java3.rest.users.UserResourceImpl;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
+@Profile("rest")
+
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {

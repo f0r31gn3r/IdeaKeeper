@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Configuration
-@Profile("prod")
+@Profile("auth")
 public class RestAuthenticationFilter implements javax.servlet.Filter {
 	@Autowired	AuthenticationService authenticationService;
 	static String requestType = new String();

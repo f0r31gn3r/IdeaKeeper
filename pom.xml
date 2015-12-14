@@ -75,6 +75,7 @@
         <feign-jackson.version>8.12.1</feign-jackson.version>
 
         <spring-boot-starter-test.version>1.2.7.RELEASE</spring-boot-starter-test.version>
+        <spring-integration-java-dsl.version>1.0.0.RELEASE</spring-integration-java-dsl.version>
     </properties>
 
     <dependencies>
@@ -186,6 +187,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency-->
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>1.4.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+
+
 
     </dependencies>
 
