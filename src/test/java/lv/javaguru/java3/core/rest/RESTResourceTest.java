@@ -37,7 +37,7 @@ public class RESTResourceTest {
 
     @Before
     public void init() throws IOException {
-        String url = "http://localhost:" + port;
+        String url = "http://localhost:" + port + "/rest";
 
         clientResource = Feign.builder()
                 .encoder(new JacksonEncoder())

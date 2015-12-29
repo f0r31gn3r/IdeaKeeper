@@ -131,11 +131,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 use javaee_idea_keeper;
 
-INSERT INTO `javaee_idea_keeper`.`users` VALUES (2, 'USER','email@email.lv', 'user1', 'name', 'user','surname');
-INSERT INTO `javaee_idea_keeper`.`users` VALUES (3, 'USER','email@email.lv', 'user2', 'name', 'user','surname');
-INSERT INTO `javaee_idea_keeper`.`users` VALUES (4, 'USER','email@email.lv', 'user3', 'name', 'user','surname');
+INSERT INTO `javaee_idea_keeper`.`users` VALUES (2, 'USER','email@email.lv', 'user1', 'user_name1', 'user','surname');
+INSERT INTO `javaee_idea_keeper`.`users` VALUES (3, 'USER','email@email.lv', 'user2', 'user_name2', 'user','surname');
+INSERT INTO `javaee_idea_keeper`.`users` VALUES (4, 'USER','email@email.lv', 'user3', 'user_name3', 'user','surname');
 INSERT INTO `javaee_idea_keeper`.`users` VALUES (1, 'ADMIN','admin@admin.lv', 'admin', 'admin', 'admin','admin');
-
 
 INSERT INTO `javaee_idea_keeper`.`ideas` VALUES (1, 'title1','description1', 2);
 INSERT INTO `javaee_idea_keeper`.`ideas` VALUES (2, 'title2','description2', 2);

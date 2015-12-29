@@ -10,6 +10,8 @@ import lv.javaguru.java3.core.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserServiceImpl implements UserService {
 
@@ -70,6 +72,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User setStatusVIP(User user) {
         return update(user.getUserId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), AccessLevel.VIP.name());
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userDAO.getAll();
     }
 
 

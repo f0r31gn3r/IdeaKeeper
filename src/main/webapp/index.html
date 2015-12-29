@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>IdeaKeeper</title>
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+<div class="header">
+	<input type="text" id="searchKey"/>
+	<button id="btnSearch">Search</button>
+	<button id="btnAdd">New User</button>
+</div>
+
+
+<div class="leftArea">
+<ul id="userList"></ul>
+</div>
+
+<form id="userForm">
+	
+<div class="mainArea">
+
+<label>Id:</label>
+<input id="userId" name="id" type="text" disabled />
+
+<label>Name:</label>
+<input type="text" id="name" name="name" required>
+
+<label>Surname:</label>
+<input type="text" id="surname" name="surname"/>
+
+<label>E-mail:</label>
+<input type="text" id="email" name="email"/>
+
+<button id="btnSave">Save</button>
+<button id="btnDelete">Delete</button>
+
+</div>
+
+<div class="rightArea">
+
+<img id="pic" height="300"/>
+
+<label>Notes:</label>
+<textarea id="description" name="description"></textarea>
+</div>
+
+</form>
+
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

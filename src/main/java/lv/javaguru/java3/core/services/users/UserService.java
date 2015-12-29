@@ -2,6 +2,8 @@ package lv.javaguru.java3.core.services.users;
 
 import lv.javaguru.java3.core.domain.user.User;
 
+import java.util.List;
+
 /**
  * Created by Anna on 27.10.2015.
  */
@@ -26,6 +28,8 @@ public interface UserService {
     User unblockUser (User user);
 
     User setStatusVIP (User user);
+
+    List<User> getAll();
 
     //TODO: impossible to delete user, who is logged in
 

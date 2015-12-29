@@ -1,7 +1,9 @@
 package lv.javaguru.java3.core.dto.user;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
+@XmlRootElement
 public class UserDTO implements Serializable{
 
 	private Long userId;

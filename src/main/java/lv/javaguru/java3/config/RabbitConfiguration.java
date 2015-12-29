@@ -3,6 +3,7 @@ package lv.javaguru.java3.config;
 /**
  * Created by Anna on 13.12.2015.
  */
+
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;

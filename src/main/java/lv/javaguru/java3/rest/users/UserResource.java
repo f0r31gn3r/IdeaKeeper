@@ -4,12 +4,12 @@ import lv.javaguru.java3.core.dto.idea.IdeaDTO;
 import lv.javaguru.java3.core.dto.user.UserDTO;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.Set;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
 public interface UserResource {
-
 
     @POST
     @Consumes(APPLICATION_JSON)
@@ -18,8 +18,9 @@ public interface UserResource {
     UserDTO create(UserDTO userDTO);
 
     @GET
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/get/{userId}")
     UserDTO get(@PathParam("userId") Long userId);
 
@@ -32,7 +33,7 @@ public interface UserResource {
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/users")
+    @Path("/users/update")
     UserDTO update(UserDTO userDTO);
 
     @PUT
@@ -59,5 +60,8 @@ public interface UserResource {
     @Path("/users/get_ideas/{userId}")
     Set<IdeaDTO> getUserIdeas(@PathParam("userId") Long userId);
 
-
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Path("/users")
+    List<UserDTO> getAllUsers();
 }

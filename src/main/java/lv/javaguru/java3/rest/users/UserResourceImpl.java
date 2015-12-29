@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -49,8 +52,9 @@ public class UserResourceImpl {
     }
 
     @GET
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/get/{userId}")
     public UserDTO get(@PathParam("userId") Long userId) {
         GetUserCommand command = new GetUserCommand(userId);
@@ -71,6 +75,7 @@ public class UserResourceImpl {
     @PUT
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
+    @Path("/update")
     public UserDTO update(UserDTO userDTO) {
         UpdateUserCommand command = new UpdateUserCommand(
                 userDTO.getUserId(),
@@ -160,4 +165,18 @@ public class UserResourceImpl {
         return resultSetDTO;
     }
 
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public List<UserDTO> getAllUsers(){
+        List<User> users = userService.getAll();
+        List<UserDTO> usersDTO = new ArrayList<>();
+
+        if(users.size() > 0){
+            for(User u : users){
+                usersDTO.add(new UserConverter().convert(u));
+            }
+        }
+
+        return usersDTO;
+    }
 }
