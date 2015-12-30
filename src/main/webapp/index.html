@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>IdeaKeeper</title>
-<link rel="stylesheet" href="css/styles.css" />
+	<title>IdeaKeeper</title>
+	<link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
@@ -15,37 +15,46 @@
 
 
 <div class="leftArea">
-<ul id="userList"></ul>
+	<ul id="userList"></ul>
 </div>
 
 <form id="userForm">
-	
-<div class="mainArea">
 
-<label>Id:</label>
-<input id="userId" name="id" type="text" disabled />
+	<div class="mainArea">
 
-<label>Name:</label>
-<input type="text" id="name" name="name" required>
+		<label>Id:</label>
+		<input id="userId" name="userId" type="text" disabled />
 
-<label>Surname:</label>
-<input type="text" id="surname" name="surname"/>
+		<label>Login:</label>
+		<input type="text" id="login" name="login" required>
 
-<label>E-mail:</label>
-<input type="text" id="email" name="email"/>
+		<label>Password:</label>
+		<input type="text" id="password" name="password" required>
 
-<button id="btnSave">Save</button>
-<button id="btnDelete">Delete</button>
+		<label>Name:</label>
+		<input type="text" id="name" name="name" required>
 
-</div>
+		<label>Surname:</label>
+		<input type="text" id="surname" name="surname"/>
 
-<div class="rightArea">
+		<label>E-mail:</label>
+		<input type="text" id="email" name="email"/>
 
-<img id="pic" height="300"/>
+		<!-- label>Access level:</label-->
+		<input type="text" id="accessLevel" name="accessLevel"/>
 
-<label>Notes:</label>
-<textarea id="description" name="description"></textarea>
-</div>
+		<button id="btnSave">Save</button>
+		<button id="btnDelete">Delete</button>
+
+	</div>
+
+	<div class="rightArea">
+
+		<img id="pic" height="300"/>
+
+		<label>Notes:</label>
+		<textarea id="description" name="description"></textarea>
+	</div>
 
 </form>
 

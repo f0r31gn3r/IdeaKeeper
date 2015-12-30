@@ -15,7 +15,7 @@ $('#searchKey').keypress(function(e){
 		search($('#searchKey').val());
 		e.preventDefault();
 		return false;
-    }
+	}
 });
 
 $('#btnAdd').click(function() {
@@ -41,19 +41,21 @@ $('#userList a').live('click', function() {
 });
 
 $("img").error(function(){
-  $(this).attr("src", "pics/generic.jpg");
+	$(this).attr("src", "pics/generic.jpg");
 
 });
 
 function search(searchKey) {
-	if (searchKey == '') 
+	if (searchKey == '')
 		findAll();
 	else
-		findByName(searchKey);
+		findById(searchKey);
 }
 
 function newUser() {
-
+	$('#btnDelete').hide();
+	currentUser = {};
+	renderDetails(currentUser); // Display empty form
 }
 
 function findAll() {
@@ -86,15 +88,57 @@ function findById(id) {
 }
 
 function addUser() {
+	console.log('addUser');
 
+	$.ajax({
+		type: 'POST',
+		contentType: 'application/json',
+		url: rootURL + "/create",
+		dataType: "json",
+		data: formToJSON(),
+		success: function(data, textStatus, jqXHR){
+			alert('User created successfully');
+			$('#btnDelete').show();
+			$('#userId').val(data.id);
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('addUser error: ' + textStatus);
+		}
+	});
 }
 
 function updateUser() {
 
+	console.log('updateUser');
+
+	$.ajax({
+		type: 'PUT',
+		contentType: 'application/json',
+		url: rootURL + '/update/',
+		dataType: "json",
+		data: formToJSON(),
+		success: function(data, textStatus, jqXHR){
+			alert('User updated successfully');
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('updateUser error: ' + textStatus);
+		}
+	});
+
 }
 
 function deleteUser() {
-
+	console.log('deleteUser');
+	$.ajax({
+		type: 'DELETE',
+		url: rootURL + '/delete/' + $('#userId').val(),
+		success: function(data, textStatus, jqXHR){
+			alert('User deleted successfully');
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert('deleteUser error');
+		}
+	});
 }
 
 function renderList(data) {
@@ -102,26 +146,30 @@ function renderList(data) {
 
 	$('#userList li').remove();
 	$.each(list, function(index, userDTO) {
-		$('#userList').append('<li><a href="#" data-identity="' + userDTO.userId + '">'+userDTO.name+'</a></li>');
+		$('#userList').append('<li><a href="#" data-identity="' + userDTO.userId + '">'+userDTO.login+'</a></li>');
 	});
 }
 
 function renderDetails(userDTO) {
 	$('#userId').val(userDTO.userId);
+	$('#login').val(userDTO.login);
+	$('#password').val(userDTO.password);
 	$('#name').val(userDTO.name);
 	$('#surname').val(userDTO.surname);
 	$('#email').val(userDTO.email);
-	$('#pic').attr('src', 'pics/' + userDTO.picture);
+	$('#accessLevel').val(userDTO.accessLevel);
+	//$('#pic').attr('src', 'pics/' + userDTO.picture);
 }
 
 function formToJSON() {
 	var userId = $('#userId').val();
 	return JSON.stringify({
-		"id": userId == "" ? null : userId,
-		"name": $('#name').val(), 
+		"userId": userId == "" ? null : userId,
+		"login": $('#login').val(),
+		"password": $('#password').val(),
+		"name": $('#name').val(),
 		"surname": $('#surname').val(),
 		"email": $('#email').val(),
-		"picture": currentUser.picture,
-		"description": $('#description').val()
-		});
+		"accessLevel": $('#accessLevel').val()
+	});
 }

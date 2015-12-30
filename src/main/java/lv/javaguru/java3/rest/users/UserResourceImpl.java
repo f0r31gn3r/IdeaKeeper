@@ -19,8 +19,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
 @Component
 @Path("/users")
 public class UserResourceImpl {
@@ -36,8 +34,10 @@ public class UserResourceImpl {
     @Autowired  AuthenticationService authenticationService;
 
     @POST
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/create")
     public UserDTO create(UserDTO userDTO) {
         //if(authenticationService.getAccessLevel().equals(AccessLevel.VIP.name())){
@@ -63,8 +63,10 @@ public class UserResourceImpl {
     }
 
     @DELETE
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/delete/{userId}")
     public int delete(@PathParam("userId") Long userId) {
         DeleteUserCommand command = new DeleteUserCommand(userId);
@@ -73,8 +75,10 @@ public class UserResourceImpl {
     }
 
     @PUT
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/update")
     public UserDTO update(UserDTO userDTO) {
         UpdateUserCommand command = new UpdateUserCommand(
@@ -88,8 +92,10 @@ public class UserResourceImpl {
     }
 
     @PUT
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/block/{userId}")
     public UserDTO block(@PathParam("userId") Long userId) {
         User user = userService.get(userId);
@@ -107,8 +113,10 @@ public class UserResourceImpl {
     }
 
     @PUT
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/unblock/{userId}")
     public UserDTO unblock(@PathParam("userId") Long userId) {
         User user = userService.get(userId);
@@ -126,8 +134,10 @@ public class UserResourceImpl {
     }
 
     @PUT
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/setvip/{userId}")
     public UserDTO setVip(@PathParam("userId") Long userId) {
         User user = userService.get(userId);
@@ -145,8 +155,10 @@ public class UserResourceImpl {
     }
 
     @GET
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/get_ideas/{userId}")
     public Set<IdeaDTO> getUserIdeas(@PathParam("userId") Long userId) {
         Set<IdeaDTO> resultSetDTO = new HashSet<IdeaDTO>();

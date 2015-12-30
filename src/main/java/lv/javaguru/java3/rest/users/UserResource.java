@@ -7,13 +7,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Set;
-
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public interface UserResource {
 
     @POST
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/create")
     UserDTO create(UserDTO userDTO);
 
@@ -25,38 +25,50 @@ public interface UserResource {
     UserDTO get(@PathParam("userId") Long userId);
 
     @DELETE
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/delete/{userId}")
     int delete(@PathParam("userId") Long userId);
 
     @PUT
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/update")
     UserDTO update(UserDTO userDTO);
 
     @PUT
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/block/{userId}")
     UserDTO block(@PathParam("userId") Long userId);
 
     @PUT
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/unblock/{userId}")
     UserDTO unblock(@PathParam("userId") Long userId);
 
     @PUT
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/setvip/{userId}")
     UserDTO setVip(@PathParam("userId") Long userId);
 
     @GET
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/get_ideas/{userId}")
     Set<IdeaDTO> getUserIdeas(@PathParam("userId") Long userId);
 
