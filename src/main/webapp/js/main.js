@@ -1,3 +1,25 @@
+//function findCurrentUserIdeas(id){
+//	console.log('findCurrentUserIdeas');
+//	$.ajax({
+//		type: 'GET',
+//		url: rootURL + "/get_ideas/" + id,
+//		dataType: "json",
+//		success: function(data){
+//			currentUserIdeas = data;
+//			renderUserIdeasList(currentUserIdeas);
+//		}
+//	});
+//}
+
+//function renderUserIdeasList(data) {
+//	var list = data == null ? [] : (data instanceof Array ? data : [data]);
+//
+//	$('#ideasList li').remove();
+//	$.each(list, function(index, ideaDTO) {
+//		$('#description').val(ideaDTO.ideaId + ' '+ideaDTO.title);
+//	});
+//}
+
 var rootURL = "http://localhost:8080/rest/users";
 var currentUser;
 

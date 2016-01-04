@@ -2,11 +2,14 @@ package lv.javaguru.java3.core.dto.idea;
 
 import lv.javaguru.java3.core.dto.user.UserDTO;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
  * Created by Anna on 22.11.2015.
  */
+
+@XmlRootElement
 public class IdeaDTO implements Serializable {
 
     private Long ideaId;
