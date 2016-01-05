@@ -15,6 +15,7 @@
 
 
 <div class="leftArea">
+	<label><h1>All Users:</h1></label>
 	<ul id="userList"></ul>
 </div>
 
@@ -22,25 +23,25 @@
 
 	<div class="mainArea">
 
-		<label>Id:</label>
+		<label><name>Id:</name></label>
 		<input id="userId" name="userId" type="text" disabled />
 
-		<label>Login:</label>
+		<label><name>Login:</name></label>
 		<input type="text" id="login" name="login" required>
 
-		<label>Password:</label>
+		<label><name>Password:</name></label>
 		<input type="text" id="password" name="password" required>
 
-		<label>Name:</label>
-		<input type="text" id="name" name="name" required>
+		<label><name>Name:</name></label>
+		<input type="text" id="name" name="name"/>
 
-		<label>Surname:</label>
+		<label><name>Surname:</name></label>
 		<input type="text" id="surname" name="surname"/>
 
-		<label>E-mail:</label>
+		<label><name>E-mail:</name></label>
 		<input type="text" id="email" name="email"/>
 
-		<!-- label>Access level:</label-->
+		<label><name>Access level:</name></label>
 		<input type="text" id="accessLevel" name="accessLevel"/>
 
 		<button id="btnSave">Save</button>
@@ -50,10 +51,10 @@
 
 	<div class="rightArea">
 
-		<img id="pic" height="300"/>
+		<img id="pic" height="250"/>
 
-		<label>Notes:</label>
-		<textarea id="description" name="description"></textarea>
+		<label><h1>User's Ideas:</h1></label>
+		<ul id="ideasList" name="ideasList"></ul>
 	</div>
 
 </form>

@@ -1,25 +1,3 @@
-//function findCurrentUserIdeas(id){
-//	console.log('findCurrentUserIdeas');
-//	$.ajax({
-//		type: 'GET',
-//		url: rootURL + "/get_ideas/" + id,
-//		dataType: "json",
-//		success: function(data){
-//			currentUserIdeas = data;
-//			renderUserIdeasList(currentUserIdeas);
-//		}
-//	});
-//}
-
-//function renderUserIdeasList(data) {
-//	var list = data == null ? [] : (data instanceof Array ? data : [data]);
-//
-//	$('#ideasList li').remove();
-//	$.each(list, function(index, ideaDTO) {
-//		$('#description').val(ideaDTO.ideaId + ' '+ideaDTO.title);
-//	});
-//}
-
 var rootURL = "http://localhost:8080/rest/users";
 var currentUser;
 
@@ -76,6 +54,7 @@ function search(searchKey) {
 
 function newUser() {
 	$('#btnDelete').hide();
+	$('#ideasList li').remove();
 	currentUser = {};
 	renderDetails(currentUser); // Display empty form
 }
@@ -88,10 +67,6 @@ function findAll() {
 		dataType: "json",
 		success: renderList
 	});
-}
-
-function findByName(searchKey) {
-
 }
 
 function findById(id) {
@@ -172,7 +147,31 @@ function renderList(data) {
 	});
 }
 
+function findCurrentUserIdeas(id){
+	console.log('findCurrentUserIdeas');
+	$.ajax({
+		type: 'GET',
+		url: rootURL + "/get_ideas/" + id,
+		dataType: "json",
+		success: function(data){
+			currentUserIdeas = data;
+			renderUserIdeasList(currentUserIdeas);
+		}
+	});
+}
+
+function renderUserIdeasList(data) {
+	var list = data == null ? [] : (data instanceof Array ? data : [data]);
+
+	$('#ideasList li').remove();
+	$.each(list, function(index, ideaDTO) {
+		$('#ideasList').append('<li><a href="#" data-identity="' + ideaDTO.ideaId + '">'+ideaDTO.title + ': ' + ideaDTO.description+'</a></li>')
+	});
+}
+
 function renderDetails(userDTO) {
+	findCurrentUserIdeas(userDTO.userId)
+
 	$('#userId').val(userDTO.userId);
 	$('#login').val(userDTO.login);
 	$('#password').val(userDTO.password);
@@ -180,7 +179,7 @@ function renderDetails(userDTO) {
 	$('#surname').val(userDTO.surname);
 	$('#email').val(userDTO.email);
 	$('#accessLevel').val(userDTO.accessLevel);
-	//$('#pic').attr('src', 'pics/' + userDTO.picture);
+	$('#pic').attr('src', 'pics/' + userDTO.userId + ".jpg");
 }
 
 function formToJSON() {
