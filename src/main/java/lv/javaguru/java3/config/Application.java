@@ -11,7 +11,6 @@ public class Application{
 
     public static void main(String[] args) throws Exception {
 
-        // for authentication
         //System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "auth");
 
         SpringApplication.run(Application.class, args);

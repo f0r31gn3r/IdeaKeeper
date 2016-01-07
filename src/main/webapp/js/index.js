@@ -1,4 +1,5 @@
 var rootURL = "http://localhost:8080/rest/authentication";
+var rootHTML = "http://localhost:8080";
 
 $('#btnLogIn').click(function() {
 	logIn();
@@ -17,6 +18,10 @@ function logIn() {
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR){
 			alert(data.messageBody);
+			if(data.messageBody=='Welcome!'){
+				window.location = rootHTML + "/main.html";
+			}
+
 		},
 		error: function(textStatus){
 			alert('Global error occured: ' + textStatus);

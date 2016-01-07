@@ -129,7 +129,7 @@ function deleteUser() {
 	$.ajax({
 		type: 'DELETE',
 		url: rootURL + '/delete/' + $('#userId').val(),
-		success: function(data, textStatus, jqXHR){
+		success: function(data){
 			alert('User deleted successfully');
 		},
 		error: function(jqXHR, textStatus, errorThrown){

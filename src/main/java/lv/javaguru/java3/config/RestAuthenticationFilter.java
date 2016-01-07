@@ -9,86 +9,75 @@ import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.services.authentication.AuthenticationService;
 import lv.javaguru.java3.core.services.authentication.AuthenticationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 
-@Configuration
-@Profile("auth")
-public class RestAuthenticationFilter implements javax.servlet.Filter {
-	@Autowired	AuthenticationService authenticationService;
+public class RestAuthenticationFilter implements ContainerRequestFilter {
+
+	@Autowired
+	AuthenticationService authenticationService;
 	static String requestType = new String();
 	static HttpSession session = null;
 
+	@Context
+	HttpServletRequest webRequest;
+
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-						 FilterChain filter) throws IOException, ServletException {
-		if (request instanceof HttpServletRequest) {
-			requestType = ((HttpServletRequest) request).getPathInfo();
-			session = ((HttpServletRequest) request).getSession();
-			System.out.println("requested path:" + "[" + requestType + "]");
+	public void filter(ContainerRequestContext request) throws IOException {
+		requestType = request.getUriInfo().getPath();
+		session = webRequest.getSession();
 
-			//if user wants to login
-			if(requestType.contains("login")){
-				authenticationService.setState(AuthenticationStatus.LOGOUT.getValue());
-				filter.doFilter(request, response);
-				if (authenticationService.getState().equals(AuthenticationStatus.SUCCESSFUL_LOGIN.getValue())){
-					initializeUserSession(authenticationService.getUser());
-					System.out.println("session login:" + session.getAttribute("login"));
-					System.out.println("Session user id: " + session.getAttribute("userId"));
-				}
+		if (authenticationService.getUser() != null && session != null) {
+			initializeUserSession(authenticationService.getUser());
+		}
 
-				//if logged in user wants to logout
-			} else if(authenticationService.getState().equals(AuthenticationStatus.SUCCESSFUL_LOGIN.getValue())
-					&& wantsToLogout()){
+		// if user wants to login
+		if (requestType != null && requestType.contains("login")) {
+			authenticationService.setState(AuthenticationStatus.LOGOUT.getValue());
+			return;
+
+			// if logged in user wants to logout
+		} else if (authenticationService.getState().equals(AuthenticationStatus.SUCCESSFUL_LOGIN.getValue())) {
+			if (wantsToLogout()) {
 				authenticationService.setState(AuthenticationStatus.LOGOUT.getValue());
 				clearSession();
-				filter.doFilter(request, response);
+				return;
 
-				//logged in user:
-				//	can't delete not his ideas
-				//	can't operate with attempts
-				// 	can't delete users
-				//	cant't change statusses
-			}else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.USER.name())
-					&& !wantsToDeleteNotHisIdeas()
-					&& !wantsToUpdateNotHisIdeas()
-					&&  userRooterAllowed()){
-				filter.doFilter(request, response);
+				// logged in user:
+				// can't delete not his ideas
+				// can't operate with attempts
+				// can't delete users
+				// cant't change statuses
+			} else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.USER.name())
+					&& !wantsToDeleteNotHisIdeas() && !wantsToUpdateNotHisIdeas() && userRooterAllowed()) {
+				return;
 
-				//logged in admin can't delete himself
-			}else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.ADMIN.name())
-					&& !wantsToDeleteHimself()){
-				filter.doFilter(request, response);
+				// logged in admin can't delete himself
+			} else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.ADMIN.name())
+					&& !wantsToDeleteHimself()) {
+				return;
 
-				//if something goes wrong
-			}else {
-				if (response instanceof HttpServletResponse) {
-					HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-					httpServletResponse
-							.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				}
+				// if user has no rights to perform requested operation
+			} else {
+				request.abortWith(Response.status(Response.Status.FORBIDDEN).build());
 			}
+
+			// if user is not authorized
+		} else {
+			request.abortWith(
+					Response.status(Response.Status.UNAUTHORIZED).entity("User cannot access the resource.").build());
 		}
 	}
 
-	@Override
-	public void destroy() {
-	}
-
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-	}
-
-	private static void initializeUserSession(User user){
+	private static void initializeUserSession(User user) {
 		String userIdeasId = new String("");
-		for(Idea i : user.getIdeas()){
+		for (Idea i : user.getIdeas()) {
 			userIdeasId = userIdeasId + "[" + String.valueOf(i.getIdeaId()) + "]";
 		}
 		session.setAttribute("login", user.getLogin());
@@ -97,77 +86,75 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
 		session.setAttribute("ideas", userIdeasId);
 	}
 
-	private static void clearSession(){
+	private static void clearSession() {
 		session.setAttribute("login", "guest");
 		session.setAttribute("role", "guest");
 		session.setAttribute("userId", "guest");
 		session.setAttribute("ideas", "empty");
 	}
 
-	private static boolean wantsToDeleteHimself(){
+	private static boolean wantsToDeleteHimself() {
 
-		//if logged in user wants to delete himself
-		if(requestType.contains("users/delete")){
+		// if logged in user wants to delete himself
+		if (requestType.contains("users/delete")) {
 			String[] parts = requestType.split("/");
-			String userId = parts[parts.length-1];
-			if(userId.equals(String.valueOf(session.getAttribute("userId")))){
+			String userId = parts[parts.length - 1];
+			if (userId.equals(String.valueOf(session.getAttribute("userId")))) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private static boolean wantsToDeleteNotHisIdeas(){
+	private static boolean wantsToDeleteNotHisIdeas() {
 
-		//if logged in user wants to delete an idea
-		if(requestType.contains("ideas/delete")){
+		// if logged in user wants to delete an idea
+		if (requestType.contains("ideas/delete")) {
 			String[] parts = requestType.split("/");
-			String ideaId = "[" + parts[parts.length-1] + "]";
+			String ideaId = "[" + parts[parts.length - 1] + "]";
 			System.out.println("deleting idea id: " + ideaId);
 
-			//if idea that user wants to delete isn't among the list of his ideas, it means
-			//that he attempts to delete not his ideas
-			if(!String.valueOf(session.getAttribute("ideas")).contains(ideaId)) {
+			// if idea that user wants to delete isn't among the list of his
+			// ideas, it means
+			// that he attempts to delete not his ideas
+			if (!String.valueOf(session.getAttribute("ideas")).contains(ideaId)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private static boolean wantsToUpdateNotHisIdeas(){
+	private static boolean wantsToUpdateNotHisIdeas() {
 
-		//if logged in user wants to update an idea
-		if(requestType.contains("ideas/update")){
+		// if logged in user wants to update an idea
+		if (requestType.contains("ideas/update")) {
 			String[] parts = requestType.split("/");
-			String ideaId = "[" + parts[parts.length-1] + "]";
+			String ideaId = "[" + parts[parts.length - 1] + "]";
 			System.out.println("updating idea id: " + ideaId);
 
-			//if idea that user wants to update isn't among the list of his ideas, it means
-			//that he attempts to update not his ideas
-			if(!String.valueOf(session.getAttribute("ideas")).contains(ideaId)) {
+			// if idea that user wants to update isn't among the list of his
+			// ideas, it means
+			// that he attempts to update not his ideas
+			if (!String.valueOf(session.getAttribute("ideas")).contains(ideaId)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private static boolean wantsToLogout(){
-		if(requestType.contains("logout")){
+	private static boolean wantsToLogout() {
+		if (requestType.contains("logout")) {
 			return true;
 		}
 		return false;
 	}
 
-	private static boolean userRooterAllowed(){
-		if(		!requestType.contains("attempts")
-				&& !requestType.contains("users/delete")
-				&& !requestType.contains("block")
-				&& !requestType.contains("unblock")
-				&& !requestType.contains("setvip")){
-
-			return true;
+	private static boolean userRooterAllowed() {
+		boolean result = true;
+		if (requestType.contains("attempts") || requestType.contains("users/delete") || requestType.contains("block")
+				|| requestType.contains("unblock") || requestType.contains("setvip")) {
+			result = false;
 		}
-		return false;
+		return result;
 	}
-
 }
