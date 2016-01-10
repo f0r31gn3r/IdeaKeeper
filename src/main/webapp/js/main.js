@@ -27,7 +27,7 @@ $('#btnSave').click(function() {
 	if ($('#userId').val() == '')
 		addUser();
 	else
-		updateUser();
+		updateUser($('#userId').val());
 	return false;
 });
 
@@ -104,21 +104,21 @@ function addUser() {
 	});
 }
 
-function updateUser() {
+function updateUser(id) {
 
 	console.log('updateUser');
 
 	$.ajax({
 		type: 'PUT',
 		contentType: 'application/json',
-		url: rootURL + '/update/',
+		url: rootURL + '/update/'+id,
 		dataType: "json",
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR){
 			alert('User updated successfully');
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			alert('updateUser error: ' + textStatus);
+			alert('You have no permission to perform this operation!');
 		}
 	});
 
@@ -133,7 +133,7 @@ function deleteUser() {
 			alert('User deleted successfully');
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			alert('deleteUser error');
+			alert('You have no permission to perform this operation!');
 		}
 	});
 }

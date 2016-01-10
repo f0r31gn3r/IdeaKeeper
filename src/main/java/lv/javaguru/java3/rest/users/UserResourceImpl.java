@@ -66,7 +66,7 @@ public class UserResourceImpl {
 //    @Consumes(APPLICATION_JSON)
 //    @Produces(APPLICATION_JSON)
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    //@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/delete/{userId}")
     public int delete(@PathParam("userId") Long userId) {
         DeleteUserCommand command = new DeleteUserCommand(userId);
@@ -79,10 +79,10 @@ public class UserResourceImpl {
 //    @Produces(APPLICATION_JSON)
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Path("/update")
-    public UserDTO update(UserDTO userDTO) {
+    @Path("/update/{userId}")
+    public UserDTO update(@PathParam("userId") Long userId, UserDTO userDTO) {
         UpdateUserCommand command = new UpdateUserCommand(
-                userDTO.getUserId(),
+                userId,
                 userDTO.getLogin(), userDTO.getPassword(),
                 userDTO.getName(), userDTO.getSurname(),
                 userDTO.getEmail(), userDTO.getAccessLevel()

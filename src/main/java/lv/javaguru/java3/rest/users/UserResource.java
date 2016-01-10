@@ -28,7 +28,7 @@ public interface UserResource {
 //    @Consumes(APPLICATION_JSON)
 //    @Produces(APPLICATION_JSON)
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    //@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users/delete/{userId}")
     int delete(@PathParam("userId") Long userId);
 
@@ -37,8 +37,8 @@ public interface UserResource {
 //    @Produces(APPLICATION_JSON)
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Path("/users/update")
-    UserDTO update(UserDTO userDTO);
+    @Path("/users/update/{userId}")
+    UserDTO update(@PathParam("userId") Long userId, UserDTO userDTO);
 
     @PUT
 //    @Consumes(APPLICATION_JSON)

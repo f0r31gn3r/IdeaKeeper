@@ -108,7 +108,7 @@ public class UserResourceImplTest extends RESTResourceTest{
         assertThat(user.getUserId(), is(notNullValue()));
 
         user.setSurname(NEWSURNAME);
-        UserDTO updatedUser = userResource.update(user);
+        UserDTO updatedUser = userResource.update(user.getUserId(), user);
 
         assertThat(updatedUser.getSurname(), is(NEWSURNAME));
     }

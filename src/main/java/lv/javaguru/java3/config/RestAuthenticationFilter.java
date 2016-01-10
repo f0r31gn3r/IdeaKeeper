@@ -54,8 +54,9 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 				// can't operate with attempts
 				// can't delete users
 				// cant't change statuses
+				// can't update another users
 			} else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.USER.name())
-					&& !wantsToDeleteNotHisIdeas() && !wantsToUpdateNotHisIdeas() && userRooterAllowed()) {
+					&& !wantsToDeleteNotHisIdeas() && !wantsToUpdateNotHisIdeas() && userRooterAllowed() && !userWantsToUpdateAnotherUser()) {
 				return;
 
 				// logged in admin can't delete himself
@@ -140,6 +141,29 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 			}
 		}
 		return false;
+	}
+
+	private static boolean userWantsToUpdateAnotherUser() {
+
+		// if logged in user wants to update another user
+		if (requestType.contains("users/update")) {
+			String[] parts = requestType.split("/");
+			String reqUserId = parts[parts.length - 1];
+			System.out.println("updating idea id: " + "[" + reqUserId + "]");
+
+			// if idea that user wants to update isn't among the list of his
+			// ideas, it means
+			// that he attempts to update not his ideas
+			if (!String.valueOf(session.getAttribute("userId")).equals(reqUserId)) {
+				System.out.println("Update not allowed: [" + requestType + "] sessionUserId: [" + session.getAttribute("userId") + "] requestUserId: [" + reqUserId);
+				return true;
+			} else {
+				return false;
+			}
+		}  else {
+			return false;
+		}
+
 	}
 
 	private static boolean wantsToLogout() {
