@@ -1,9 +1,5 @@
 package lv.javaguru.java3.config;
 
-/**
- * Created by Anna on 13.12.2015.
- */
-
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
@@ -13,6 +9,10 @@ import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+/**
+ * Created by Anna on 13.12.2015.
+ */
 
 @Configuration
 public class RabbitConfiguration {

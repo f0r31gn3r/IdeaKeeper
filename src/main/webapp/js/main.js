@@ -24,10 +24,11 @@ $('#btnAdd').click(function() {
 });
 
 $('#btnSave').click(function() {
-	if ($('#userId').val() == '')
+	if ($('#userId').val() == ''){
 		addUser();
-	else
+	}else{
 		updateUser($('#userId').val());
+	}
 	return false;
 });
 
@@ -97,10 +98,12 @@ function addUser() {
 			alert('User created successfully');
 			$('#btnDelete').show();
 			$('#userId').val(data.id);
+			sendEmail();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			alert('addUser error: ' + textStatus);
+			alert('You have no permission to perform this operation' + textStatus);
 		}
+
 	});
 }
 
@@ -135,6 +138,14 @@ function deleteUser() {
 		error: function(jqXHR, textStatus, errorThrown){
 			alert('You have no permission to perform this operation!');
 		}
+	});
+}
+
+function sendEmail() {
+	console.log('sending Email');
+
+	$.ajax({
+		url: 'http://localhost:8080/amq/call_queue1',
 	});
 }
 

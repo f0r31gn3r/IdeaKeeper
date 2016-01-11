@@ -54,7 +54,6 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 				// can't operate with attempts
 				// can't delete users
 				// cant't change statuses
-				// can't update another users
 			} else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.USER.name())
 					&& !wantsToDeleteNotHisIdeas() && !wantsToUpdateNotHisIdeas() && userRooterAllowed() && !userWantsToUpdateAnotherUser()) {
 				return;
@@ -176,7 +175,7 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 	private static boolean userRooterAllowed() {
 		boolean result = true;
 		if (requestType.contains("attempts") || requestType.contains("users/delete") || requestType.contains("block")
-				|| requestType.contains("unblock") || requestType.contains("setvip")) {
+				|| requestType.contains("unblock") || requestType.contains("setvip") || requestType.contains("users/create")) {
 			result = false;
 		}
 		return result;
