@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0" metadata-complete="false">
+
+    <application>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    </application>
+
+
+
+    <lifecycle>
+        <phase-listener>org.springframework.web.jsf.DelegatingPhaseListenerMulticaster</phase-listener>
+    </lifecycle>
+
+    <managed-bean>
+    <managed-bean-name>PersonEditBean</managed-bean-name>
+    <managed-bean-class>lv.javaguru.java3.beans.PersonEditBean</managed-bean-class>
+    <managed-bean-scope>view</managed-bean-scope>
+</managed-bean>
+
+</faces-config>

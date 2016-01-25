@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:t="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>IdeaKeeper</title>
+
+    <h:outputScript name="js/main.js" />
+    <h:outputScript name="js/jquery-1.7.1.min.js" />
+    <h:outputStylesheet name="js/styles.css"  />
+    <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+    <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+
+</h:head>
+
+
+
+<h:body>
+
+    <div class="header">
+        <input type="text" id="searchKey"/>
+        <button id="btnSearch">Search</button>
+        <button id="btnAdd">New User</button>
+    </div>
+
+    <div class="leftArea">
+        <label><h1>All Users:</h1></label>
+        <ul id="userList"></ul>
+    </div>
+
+    <div class="mainArea">
+
+        <h:form>
+            <p:dataTable var="row" value="#{PersonEditBean.getPersonById('http://localhost:8080/rest/users/get/2')}">
+
+                    <h:outputText value="UserID"/>
+                    <h:inputText value="#{row.userId}"/>
+
+                    <h:inputText value="#{row.name}"/>
+
+                    <h:inputText value="#{row.surname}"/>
+
+            </p:dataTable>
+
+        </h:form>
+
+
+        <button id="btnSave">Save</button>
+        <button id="btnDelete">Delete</button>
+    </div>
+
+    <div class="rightArea">
+        <p:graphicImage id="pic" height="250"/>
+        <label><h1>User's Ideas:</h1></label>
+        <ul id="ideasList"></ul>
+    </div>
+
+</h:body>
+</html>

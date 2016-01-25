@@ -32,6 +32,12 @@
             <id>spring-milestones</id>
             <url>http://repo.spring.io/milestone</url>
         </repository>
+
+        <repository>
+            <id>prime-repo</id>
+            <name>Prime Repo</name>
+            <url>http://repository.primefaces.org</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -76,6 +82,7 @@
 
         <spring-boot-starter-test.version>1.2.7.RELEASE</spring-boot-starter-test.version>
         <spring-integration-java-dsl.version>1.0.0.RELEASE</spring-integration-java-dsl.version>
+
     </properties>
 
     <dependencies>
@@ -198,6 +205,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-mvc-bean-validation</artifactId>
+            <version>2.22.1</version>
+        </dependency-->
+
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
@@ -221,6 +234,72 @@
             <artifactId>selenide</artifactId>
             <version>2.25</version>
         </dependency>
+
+        <!-- dependency>
+    <groupId>com.sun.faces</groupId>
+    <artifactId>jsf-api</artifactId>
+    <version>2.2.8</version>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupId>com.sun.faces</groupId>
+    <artifactId>jsf-impl</artifactId>
+    <version>2.2.8</version>
+    <scope>compile</scope>
+    <optional>true</optional>
+</dependency-->
+
+        <!-- PrimeFaces -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>3.3</version>
+        </dependency>
+
+        <!-- JSF 2 -->
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.1.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.1.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+        <!-- EL -->
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>el-impl</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
+        </dependency>
+
+
 
     </dependencies>
 
