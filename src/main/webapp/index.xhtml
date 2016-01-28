@@ -23,43 +23,48 @@
 
 <h:body>
 
-    <div class="header">
-        <input type="text" id="searchKey"/>
-        <button id="btnSearch">Search</button>
-        <button id="btnAdd">New User</button>
-    </div>
+    #{personEditBean.getPersonById("http://localhost:8080/rest/users/get/2")}
+    <p:growl autoUpdate="true" />
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputText value="ID" />
+            <h:outputText value="#{personEditBean.userDTO.userId}" />
 
-    <div class="leftArea">
-        <label><h1>All Users:</h1></label>
-        <ul id="userList"></ul>
-    </div>
+            <h:outputText value="Name" />
+            <p:inputText value="#{personEditBean.userDTO.name}">
+                <f:validator validatorId="dataValidator" />
+            </p:inputText>
 
-    <div class="mainArea">
+            <h:outputText value="Surname" />
+            <p:inputText value="#{personEditBean.userDTO.surname}" />
 
-        <h:form>
-            <p:dataTable var="row" value="#{PersonEditBean.getPersonById('http://localhost:8080/rest/users/get/2')}">
+            <h:outputText value="Login" />
+            <p:inputText value="#{personEditBean.userDTO.login}"/>
 
-                    <h:outputText value="UserID"/>
-                    <h:inputText value="#{row.userId}"/>
+            <h:outputText value="Password" />
+            <p:inputText value="#{personEditBean.userDTO.password}" />
 
-                    <h:inputText value="#{row.name}"/>
+        </h:panelGrid>
 
-                    <h:inputText value="#{row.surname}"/>
+        <h:outputText rendered="#{personEditBean.userDTO.userId > 0}" value="User's ideas"/>
+        <p:dataTable rendered="#{personEditBean.userIdeas.size() > 0}" var="row" value="#{personEditBean.userIdeas}">
 
-            </p:dataTable>
+            <p:column headerText="Id">
+                <h:outputText value="#{row.ideaId}"/>
+            </p:column>
 
-        </h:form>
+            <p:column headerText="Title">
+                <h:outputText value="#{row.title}"/>
+            </p:column>
 
+            <p:column headerText="Description">
+                <h:outputText value="#{row.description}"/>
+            </p:column>
 
-        <button id="btnSave">Save</button>
-        <button id="btnDelete">Delete</button>
-    </div>
+        </p:dataTable>
 
-    <div class="rightArea">
-        <p:graphicImage id="pic" height="250"/>
-        <label><h1>User's Ideas:</h1></label>
-        <ul id="ideasList"></ul>
-    </div>
+        <p:commandButton value="Validate Name" process="@form"/>
+    </h:form>
 
 </h:body>
 </html>

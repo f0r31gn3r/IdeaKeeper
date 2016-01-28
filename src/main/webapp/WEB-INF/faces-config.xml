@@ -15,9 +15,14 @@
     </lifecycle>
 
     <managed-bean>
-    <managed-bean-name>PersonEditBean</managed-bean-name>
-    <managed-bean-class>lv.javaguru.java3.beans.PersonEditBean</managed-bean-class>
-    <managed-bean-scope>view</managed-bean-scope>
-</managed-bean>
+        <managed-bean-name>personEditBean</managed-bean-name>
+        <managed-bean-class>lv.javaguru.java3.beans.PersonEditBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+
+    <validator>
+        <validator-id>dataValidator</validator-id>
+        <validator-class>lv.javaguru.java3.validators.DataValidator</validator-class>
+    </validator>
 
 </faces-config>
