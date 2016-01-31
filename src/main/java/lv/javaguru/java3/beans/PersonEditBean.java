@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.XML;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +29,17 @@ import java.util.Set;
 @ManagedBean
 @RequestScoped
 public class PersonEditBean{
+
+    @ManagedProperty(value="#{param.id}")
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public UserDTO userDTO;
 
@@ -49,7 +61,9 @@ public class PersonEditBean{
         this.userDTO = userDTO;
     }
 
-    public UserDTO getPersonById(String link) {
+    public UserDTO getPersonById(Long id) {
+
+        String link = new String("http://localhost:8080/rest/users/get/") + String.valueOf(id);
 
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(link);

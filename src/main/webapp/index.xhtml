@@ -10,39 +10,41 @@
 
 <h:head>
     <title>IdeaKeeper</title>
-
-    <h:outputScript name="js/main.js" />
-    <h:outputScript name="js/jquery-1.7.1.min.js" />
-    <h:outputStylesheet name="js/styles.css"  />
     <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
-    <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-
+    <h:outputStylesheet name="js/styles.css"  />
+    <script type="text/javascript" src="js/mainJSF.js" />
 </h:head>
 
 
 
 <h:body>
 
-    #{personEditBean.getPersonById("http://localhost:8080/rest/users/get/2")}
+    #{personEditBean.getPersonById(param.id)}
     <p:growl autoUpdate="true" />
-    <h:form>
+    <h:form id="userForm">
         <h:panelGrid columns="2">
             <h:outputText value="ID" />
-            <h:outputText value="#{personEditBean.userDTO.userId}" />
+            <h:inputText id="userId" value="#{personEditBean.userDTO.userId}" />
 
             <h:outputText value="Name" />
-            <p:inputText value="#{personEditBean.userDTO.name}">
+            <p:inputText id="name" value="#{personEditBean.userDTO.name}">
                 <f:validator validatorId="dataValidator" />
             </p:inputText>
 
             <h:outputText value="Surname" />
-            <p:inputText value="#{personEditBean.userDTO.surname}" />
+            <p:inputText id="surname" value="#{personEditBean.userDTO.surname}" />
 
             <h:outputText value="Login" />
-            <p:inputText value="#{personEditBean.userDTO.login}"/>
+            <p:inputText id="login" value="#{personEditBean.userDTO.login}"/>
 
             <h:outputText value="Password" />
-            <p:inputText value="#{personEditBean.userDTO.password}" />
+            <p:inputText id="password" value="#{personEditBean.userDTO.password}" />
+
+            <h:outputText value="Email" />
+            <p:inputText id="email" value="#{personEditBean.userDTO.email}" />
+
+            <h:outputText value="Access" />
+            <p:inputText id="accessLevel" value="#{personEditBean.userDTO.accessLevel}" />
 
         </h:panelGrid>
 
@@ -50,20 +52,21 @@
         <p:dataTable rendered="#{personEditBean.userIdeas.size() > 0}" var="row" value="#{personEditBean.userIdeas}">
 
             <p:column headerText="Id">
-                <h:outputText value="#{row.ideaId}"/>
+                <h:inputText value="#{row.ideaId}"/>
             </p:column>
 
             <p:column headerText="Title">
-                <h:outputText value="#{row.title}"/>
+                <h:inputText value="#{row.title}"/>
             </p:column>
 
             <p:column headerText="Description">
-                <h:outputText value="#{row.description}"/>
+                <h:inputText value="#{row.description}"/>
             </p:column>
 
         </p:dataTable>
 
         <p:commandButton value="Validate Name" process="@form"/>
+        <p:commandButton id="btnSave" value="Save" process="@form"/>
     </h:form>
 
 </h:body>

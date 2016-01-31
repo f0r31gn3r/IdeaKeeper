@@ -37,6 +37,12 @@ $('#btnDelete').click(function() {
 	return false;
 });
 
+$('#btnEdit').click(function() {
+	window.location = 'http://localhost:8080/index.faces?id=' + $('#userId').val();
+	return false;
+
+});
+
 $('#userList a').live('click', function() {
 	findById($(this).data('identity'));
 });
