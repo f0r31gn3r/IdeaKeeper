@@ -2,6 +2,7 @@ var rootURL = "http://localhost:8080/rest/users";
 var currentUser;
 
 findAll();
+newUser();
 
 $('#btnDelete').hide();
 
@@ -38,7 +39,7 @@ $('#btnDelete').click(function() {
 });
 
 $('#btnEdit').click(function() {
-	window.location = 'http://localhost:8080/index.faces?id=' + $('#userId').val();
+	window.location = 'http://localhost:8080/editUserProfile.faces?userId=' + $('#userId').val();
 	return false;
 
 });

@@ -9,7 +9,7 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>IdeaKeeper</title>
+    <title>Edit User Profile</title>
     <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
     <h:outputStylesheet name="js/styles.css"  />
     <script type="text/javascript" src="js/mainJSF.js" />
@@ -19,54 +19,59 @@
 
 <h:body>
 
-    #{personEditBean.getPersonById(param.id)}
+    #{userBean.getUserById(param.userId)}
     <p:growl autoUpdate="true" />
     <h:form id="userForm">
         <h:panelGrid columns="2">
             <h:outputText value="ID" />
-            <h:inputText id="userId" value="#{personEditBean.userDTO.userId}" />
+            <h:inputText id="userId" value="#{userBean.userDTO.userId}" />
 
             <h:outputText value="Name" />
-            <p:inputText id="name" value="#{personEditBean.userDTO.name}">
+            <p:inputText id="name" value="#{userBean.userDTO.name}">
                 <f:validator validatorId="dataValidator" />
             </p:inputText>
 
             <h:outputText value="Surname" />
-            <p:inputText id="surname" value="#{personEditBean.userDTO.surname}" />
+            <p:inputText id="surname" value="#{userBean.userDTO.surname}" />
 
             <h:outputText value="Login" />
-            <p:inputText id="login" value="#{personEditBean.userDTO.login}"/>
+            <p:inputText id="login" value="#{userBean.userDTO.login}"/>
 
             <h:outputText value="Password" />
-            <p:inputText id="password" value="#{personEditBean.userDTO.password}" />
+            <p:inputText id="password" value="#{userBean.userDTO.password}" />
 
             <h:outputText value="Email" />
-            <p:inputText id="email" value="#{personEditBean.userDTO.email}" />
+            <p:inputText id="email" value="#{userBean.userDTO.email}" />
 
             <h:outputText value="Access" />
-            <p:inputText id="accessLevel" value="#{personEditBean.userDTO.accessLevel}" />
+            <p:inputText id="accessLevel" value="#{userBean.userDTO.accessLevel}" />
 
         </h:panelGrid>
 
-        <h:outputText rendered="#{personEditBean.userDTO.userId > 0}" value="User's ideas"/>
-        <p:dataTable rendered="#{personEditBean.userIdeas.size() > 0}" var="row" value="#{personEditBean.userIdeas}">
+        <h:outputText rendered="#{userBean.userDTO.userId > 0}" value="User's ideas"/>
+        <p:dataTable rendered="#{userBean.userIdeas.size() > 0}" var="row" value="#{userBean.userIdeas}">
 
             <p:column headerText="Id">
-                <h:inputText value="#{row.ideaId}"/>
+                <h:outputText value="#{row.ideaId}"/>
             </p:column>
 
             <p:column headerText="Title">
-                <h:inputText value="#{row.title}"/>
+                <h:outputText value="#{row.title}"/>
             </p:column>
 
             <p:column headerText="Description">
-                <h:inputText value="#{row.description}"/>
+                <h:outputText value="#{row.description}"/>
+            </p:column>
+            
+             <p:column>
+                <h:button value="Edit" outcome="#{ideaBean.editIdea(row.ideaId, userBean.userDTO.userId)}" />
             </p:column>
 
         </p:dataTable>
 
         <p:commandButton value="Validate Name" process="@form"/>
         <p:commandButton id="btnSave" value="Save" process="@form"/>
+        <h:button value="Add Idea" outcome="#{ideaBean.editIdea(0, userBean.userDTO.userId)}" />
     </h:form>
 
 </h:body>

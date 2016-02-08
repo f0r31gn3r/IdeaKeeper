@@ -15,8 +15,14 @@
     </lifecycle>
 
     <managed-bean>
-        <managed-bean-name>personEditBean</managed-bean-name>
-        <managed-bean-class>lv.javaguru.java3.beans.PersonEditBean</managed-bean-class>
+        <managed-bean-name>userBean</managed-bean-name>
+        <managed-bean-class>lv.javaguru.java3.beans.UserBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>ideaBean</managed-bean-name>
+        <managed-bean-class>lv.javaguru.java3.beans.IdeaBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
 

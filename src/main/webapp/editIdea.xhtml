@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:t="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Edit Idea</title>
+    <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+    <h:outputStylesheet name="js/styles.css"  />
+    <script type="text/javascript" src="js/mainJSF.js" />
+</h:head>
+
+
+
+<h:body>
+ 
+ 	#{ideaBean.getIdeaById(param.ideaId)}
+    
+    <p:growl autoUpdate="true" />
+    <h:form id="ideaForm">
+        <h:panelGrid columns="2">
+            <h:outputText value="ID" />
+            <h:inputText id="ideaId" value="#{ideaBean.currentIdea.ideaId}" />
+
+            <h:outputText value="Title" />
+            <h:inputText id="title" value="#{ideaBean.currentIdea.title}"/>
+
+            <h:outputText value="Description" />
+            <p:inputText id="description" value="#{ideaBean.currentIdea.description}" />
+        </h:panelGrid>
+        
+        <p:commandButton id="btnSaveIdea" value="Save" process="@form"/>
+        <h:button value="Back" outcome="#{ideaBean.backToUserProfile(userBean.userDTO.userId)}" />
+        
+    </h:form>
+
+</h:body>
+</html>

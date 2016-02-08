@@ -1,49 +1,64 @@
 package lv.javaguru.java3.beans;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import lv.javaguru.java3.core.dto.idea.IdeaDTO;
-import lv.javaguru.java3.core.dto.user.UserDTO;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.XML;
+        import com.fasterxml.jackson.databind.ObjectMapper;
+        import com.fasterxml.jackson.databind.type.TypeFactory;
+        import lv.javaguru.java3.core.dto.idea.IdeaDTO;
+        import lv.javaguru.java3.core.dto.user.UserDTO;
+        import org.apache.http.HttpEntity;
+        import org.apache.http.HttpResponse;
+        import org.apache.http.client.HttpClient;
+        import org.apache.http.client.methods.HttpGet;
+        import org.apache.http.impl.client.DefaultHttpClient;
+        import org.json.XML;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+        import javax.faces.bean.ManagedBean;
+        import javax.faces.bean.ManagedProperty;
+        import javax.faces.bean.RequestScoped;
+        import java.io.BufferedReader;
+        import java.io.IOException;
+        import java.io.InputStream;
+        import java.io.InputStreamReader;
+        import java.util.ArrayList;
+        import java.util.HashSet;
+        import java.util.List;
+        import java.util.Set;
 
 /**
  * Created by Anna on 23.01.2016.
  */
 @ManagedBean
 @RequestScoped
-public class PersonEditBean{
+public class UserBean{
+
+    private static String userLink = new String("http://localhost:8080/rest/users/get/");
+    private static String userIdeasLink = new String("http://localhost:8080/rest/users/get_ideas/");
+    //private static String ideaLink = new String("http://localhost:8080/rest/ideas/get/");
+
 
     @ManagedProperty(value="#{param.id}")
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long id;
 
     public UserDTO userDTO;
 
     public List<IdeaDTO> userIdeas = new ArrayList<IdeaDTO>();
+
+    //public IdeaDTO currentIdea;
+
+//    public IdeaDTO getCurrentIdea() {
+//		return currentIdea;
+//	}
+//
+//	public void setCurrentIdea(IdeaDTO currentIdea) {
+//		this.currentIdea = currentIdea;
+//	}
+
+//	public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public List<IdeaDTO> getUserIdeas() {
         return userIdeas;
@@ -61,9 +76,9 @@ public class PersonEditBean{
         this.userDTO = userDTO;
     }
 
-    public UserDTO getPersonById(Long id) {
+    public UserDTO getUserById(Long id) {
 
-        String link = new String("http://localhost:8080/rest/users/get/") + String.valueOf(id);
+        String link = userLink + String.valueOf(id);
 
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(link);
@@ -104,12 +119,48 @@ public class PersonEditBean{
             e1.printStackTrace();
         }
 
-        String[] parts = link.split("/");
-        String userId = parts[parts.length-1];
-
-        getUserIdeas("http://localhost:8080/rest/users/get_ideas/"+userId);
+        getUserIdeas(userIdeasLink + String.valueOf(id));
         return userDTO;
     }
+
+//    public IdeaDTO getIdeaById(Long id) {
+//
+//        String link = ideaLink + String.valueOf(id);
+//
+//        HttpClient client = new DefaultHttpClient();
+//        HttpGet request = new HttpGet(link);
+//        HttpResponse response;
+//        String result = null;
+//        currentIdea = null;
+//        try {
+//            response = client.execute(request);
+//            HttpEntity entity = response.getEntity();
+//
+//            if (entity != null) {
+//
+//                // A Simple JSON Response Read
+//                InputStream instream = entity.getContent();
+//                result = convertStreamToString(instream);
+//                System.out.println("RESPONSE result idea: " + result);
+//
+//                System.out.println("RESPONSE json string idea: " + result);
+//
+//                ObjectMapper mapper = new ObjectMapper();
+//                currentIdea = mapper.readValue(result, IdeaDTO.class);
+//
+//                instream.close();
+//            }
+//            // Headers
+//            org.apache.http.Header[] headers = response.getAllHeaders();
+//            for (int i = 0; i < headers.length; i++) {
+//                System.out.println(headers[i]);
+//            }
+//        } catch (Exception e1) {
+//            // TODO Auto-generated catch block
+//            e1.printStackTrace();
+//        }
+//        return currentIdea;
+//    }
 
     public void getUserIdeas(String link) {
 
@@ -130,13 +181,19 @@ public class PersonEditBean{
 
                 org.json.JSONObject xmlJSONObj = XML.toJSONObject(result);
                 System.out.println("RESPONSE json: " + xmlJSONObj);
-                //userDTO = xmlJSONObj;
 
                 ObjectMapper mapper = new ObjectMapper();
                 String jsonString = xmlJSONObj.toString();
 
-                jsonString = jsonString.substring(jsonString.indexOf("["), jsonString.length()-2);
-                System.out.println("RESPONSE json string: " + jsonString);
+                if(jsonString.indexOf("[") > 0){
+                    jsonString = jsonString.substring(jsonString.indexOf("["), jsonString.length()-2);
+                    System.out.println("RESPONSE json string: " + jsonString);
+                } else {
+                    jsonString = jsonString.substring(jsonString.indexOf(":")+2, jsonString.length()-2);
+                    jsonString = "[" + jsonString.substring(jsonString.indexOf(":")+1, jsonString.length()) + "]";
+                    System.out.println("RESPONSE json string: " + jsonString);
+                }
+
 
                 Set<IdeaDTO> userIdeasSET = new HashSet<IdeaDTO>();
                 userIdeasSET = mapper.readValue(jsonString,
@@ -161,6 +218,10 @@ public class PersonEditBean{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+    }
+
+    public String backToMain() {
+        return "main.html";
     }
 
     private static String convertStreamToString(InputStream is) {
