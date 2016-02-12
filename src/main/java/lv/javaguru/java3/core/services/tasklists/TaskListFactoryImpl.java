@@ -13,6 +13,8 @@ import static lv.javaguru.java3.core.domain.tasklist.TaskListBuilder.createTaskL
 /**
  * Created by Fatum on 05-Nov-15.
  */
+
+@Deprecated
 @Component
 class TaskListFactoryImpl implements TaskListFactory{
 

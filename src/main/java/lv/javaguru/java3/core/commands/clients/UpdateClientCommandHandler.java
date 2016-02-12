@@ -7,6 +7,7 @@ import lv.javaguru.java3.core.services.clients.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Deprecated
 @Component
 class UpdateClientCommandHandler
         implements DomainCommandHandler<UpdateClientCommand, UpdateClientResult> {

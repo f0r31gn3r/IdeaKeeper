@@ -9,6 +9,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by Fatum on 05-Nov-15.
  */
+@Deprecated
 @Component
 class TaskListValidatorImpl implements TaskListValidator {
 

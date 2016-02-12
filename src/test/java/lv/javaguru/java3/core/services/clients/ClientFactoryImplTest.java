@@ -15,6 +15,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 
+@Deprecated
 @RunWith(MockitoJUnitRunner.class)
 public class ClientFactoryImplTest {
 

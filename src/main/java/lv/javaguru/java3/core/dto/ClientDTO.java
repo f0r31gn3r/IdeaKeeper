@@ -2,6 +2,7 @@ package lv.javaguru.java3.core.dto;
 
 import java.io.Serializable;
 
+@Deprecated
 public class ClientDTO implements Serializable {
 
     private Long id;

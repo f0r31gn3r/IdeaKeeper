@@ -7,6 +7,8 @@ import java.util.Date;
 /**
  * Created by Fatum on 05-Nov-15.
  */
+
+@Deprecated
 public interface TaskListFactory {
 
     TaskList create(Long userId, Long taskId, Date createdDate, Date endDate);

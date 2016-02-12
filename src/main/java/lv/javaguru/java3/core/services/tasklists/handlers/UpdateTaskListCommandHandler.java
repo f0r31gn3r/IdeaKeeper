@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Fatum on 05-Nov-15.
  */
+@Deprecated
 @Component
 class UpdateTaskListCommandHandler
         implements DomainCommandHandler<UpdateTaskListCommand, UpdateTaskListResult> {

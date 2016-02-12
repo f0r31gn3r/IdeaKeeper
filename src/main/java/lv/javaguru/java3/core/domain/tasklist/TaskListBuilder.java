@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * Created by Fatum on 03-Nov-15.
  */
+@Deprecated
 public class TaskListBuilder {
 
     private Long taskListId;

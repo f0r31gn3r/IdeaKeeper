@@ -98,7 +98,7 @@ $(document).ready(function() {
 				alert('Idea updated successfully');
 			},
 			error: function(jqXHR, textStatus, errorThrown){
-				alert('You have no permission to perform this operation!');
+				alert('You have no permission to perform this operation!' + textStatus + errorThrown);
 			}
 		});
 

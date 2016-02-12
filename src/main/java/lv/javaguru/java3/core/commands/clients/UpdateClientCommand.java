@@ -2,6 +2,7 @@ package lv.javaguru.java3.core.commands.clients;
 
 import lv.javaguru.java3.core.commands.DomainCommand;
 
+@Deprecated
 public class UpdateClientCommand implements DomainCommand<UpdateClientResult> {
 
     private Long clientId;

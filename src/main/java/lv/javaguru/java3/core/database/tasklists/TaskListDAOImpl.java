@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Fatum on 04-Nov-15.
  */
+@Deprecated
 @Component
 public class TaskListDAOImpl extends CRUDOperationDAOImpl<TaskList, Long> implements TaskListDAO{
 }

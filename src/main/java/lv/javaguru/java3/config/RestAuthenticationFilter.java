@@ -148,7 +148,7 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 		if (requestType.contains("users/update")) {
 			String[] parts = requestType.split("/");
 			String reqUserId = parts[parts.length - 1];
-			System.out.println("updating idea id: " + "[" + reqUserId + "]");
+			System.out.println("updating user id: " + "[" + reqUserId + "]");
 
 			// if idea that user wants to update isn't among the list of his
 			// ideas, it means

@@ -26,8 +26,6 @@ public class UserBuilder {
 
     private List<Idea> ideas;
 
-    private List<Activity> activities;
-
     private List<Attempt> attempts;
 
     public static UserBuilder createUser() {

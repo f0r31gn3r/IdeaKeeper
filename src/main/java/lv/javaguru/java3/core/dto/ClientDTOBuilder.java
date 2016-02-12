@@ -1,7 +1,6 @@
 package lv.javaguru.java3.core.dto;
 
-import lv.javaguru.java3.core.domain.Client;
-
+@Deprecated
 public class ClientDTOBuilder {
 
     private Long id;

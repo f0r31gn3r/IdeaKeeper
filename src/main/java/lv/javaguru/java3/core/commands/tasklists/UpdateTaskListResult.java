@@ -6,6 +6,7 @@ import lv.javaguru.java3.core.domain.tasklist.TaskList;
 /**
  * Created by Fatum on 05-Nov-15.
  */
+@Deprecated
 public class UpdateTaskListResult implements DomainCommandResult {
 
     private TaskList taskList;

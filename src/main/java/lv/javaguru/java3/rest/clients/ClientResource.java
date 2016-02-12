@@ -6,6 +6,7 @@ import javax.ws.rs.*;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+@Deprecated
 public interface ClientResource {
 
     @POST

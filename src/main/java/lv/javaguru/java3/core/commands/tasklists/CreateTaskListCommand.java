@@ -7,6 +7,8 @@ import java.util.Date;
 /**
  * Created by Fatum on 05-Nov-15.
  */
+
+@Deprecated
 public class CreateTaskListCommand implements DomainCommand<CreateTaskListResult> {
 
     private Long userId;

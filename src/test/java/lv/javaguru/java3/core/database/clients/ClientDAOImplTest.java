@@ -10,6 +10,7 @@ import static lv.javaguru.java3.core.domain.ClientBuilder.createClient;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
+@Deprecated
 public class ClientDAOImplTest extends DatabaseHibernateTest {
 
     private DatabaseCleaner databaseCleaner = new DatabaseCleaner();

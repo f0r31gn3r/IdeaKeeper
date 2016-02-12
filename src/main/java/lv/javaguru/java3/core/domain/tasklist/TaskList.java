@@ -6,7 +6,7 @@ package lv.javaguru.java3.core.domain.tasklist;
 
 import javax.persistence.*;
 import java.util.Date;
-
+@Deprecated
 @Entity
 @Table(name = "tasklists")
 public class TaskList {

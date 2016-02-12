@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
+@Deprecated
 @Component
 @Path("/clients")
 public class ClientResourceImpl {

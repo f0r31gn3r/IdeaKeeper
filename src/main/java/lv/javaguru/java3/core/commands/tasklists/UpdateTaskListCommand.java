@@ -6,6 +6,7 @@ import java.util.Date;
 /**
  * Created by Fatum on 05-Nov-15.
  */
+@Deprecated
 public class UpdateTaskListCommand implements DomainCommand<UpdateTaskListResult> {
 
     private Long taskListId;

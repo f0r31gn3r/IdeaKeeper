@@ -9,6 +9,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+@Deprecated
 public class ClientResourceImplTest extends RESTResourceTest {
 
     private static final String LOGIN = "login";

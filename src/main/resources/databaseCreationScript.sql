@@ -2,7 +2,7 @@
 
 use javaee_idea_keeper;
 
-INSERT INTO `javaee_idea_keeper`.`users` VALUES (2, 'USER','email@email.lv', 'loginraa', 'nameaa', 'passwordaa','surnameaa');
+INSERT INTO `javaee_idea_keeper`.`users` VALUES (2, 'USER','email@email.lv', 'loginaa', 'nameaa', 'passwordaa','surnameaa');
 INSERT INTO `javaee_idea_keeper`.`users` VALUES (3, 'USER','email@email.lv', 'loginbb', 'namebb', 'passwordbb','surnamebb');
 INSERT INTO `javaee_idea_keeper`.`users` VALUES (4, 'USER','email@email.lv', 'logincc', 'namecc', 'passwordcc','surnamecc');
 INSERT INTO `javaee_idea_keeper`.`users` VALUES (1, 'ADMIN','admin@admin.lv', 'admin', 'admin', 'admin','admin');

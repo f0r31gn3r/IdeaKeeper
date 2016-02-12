@@ -13,6 +13,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by Fatum on 11-Nov-15.
  */
+@Deprecated
 public class TaskListDAOImplTest extends DatabaseHibernateTest {
 
     @Test

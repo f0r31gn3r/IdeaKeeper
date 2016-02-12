@@ -2,6 +2,7 @@ package lv.javaguru.java3.core.domain;
 
 import javax.persistence.*;
 
+@Deprecated
 @Entity
 @Table(name="clients")
 public class Client {

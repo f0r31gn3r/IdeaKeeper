@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import static lv.javaguru.java3.core.dto.ClientDTOBuilder.createClientDTO;
 
+@Deprecated
 @Component
 public class ClientConverter {
 

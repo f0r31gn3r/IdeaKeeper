@@ -1,5 +1,6 @@
 package lv.javaguru.java3.core.domain;
 
+@Deprecated
 public class ClientBuilder {
 
     private Long id;
