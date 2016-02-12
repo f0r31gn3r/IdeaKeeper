@@ -2,6 +2,7 @@ package lv.javaguru.java3.core.rest.clients;
 
 import lv.javaguru.java3.core.dto.ClientDTO;
 import lv.javaguru.java3.core.rest.RESTResourceTest;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static lv.javaguru.java3.core.dto.ClientDTOBuilder.createClientDTO;
@@ -10,6 +11,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 @Deprecated
+@Ignore
 public class ClientResourceImplTest extends RESTResourceTest {
 
     private static final String LOGIN = "login";
