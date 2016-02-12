@@ -21,7 +21,7 @@ import java.io.IOException;
 public class RestAuthenticationFilter implements ContainerRequestFilter {
 
 	@Autowired
-	AuthenticationService authenticationService;
+	static AuthenticationService authenticationService;
 	static String requestType = new String();
 	static HttpSession session = null;
 
@@ -35,6 +35,8 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 
 		if (authenticationService.getUser() != null && session != null) {
 			initializeUserSession(authenticationService.getUser());
+			updateUserSessionIdeas(authenticationService.getUser());
+
 		}
 
 		// if user wants to login
@@ -56,6 +58,7 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 				// cant't change statuses
 			} else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.USER.name())
 					&& !wantsToDeleteNotHisIdeas() && !wantsToUpdateNotHisIdeas() && userRooterAllowed() && !userWantsToUpdateAnotherUser()) {
+
 				return;
 
 				// logged in admin can't delete himself
@@ -84,6 +87,16 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 		session.setAttribute("role", user.getAccessLevel());
 		session.setAttribute("userId", user.getUserId());
 		session.setAttribute("ideas", userIdeasId);
+	}
+
+	private static void updateUserSessionIdeas(User user) {
+		//authenticationService.authenticate(userDTO.getLogin(), userDTO.getPassword());
+		String userIdeasId = new String("");
+		for (Idea i : user.getIdeas()) {
+			userIdeasId = userIdeasId + "[" + String.valueOf(i.getIdeaId()) + "]";
+		}
+		session.setAttribute("ideas", userIdeasId);
+		System.out.println("ideas: " + userIdeasId);
 	}
 
 	private static void clearSession() {

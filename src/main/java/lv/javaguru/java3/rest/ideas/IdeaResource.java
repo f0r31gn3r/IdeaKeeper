@@ -24,8 +24,6 @@ public interface IdeaResource {
     IdeaDTO get(@PathParam("ideaId") Long ideaId);
 
     @DELETE
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
     @Path("/ideas/delete/{ideaId}")
     int delete(@PathParam("ideaId") Long ideaId);
 

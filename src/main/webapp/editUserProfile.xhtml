@@ -62,15 +62,21 @@
             <p:column headerText="Description">
                 <h:outputText value="#{row.description}"/>
             </p:column>
-            
+
              <p:column>
                 <h:button value="Edit" outcome="#{ideaBean.editIdea(row.ideaId, userBean.userDTO.userId)}" />
+            </p:column>
+
+            <p:column>
+                <p:commandLink action="#{ideaBean.deleteIdeaById(row.ideaId, userBean.userDTO.userId)}"
+                               process="@this"
+                               value="Delete"/>
             </p:column>
 
         </p:dataTable>
 
         <p:commandButton value="Validate Name" process="@form"/>
-        <p:commandButton id="btnSave" value="Save" process="@form"/>
+        <p:commandButton id="btnSaveUser" value="Save" process="@form"/>
         <h:button value="Add Idea" outcome="#{ideaBean.editIdea(0, userBean.userDTO.userId)}" />
     </h:form>
 

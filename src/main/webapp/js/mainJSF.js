@@ -5,7 +5,7 @@ $ = jQuery;
 
 $(document).ready(function() {
 	
-	$("#userForm\\:btnSave").click(function() {
+	$("#userForm\\:btnSaveUser").click(function() {
 		if ($("#userForm\\:userId").val() == ''){
 			addUser();
 		}else{
@@ -20,7 +20,7 @@ $(document).ready(function() {
 			updateIdea($("#ideaForm\\:ideaId").val());
 		}
 	});
-	
+
 	function addUser() {
 		console.log('addUser');
 
@@ -56,6 +56,7 @@ $(document).ready(function() {
 			data: formToJSON(),
 			success: function(data, textStatus, jqXHR){
 				alert('User updated successfully');
+				location.reload();
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				alert('You have no permission to perform this operation!');
@@ -75,6 +76,7 @@ $(document).ready(function() {
 			data: formToJSONIdea(),
 			success: function(data, textStatus, jqXHR){
 				alert('Idea created successfully');
+				location.reload();
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				alert('You have no permission to perform this operation' + textStatus);
@@ -96,6 +98,29 @@ $(document).ready(function() {
 			data: formToJSONIdea(),
 			success: function(data, textStatus, jqXHR){
 				alert('Idea updated successfully');
+				location.reload();
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert('You have no permission to perform this operation!' + textStatus + errorThrown);
+			}
+		});
+
+	}
+
+	function deleteIdea(id) {
+
+		console.log('deleteIdea');
+		console.log(id);
+
+		$.ajax({
+			type: 'DELETE',
+			contentType: 'application/json',
+			url: rootURLIdeas + '/delete/'+id,
+			dataType: "json",
+			data: formToJSONIdea(),
+			success: function(data, textStatus, jqXHR){
+				alert('Idea deleted successfully');
+				//location.reload();
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				alert('You have no permission to perform this operation!' + textStatus + errorThrown);

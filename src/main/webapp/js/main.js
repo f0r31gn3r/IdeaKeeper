@@ -44,6 +44,13 @@ $('#btnEdit').click(function() {
 
 });
 
+$('#btnLogout').click(function() {
+	logout();
+	window.location = 'http://localhost:8080/';
+	return false;
+
+});
+
 $('#userList a').live('click', function() {
 	findById($(this).data('identity'));
 });
@@ -153,6 +160,14 @@ function sendEmail() {
 
 	$.ajax({
 		url: 'http://localhost:8080/amq/call_queue1',
+	});
+}
+
+function logout() {
+	console.log('logging out');
+
+	$.ajax({
+		url: 'http://localhost:8080/rest/authentication/logout',
 	});
 }
 

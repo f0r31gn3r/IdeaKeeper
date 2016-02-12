@@ -55,8 +55,6 @@ public class IdeaResourceImpl {
     }
 
     @DELETE
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
     @Path("/delete/{ideaId}")
     public int delete(@PathParam("ideaId") Long ideaId) {
         DeleteIdeaCommand command = new DeleteIdeaCommand(ideaId);

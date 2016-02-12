@@ -25,7 +25,7 @@
     <h:form id="ideaForm">
         <h:panelGrid columns="2">
             <h:outputText value="ID" />
-            <h:inputText id="ideaId" value="#{ideaBean.currentIdea.ideaId}" />
+            <h:inputText id="ideaId" value="#{ideaBean.currentIdea.ideaId}" disabled="true"/>
 
             <h:outputText value="Title" />
             <h:inputText id="title" value="#{ideaBean.currentIdea.title}"/>
@@ -33,12 +33,10 @@
             <h:outputText value="Description" />
             <p:inputText id="description" value="#{ideaBean.currentIdea.description}" />
 
-            <h:outputText value="User" />
-            <p:inputText id="userId" value="#{ideaBean.currentIdea.userId}" />
         </h:panelGrid>
         
         <p:commandButton id="btnSaveIdea" value="Save" process="@form"/>
-        <h:button value="Back" outcome="#{ideaBean.backToUserProfile(userBean.userDTO.userId)}" />
+        <h:button value="Back" outcome="#{ideaBean.backToUserProfile(ideaBean.currentIdea.userId)}" />
         
     </h:form>
 
