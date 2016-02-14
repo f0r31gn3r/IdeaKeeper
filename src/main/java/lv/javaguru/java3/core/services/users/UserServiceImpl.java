@@ -72,8 +72,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User unblockUser(User user) {
-        Attempt userLoginAttempts = attemptService.get(user.getLogin());
-        attemptService.resetBySuccessfulLogin(userLoginAttempts);
+        if(attemptService.get(user.getLogin())!=null){
+            Attempt userLoginAttempts = attemptService.get(user.getLogin());
+            attemptService.resetBySuccessfulLogin(userLoginAttempts);
+        }
         return update(user.getUserId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), AccessLevel.USER.name());
     }
 
