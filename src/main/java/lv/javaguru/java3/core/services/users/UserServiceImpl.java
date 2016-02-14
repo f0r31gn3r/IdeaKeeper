@@ -4,9 +4,12 @@ package lv.javaguru.java3.core.services.users;
  * Created by Anna on 27.10.2015.
  */
 
+import lv.javaguru.java3.core.database.AttemptDAO;
 import lv.javaguru.java3.core.database.UserDAO;
+import lv.javaguru.java3.core.domain.attempt.Attempt;
 import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
+import lv.javaguru.java3.core.services.attempts.AttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired private UserDAO userDAO;
     @Autowired private UserValidator userValidator;
+    @Autowired private AttemptDAO attemptDAO;
+    @Autowired private AttemptService attemptService;
 
     @Override
     public User update(Long userId,
@@ -67,6 +72,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User unblockUser(User user) {
+        Attempt userLoginAttempts = attemptService.get(user.getLogin());
+        attemptService.resetBySuccessfulLogin(userLoginAttempts);
         return update(user.getUserId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), AccessLevel.USER.name());
     }
 
@@ -77,19 +84,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getFirstFive() {
-        List<User> fullResult = new ArrayList<User>();
-        List<User> uniqueResult = new ArrayList<User>();
-        List<Long> uniqueIds = new ArrayList<Long>();
-
-        fullResult = userDAO.getFirstFive();
-
-//        for (User u : fullResult){
-//            if(!uniqueIds.contains(u.getUserId())){
-//                uniqueResult.add(u);
-//                uniqueIds.add(u.getUserId());
-//            }
-//        }
-        return userDAO.getFirstFive();
+        List<User> firstFive = new ArrayList<User>();
+        if(userDAO.getFirstFive() != null){
+            firstFive = userDAO.getFirstFive();
+        }
+        return firstFive;
     }
 
 

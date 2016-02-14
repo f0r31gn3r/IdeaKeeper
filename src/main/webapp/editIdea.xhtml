@@ -33,6 +33,9 @@
             <h:outputText value="Description" />
             <p:inputText id="description" value="#{ideaBean.currentIdea.description}" />
 
+            <h:outputText value="user" />
+            <p:inputText id="userId" value="#{ideaBean.currentIdea.userId}" />
+
         </h:panelGrid>
         
         <p:commandButton id="btnSaveIdea" value="Save" process="@form"/>

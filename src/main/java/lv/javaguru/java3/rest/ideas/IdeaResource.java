@@ -14,8 +14,8 @@ public interface IdeaResource {
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/ideas/create")
-    IdeaDTO create(IdeaDTO ideaDTO);
+    @Path("/ideas/create/{userId}")
+    IdeaDTO create(@PathParam("userId") Long userId, IdeaDTO ideaDTO);
 
     @GET
     @Consumes(APPLICATION_JSON)

@@ -70,7 +70,7 @@ public class IdeaResourceImplTest extends RESTResourceTest {
         assertThat(user, is(notNullValue()));
         assertThat(user.getUserId(), is(notNullValue()));
 
-        IdeaDTO ideaDTO = ideaResource.create(
+        IdeaDTO ideaDTO = ideaResource.create(user.getUserId(),
                 createIdeaDTO()
                         .withTitle(TITLE)
                         .withDescription(DESCRIPTION)
@@ -96,7 +96,7 @@ public class IdeaResourceImplTest extends RESTResourceTest {
         assertThat(user, is(notNullValue()));
         assertThat(user.getUserId(), is(notNullValue()));
 
-        IdeaDTO newIdea = ideaResource.create(
+        IdeaDTO newIdea = ideaResource.create(user.getUserId(),
                 createIdeaDTO()
                         .withTitle(TITLE)
                         .withDescription(DESCRIPTION)

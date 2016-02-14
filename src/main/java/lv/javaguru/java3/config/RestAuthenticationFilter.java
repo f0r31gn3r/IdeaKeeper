@@ -8,6 +8,7 @@ import lv.javaguru.java3.core.domain.user.AccessLevel;
 import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.services.authentication.AuthenticationService;
 import lv.javaguru.java3.core.services.authentication.AuthenticationStatus;
+import lv.javaguru.java3.core.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,11 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 
 	@Autowired
 	AuthenticationService authenticationService;
-	static String requestType = new String();
-	static HttpSession session = null;
+	String requestType = new String();
+	HttpSession session = null;
+
+	@Autowired
+	UserService userService;
 
 	@Context
 	HttpServletRequest webRequest;
@@ -36,7 +40,6 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 		if (authenticationService.getUser() != null && session != null) {
 			initializeUserSession(authenticationService.getUser());
 			updateUserSessionIdeas(authenticationService.getUser());
-
 		}
 
 		// if user wants to login
@@ -57,7 +60,9 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 				// can't delete users
 				// cant't change statuses
 			} else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.USER.name())
-					&& !wantsToDeleteNotHisIdeas() && !wantsToUpdateNotHisIdeas() && userRooterAllowed() && !userWantsToUpdateAnotherUser()) {
+					&& !wantsToDeleteNotHisIdeas() && !wantsToUpdateNotHisIdeas()
+					&& userRooterAllowed() && !userWantsToUpdateAnotherUser()
+					&& !wantsToCreateNotHisIdeas()) {
 
 				return;
 
@@ -78,7 +83,7 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 		}
 	}
 
-	private static void initializeUserSession(User user) {
+	private void initializeUserSession(User user) {
 		String userIdeasId = new String("");
 		for (Idea i : user.getIdeas()) {
 			userIdeasId = userIdeasId + "[" + String.valueOf(i.getIdeaId()) + "]";
@@ -87,26 +92,28 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 		session.setAttribute("role", user.getAccessLevel());
 		session.setAttribute("userId", user.getUserId());
 		session.setAttribute("ideas", userIdeasId);
+		System.out.println("initialized ideas: " + userIdeasId);
 	}
 
-	private static void updateUserSessionIdeas(User user) {
+	private void updateUserSessionIdeas(User user) {
+		authenticationService.setUser(userService.get(user.getUserId()));
 		//authenticationService.authenticate(userDTO.getLogin(), userDTO.getPassword());
 		String userIdeasId = new String("");
 		for (Idea i : user.getIdeas()) {
 			userIdeasId = userIdeasId + "[" + String.valueOf(i.getIdeaId()) + "]";
 		}
 		session.setAttribute("ideas", userIdeasId);
-		System.out.println("ideas: " + userIdeasId);
+		System.out.println("updated ideas: " + userIdeasId);
 	}
 
-	private static void clearSession() {
+	private void clearSession() {
 		session.setAttribute("login", "guest");
 		session.setAttribute("role", "guest");
 		session.setAttribute("userId", "guest");
 		session.setAttribute("ideas", "empty");
 	}
 
-	private static boolean wantsToDeleteHimself() {
+	private boolean wantsToDeleteHimself() {
 
 		// if logged in user wants to delete himself
 		if (requestType.contains("users/delete")) {
@@ -119,7 +126,7 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 		return false;
 	}
 
-	private static boolean wantsToDeleteNotHisIdeas() {
+	private boolean wantsToDeleteNotHisIdeas() {
 
 		// if logged in user wants to delete an idea
 		if (requestType.contains("ideas/delete")) {
@@ -137,13 +144,15 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 		return false;
 	}
 
-	private static boolean wantsToUpdateNotHisIdeas() {
+	private boolean wantsToUpdateNotHisIdeas() {
 
 		// if logged in user wants to update an idea
 		if (requestType.contains("ideas/update")) {
 			String[] parts = requestType.split("/");
 			String ideaId = "[" + parts[parts.length - 1] + "]";
 			System.out.println("updating idea id: " + ideaId);
+			System.out.println("updating idea for user: " + authenticationService.getUser().getUserId());
+			System.out.println("session user: " + session.getAttribute("userId"));
 
 			// if idea that user wants to update isn't among the list of his
 			// ideas, it means
@@ -155,7 +164,25 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 		return false;
 	}
 
-	private static boolean userWantsToUpdateAnotherUser() {
+	private boolean wantsToCreateNotHisIdeas() {
+
+		// if logged in user wants to create an idea
+		if (requestType.contains("ideas/create")) {
+
+			String[] parts = requestType.split("/");
+			String reqUserId = parts[parts.length - 1];
+			System.out.println("updating ideas for user: " + "[" + reqUserId + "]");
+			System.out.println("session user: " + session.getAttribute("userId"));
+
+
+			if (!String.valueOf(session.getAttribute("userId")).equals(reqUserId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean userWantsToUpdateAnotherUser() {
 
 		// if logged in user wants to update another user
 		if (requestType.contains("users/update")) {
@@ -178,14 +205,14 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 
 	}
 
-	private static boolean wantsToLogout() {
+	private boolean wantsToLogout() {
 		if (requestType.contains("logout")) {
 			return true;
 		}
 		return false;
 	}
 
-	private static boolean userRooterAllowed() {
+	private boolean userRooterAllowed() {
 		boolean result = true;
 		if (requestType.contains("attempts") || requestType.contains("users/delete") || requestType.contains("block")
 				|| requestType.contains("unblock") || requestType.contains("setvip") || requestType.contains("users/create")) {

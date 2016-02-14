@@ -1,5 +1,6 @@
 var rootURL = "http://localhost:8080/rest/users";
 var rootURLIdeas = "http://localhost:8080/rest/ideas";
+var rootHTML = "http://localhost:8080";
 
 $ = jQuery;
 
@@ -12,13 +13,25 @@ $(document).ready(function() {
 			updateUser($("#userForm\\:userId").val());
 		}
 	});
-	
+
 	$("#ideaForm\\:btnSaveIdea").click(function() {
 		if ($("#ideaForm\\:ideaId").val() == '' || $("#ideaForm\\:ideaId").val() == '0'){
-			addIdea();
+			addIdea($("#ideaForm\\:userId").val());
 		}else{
 			updateIdea($("#ideaForm\\:ideaId").val());
 		}
+	});
+
+	$("#userForm\\:btnBackToMain").click(function() {
+		window.location = rootHTML + "/main.html";
+	});
+
+	$("#userForm\\:btnBlockUser").click(function() {
+		blockUser($("#userForm\\:userId").val());
+	});
+
+	$("#userForm\\:btnUnblockUser").click(function() {
+		unblockUser($("#userForm\\:userId").val());
 	});
 
 	function addUser() {
@@ -64,14 +77,58 @@ $(document).ready(function() {
 		});
 
 	}
+
+	function blockUser(id) {
+
+		console.log('blockUser');
+		console.log(id);
+
+		$.ajax({
+			type: 'PUT',
+			contentType: 'application/json',
+			url: rootURL + '/block/'+id,
+			dataType: "json",
+			data: formToJSON(),
+			success: function(data, textStatus, jqXHR){
+				alert('User blocked successfully');
+				location.reload();
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert('You have no permission to perform this operation!');
+			}
+		});
+
+	}
+
+	function unblockUser(id) {
+
+		console.log('unblockUser');
+		console.log(id);
+
+		$.ajax({
+			type: 'PUT',
+			contentType: 'application/json',
+			url: rootURL + '/unblock/'+id,
+			dataType: "json",
+			data: formToJSON(),
+			success: function(data, textStatus, jqXHR){
+				alert('User unblocked successfully');
+				location.reload();
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert('You have no permission to perform this operation!');
+			}
+		});
+
+	}
 	
-	function addIdea() {
+	function addIdea(userId) {
 		console.log('addIdea');
 
 		$.ajax({
 			type: 'POST',
 			contentType: 'application/json',
-			url: rootURLIdeas + "/create",
+			url: rootURLIdeas + "/create/" + userId,
 			dataType: "json",
 			data: formToJSONIdea(),
 			success: function(data, textStatus, jqXHR){

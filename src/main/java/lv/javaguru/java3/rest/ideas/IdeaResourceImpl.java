@@ -29,8 +29,8 @@ public class IdeaResourceImpl {
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    @Path("/create")
-    public IdeaDTO create(IdeaDTO ideaDTO) {
+    @Path("/create/{userId}")
+    public IdeaDTO create(@PathParam("userId") Long userId, IdeaDTO ideaDTO) {
         Long id = ideaDTO.getUserId();
         if(id==null){
             id = ideaDTO.getUserDTO().getUserId();

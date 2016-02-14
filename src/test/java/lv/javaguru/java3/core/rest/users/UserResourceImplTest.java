@@ -189,7 +189,7 @@ public class UserResourceImplTest extends RESTResourceTest{
         assertThat(user, is(notNullValue()));
         assertThat(user.getUserId(), is(notNullValue()));
 
-        IdeaDTO idea1 = ideaResource.create(
+        IdeaDTO idea1 = ideaResource.create(user.getUserId(),
                 createIdeaDTO()
                         .withTitle(TITLE)
                         .withDescription(DESCRIPTION)
@@ -197,7 +197,7 @@ public class UserResourceImplTest extends RESTResourceTest{
                         .build()
         );
 
-        IdeaDTO idea2 = ideaResource.create(
+        IdeaDTO idea2 = ideaResource.create(user.getUserId(),
                 createIdeaDTO()
                         .withTitle(TITLE)
                         .withDescription(DESCRIPTION)

@@ -78,6 +78,9 @@
         <p:commandButton value="Validate Name" process="@form"/>
         <p:commandButton id="btnSaveUser" value="Save" process="@form"/>
         <h:button value="Add Idea" outcome="#{ideaBean.editIdea(0, userBean.userDTO.userId)}" />
+        <p:commandButton id="btnBackToMain" value="Back" process="@form"/>
+        <p:commandButton id="btnBlockUser" value="Block" process="@form"/>
+        <p:commandButton id="btnUnblockUser" value="Unblock" process="@form"/>
     </h:form>
 
 </h:body>
