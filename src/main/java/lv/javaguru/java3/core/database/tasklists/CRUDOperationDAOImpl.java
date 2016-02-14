@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.List;
 
 /**
  * Created by Fatum on 04-Nov-15.
@@ -60,9 +59,9 @@ abstract class CRUDOperationDAOImpl<E, K extends Serializable> implements CRUDOp
         getCurrentSession().delete(entity);
     }
 
-    @Override
-    public List<E> getAll() {
-        return getCurrentSession().createCriteria(daoType).list();
-    }
+//    @Override
+//    public List<E> getAll() {
+//        return getCurrentSession().createCriteria(daoType).list();
+//    }
 
 }

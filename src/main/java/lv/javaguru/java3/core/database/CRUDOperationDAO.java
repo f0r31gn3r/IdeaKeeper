@@ -1,7 +1,5 @@
 package lv.javaguru.java3.core.database;
 
-import java.util.List;
-
 public interface CRUDOperationDAO<E, K> {
 
     void create(E entity);
@@ -14,6 +12,6 @@ public interface CRUDOperationDAO<E, K> {
 
     void delete(E entity);
 
-    List<E> getAll();
+    //List<E> getAll();
 
 }

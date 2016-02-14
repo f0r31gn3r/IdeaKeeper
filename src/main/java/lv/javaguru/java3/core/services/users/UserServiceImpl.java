@@ -76,19 +76,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getFirstFive() {
         List<User> fullResult = new ArrayList<User>();
         List<User> uniqueResult = new ArrayList<User>();
         List<Long> uniqueIds = new ArrayList<Long>();
 
-        fullResult = userDAO.getAll();
-        for (User u : fullResult){
-            if(!uniqueIds.contains(u.getUserId())){
-                uniqueResult.add(u);
-                uniqueIds.add(u.getUserId());
-            }
-        }
-        return uniqueResult;
+        fullResult = userDAO.getFirstFive();
+
+//        for (User u : fullResult){
+//            if(!uniqueIds.contains(u.getUserId())){
+//                uniqueResult.add(u);
+//                uniqueIds.add(u.getUserId());
+//            }
+//        }
+        return userDAO.getFirstFive();
     }
 
 

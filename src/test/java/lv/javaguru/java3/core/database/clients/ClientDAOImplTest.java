@@ -42,15 +42,15 @@ public class ClientDAOImplTest extends DatabaseHibernateTest {
         assertThat(clientFromDb, is(notNullValue()));
     }
 
-    @Test
-    @Transactional
-    public void testGetAllClients() {
-        Client client = createClient()
-                .withLogin("login")
-                .withPassword("password").build();
-        clientDAO.create(client);
-        assertThat(clientDAO.getAll().size(), is(1));
-    }
+//    @Test
+//    @Transactional
+//    public void testGetAllClients() {
+//        Client client = createClient()
+//                .withLogin("login")
+//                .withPassword("password").build();
+//        clientDAO.create(client);
+//        assertThat(clientDAO.getAll().size(), is(1));
+//    }
 
     @Test
     @Transactional

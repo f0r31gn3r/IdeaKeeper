@@ -39,9 +39,9 @@ public class IdeaBean{
         this.currentIdea = currentIdea;
     }
 
-    public IdeaDTO getIdeaById(Long id) {
-        if(id > 0){
-            String link = ideaLink + "get/"+ String.valueOf(id);
+    public IdeaDTO getIdeaById(Long ideaId, Long userId) {
+        if(ideaId > 0){
+            String link = ideaLink + "get/"+ String.valueOf(ideaId);
 
             HttpClient client = new DefaultHttpClient();
             HttpGet request = new HttpGet(link);
@@ -78,33 +78,34 @@ public class IdeaBean{
         } else {
             currentIdea = new IdeaDTO();
             currentIdea.setIdeaId(0L);
+            currentIdea.setUserId(userId);
         }
         return currentIdea;
     }
 
     public String deleteIdeaById(Long ideaId, Long userId) {
+        //if deletion performed successfully, return 0
         int result = -1;
-            String link = ideaLink + "delete/" + String.valueOf(ideaId);
+        String link = ideaLink + "delete/" + String.valueOf(ideaId);
 
-            HttpClient client = new DefaultHttpClient();
-            HttpDelete request = new HttpDelete(link);
-            HttpResponse response;
-            currentIdea = null;
-            try {
-                response = client.execute(request);
-                HttpEntity entity = response.getEntity();
-                InputStream instream = entity.getContent();
-                String resultToString = convertStreamToString(instream).trim();
-                System.out.println("RESULT TO STRING:[" + resultToString + "]");
-                result = Integer.parseInt(resultToString);
-            } catch (Exception e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+        HttpClient client = new DefaultHttpClient();
+        HttpDelete request = new HttpDelete(link);
+        HttpResponse response;
+
+        try {
+            response = client.execute(request);
+            HttpEntity entity = response.getEntity();
+            InputStream instream = entity.getContent();
+            String resultToString = convertStreamToString(instream).trim();
+            result = Integer.parseInt(resultToString);
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
         if(result == 0){
             refersh();
-            return "editUserProfile.faces?userId=" + String.valueOf(userId);
+            return "editUserProfile.faces?faces-redirect=true&userId=" + String.valueOf(userId);
 
         } else {
             refersh();
@@ -112,6 +113,7 @@ public class IdeaBean{
         }
     }
 
+    //converts to string response given by rest method
     private static String convertStreamToString(InputStream is) {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -143,7 +145,7 @@ public class IdeaBean{
     }
 
     public String backToUserProfile(Long userId) {
-        return "editUserProfile.faces?userId=" + String.valueOf(userId);
+        return "editUserProfile.faces?faces-redirect=true&userId=" + String.valueOf(userId);
     }
 
     private static void refersh(){

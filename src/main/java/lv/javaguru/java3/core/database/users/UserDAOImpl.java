@@ -6,11 +6,13 @@ import lv.javaguru.java3.core.domain.user.User;
 import lv.javaguru.java3.core.services.attempts.AttemptFactory;
 import lv.javaguru.java3.core.services.attempts.AttemptService;
 import lv.javaguru.java3.core.services.users.UserValidator;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Anna on 26.10.2015.
@@ -28,19 +30,26 @@ public class UserDAOImpl extends CRUDOperationDAOImpl<User, Long> implements Use
     @Autowired private AttemptFactory attemptFactory;
     @Autowired private AttemptService attemptService;
 
+    @Override
     public User getUserByLogin(String login){
         return (User) getCurrentSession()
                 .createCriteria(User.class)
                 .add(Restrictions
                         .eq("login", login))
                 .uniqueResult();
+    }
 
-//        List<User> allUsers = getAll();
-//        for(User u : allUsers){
-//            if(u.getLogin().equals(login)){
-//                return u;
-//            }
-//        }
-//        return null;
+    @Override
+    public List<User> getFirstFive() {
+
+        Criteria criteria = getCurrentSession().createCriteria( User.class );
+
+        //get unique entities (users with unique login) from first 10 records
+        List<User> firstFive = criteria
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .setMaxResults(10)
+                .list();
+
+        return firstFive;
     }
 }

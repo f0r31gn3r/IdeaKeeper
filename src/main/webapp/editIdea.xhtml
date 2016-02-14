@@ -19,7 +19,7 @@
 
 <h:body>
  
- 	#{ideaBean.getIdeaById(param.ideaId)}
+ 	#{ideaBean.getIdeaById(param.ideaId, param.userId)}
     
     <p:growl autoUpdate="true" />
     <h:form id="ideaForm">
@@ -36,9 +36,10 @@
         </h:panelGrid>
         
         <p:commandButton id="btnSaveIdea" value="Save" process="@form"/>
-        <h:button value="Back" outcome="#{ideaBean.backToUserProfile(ideaBean.currentIdea.userId)}" />
-        
-    </h:form>
+
+        <p:commandButton action="#{ideaBean.backToUserProfile(ideaBean.currentIdea.userId)}"
+                       process="@this"
+                       value="Back"/>    </h:form>
 
 </h:body>
 </html>

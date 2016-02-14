@@ -155,9 +155,6 @@ public class UserResourceImpl {
     }
 
     @GET
-//    @Consumes(APPLICATION_JSON)
-//    @Produces(APPLICATION_JSON)
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/get_ideas/{userId}")
     public Set<IdeaDTO> getUserIdeas(@PathParam("userId") Long userId) {
@@ -178,10 +175,13 @@ public class UserResourceImpl {
     }
 
     @GET
+//    @Consumes(APPLICATION_JSON)
+//    @Produces(APPLICATION_JSON)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<UserDTO> getAllUsers(){
-        List<User> users = userService.getAll();
-        List<UserDTO> usersDTO = new ArrayList<>();
+
+    public List<UserDTO> getFirstFive(){
+        List<User> users = userService.getFirstFive();
+        List<UserDTO> usersDTO = new ArrayList<UserDTO>();
 
         if(users.size() > 0){
             for(User u : users){

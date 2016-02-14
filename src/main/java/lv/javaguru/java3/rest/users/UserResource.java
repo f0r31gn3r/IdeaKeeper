@@ -75,5 +75,5 @@ public interface UserResource {
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Path("/users")
-    List<UserDTO> getAllUsers();
+    List<UserDTO> getFirstFive();
 }

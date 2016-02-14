@@ -29,8 +29,7 @@ public interface UserService {
 
     User setStatusVIP (User user);
 
-    List<User> getAll();
+    List<User> getFirstFive();
 
-    //TODO: impossible to delete user, who is logged in
 
 }

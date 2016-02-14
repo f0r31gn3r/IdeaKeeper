@@ -21,7 +21,7 @@ import static lv.javaguru.java3.core.domain.attempt.AttemptBuilder.createAttempt
 import static lv.javaguru.java3.core.domain.idea.IdeaBuilder.createIdea;
 import static lv.javaguru.java3.core.domain.user.UserBuilder.createUser;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 
 public class UserDAOImplTest extends DatabaseHibernateTest {
@@ -93,18 +93,36 @@ public class UserDAOImplTest extends DatabaseHibernateTest {
 
     @Test
     @Transactional
-    public void testGetAll() {
-        User user = createUser()
-                .withLogin(LOGIN)
-                .withPassword(PASSWORD)
-                .withName(NAME)
-                .withSurname(SURNAME)
-                .withEmail(EMAIL)
-                .withAccessLevel(ACCESSLEVEL)
-                .build();
-        userDAO.create(user);
-        assertThat(userDAO.getAll().size(), is(1));
+    public void testGetFirstFive() {
+        for (int i=0; i<15; i++){
+            User user = createUser()
+                    .withLogin(LOGIN + String.valueOf(i))
+                    .withPassword(PASSWORD)
+                    .withName(NAME)
+                    .withSurname(SURNAME)
+                    .withEmail(EMAIL)
+                    .withAccessLevel(ACCESSLEVEL)
+                    .build();
+            userDAO.create(user);
+        }
+
+        assertSame(userDAO.getFirstFive().size(), 10);
     }
+
+//    @Test
+//    @Transactional
+//    public void testGetAll() {
+//        User user = createUser()
+//                .withLogin(LOGIN)
+//                .withPassword(PASSWORD)
+//                .withName(NAME)
+//                .withSurname(SURNAME)
+//                .withEmail(EMAIL)
+//                .withAccessLevel(ACCESSLEVEL)
+//                .build();
+//        userDAO.create(user);
+//        assertThat(userDAO.getAll().size(), is(1));
+//    }
 
     @Test
     @Transactional

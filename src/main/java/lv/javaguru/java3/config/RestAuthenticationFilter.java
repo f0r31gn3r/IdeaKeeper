@@ -21,7 +21,7 @@ import java.io.IOException;
 public class RestAuthenticationFilter implements ContainerRequestFilter {
 
 	@Autowired
-	static AuthenticationService authenticationService;
+	AuthenticationService authenticationService;
 	static String requestType = new String();
 	static HttpSession session = null;
 
