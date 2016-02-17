@@ -37,7 +37,8 @@ public class UserValidatorImpl implements UserValidator {
         checkArgument(!isBlank(password), "User password must not be empty");
     }
 
-    private void validateName(String name) {
+    @Override
+    public void validateName(String name) {
         checkArgument(!containsAny(name, "!?$%^<>*()#~/?&|"), "User name must not contain symbols");
         checkArgument(!containsAny(name, "1234567890"), "User name must not contain numbers");
         checkArgument(!(name.length() > 0 && name.trim().length()==0), "User name must not contain all spaces");
@@ -49,7 +50,8 @@ public class UserValidatorImpl implements UserValidator {
         checkArgument(!(surname.length() > 0 && surname.trim().length()==0), "User surname must not contain all spaces");
     }
 
-    private void validateEmail(String email) {
+    @Override
+    public void validateEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);

@@ -1,19 +1,5 @@
 package lv.javaguru.java3.jms;
 
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.Path;
-
-/**
- * Created by Anna on 14.12.2015.
- */
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +7,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.close;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
+
+/**
+ * Created by Anna on 14.12.2015.
+ */
 
 @Controller
 @RequestMapping("/amq")
@@ -92,6 +83,7 @@ public class JmsController {
         $("#subject").setValue("JMS testing!!!");
         $("#toolbar_secondary_btn_send").click();
         $("#btn_return-to-folder").click();
+        sleep(3000);
         close();
     }
 }

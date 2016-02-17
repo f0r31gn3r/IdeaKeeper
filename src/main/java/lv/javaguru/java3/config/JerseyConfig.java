@@ -20,7 +20,8 @@ public class JerseyConfig extends ResourceConfig {
         register(AttemptResourceImpl.class);
         register(AuthenticationResourceImpl.class);
         register(IdeaResourceImpl.class);
-        register(RestAuthenticationFilter.class); //comment this for passing REST tests
+        //register(RestAuthenticationFilter.class); //comment this for passing REST tests
+        register(RabbitConfiguration.class);
 
         register(CORSResponseFilter.class);
     }

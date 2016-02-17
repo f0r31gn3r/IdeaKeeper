@@ -66,13 +66,16 @@ public class RestAuthenticationFilter implements ContainerRequestFilter {
 
 				return;
 
-				// logged in admin can't delete himself
+			// logged in admin can't delete himself
 			} else if (String.valueOf(session.getAttribute("role")).equals(AccessLevel.ADMIN.name())
 					&& !wantsToDeleteHimself()) {
 				return;
 
-				// if user has no rights to perform requested operation
+				// if admin wants to send email
+			} else if(String.valueOf(session.getAttribute("role")).equals(AccessLevel.ADMIN.name()) && requestType.contains("queue1")){
+				return;
 			} else {
+				// if user has no rights to perform requested operation
 				request.abortWith(Response.status(Response.Status.FORBIDDEN).build());
 			}
 

@@ -34,6 +34,10 @@ $(document).ready(function() {
 		unblockUser($("#userForm\\:userId").val());
 	});
 
+	$("#userForm\\:btnSendEmail").click(function() {
+		sendEmail();
+	});
+
 	function addUser() {
 		console.log('addUser');
 
@@ -184,6 +188,14 @@ $(document).ready(function() {
 			}
 		});
 
+	}
+
+	function sendEmail() {
+		console.log('sending Email');
+
+		$.ajax({
+			url: 'http://localhost:8080/amq/call_queue1',
+		});
 	}
 
 	function formToJSON() {

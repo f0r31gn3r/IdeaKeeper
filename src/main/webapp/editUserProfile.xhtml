@@ -23,12 +23,13 @@
     <p:growl autoUpdate="true" />
     <h:form id="userForm">
         <h:panelGrid columns="2">
+
             <h:outputText value="ID" />
-            <h:inputText id="userId" value="#{userBean.userDTO.userId}" />
+            <p:inputText id="userId" value="#{userBean.userDTO.userId}" />
 
             <h:outputText value="Name" />
             <p:inputText id="name" value="#{userBean.userDTO.name}">
-                <f:validator validatorId="dataValidator" />
+                <f:validator validatorId="nameValidator" />
             </p:inputText>
 
             <h:outputText value="Surname" />
@@ -41,7 +42,9 @@
             <p:inputText id="password" value="#{userBean.userDTO.password}" />
 
             <h:outputText value="Email" />
-            <p:inputText id="email" value="#{userBean.userDTO.email}" />
+            <p:inputText id="email" value="#{userBean.userDTO.email}" >
+                <f:validator validatorId="emailValidator" />
+            </p:inputText>
 
             <h:outputText value="Access" />
             <p:inputText id="accessLevel" value="#{userBean.userDTO.accessLevel}" />
@@ -49,14 +52,20 @@
         </h:panelGrid>
 
         <h:outputText rendered="#{userBean.userDTO.userId > 0}" value="User's ideas"/>
-        <p:dataTable rendered="#{userBean.userIdeas.size() > 0}" var="row" value="#{userBean.userIdeas}">
+        <p:dataTable rendered="#{userBean.userIdeas.size() > 0}" var="row" value="#{userBean.userIdeas}" widgetVar="ideasTable">
 
-            <p:column headerText="Id">
+            <p:column headerText="Id" sortBy="#{row.ideaId}">
                 <h:outputText value="#{row.ideaId}"/>
             </p:column>
 
-            <p:column headerText="Title">
-                <h:outputText value="#{row.title}"/>
+            <p:column headerText="Title" filterBy="#{row.title}" filterMatchMode="exact">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('ideasTable').filter()" >
+                        <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItems value="#{userBean.userIdeasTitles}" />
+                    </p:selectOneMenu>
+                </f:facet>
+                <h:outputText value="#{row.title}" />
             </p:column>
 
             <p:column headerText="Description">
@@ -75,7 +84,7 @@
 
         </p:dataTable>
 
-        <p:commandButton value="Validate Name" process="@form"/>
+        <p:commandButton value="Validate" process="@form"/>
         <p:commandButton id="btnSaveUser" value="Save" process="@form"/>
         <h:button value="Add Idea" outcome="#{ideaBean.editIdea(0, userBean.userDTO.userId)}" />
         <p:commandButton id="btnBackToMain" value="Back" process="@form"/>

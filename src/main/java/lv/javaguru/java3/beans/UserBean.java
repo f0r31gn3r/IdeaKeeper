@@ -42,23 +42,7 @@ public class UserBean{
 
     public List<IdeaDTO> userIdeas = new ArrayList<IdeaDTO>();
 
-    //public IdeaDTO currentIdea;
-
-//    public IdeaDTO getCurrentIdea() {
-//		return currentIdea;
-//	}
-//
-//	public void setCurrentIdea(IdeaDTO currentIdea) {
-//		this.currentIdea = currentIdea;
-//	}
-
-//	public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    public List<String> userIdeasTitles = new ArrayList<String>();
 
     public List<IdeaDTO> getUserIdeas() {
         return userIdeas;
@@ -123,45 +107,6 @@ public class UserBean{
         return userDTO;
     }
 
-//    public IdeaDTO getIdeaById(Long id) {
-//
-//        String link = ideaLink + String.valueOf(id);
-//
-//        HttpClient client = new DefaultHttpClient();
-//        HttpGet request = new HttpGet(link);
-//        HttpResponse response;
-//        String result = null;
-//        currentIdea = null;
-//        try {
-//            response = client.execute(request);
-//            HttpEntity entity = response.getEntity();
-//
-//            if (entity != null) {
-//
-//                // A Simple JSON Response Read
-//                InputStream instream = entity.getContent();
-//                result = convertStreamToString(instream);
-//                System.out.println("RESPONSE result idea: " + result);
-//
-//                System.out.println("RESPONSE json string idea: " + result);
-//
-//                ObjectMapper mapper = new ObjectMapper();
-//                currentIdea = mapper.readValue(result, IdeaDTO.class);
-//
-//                instream.close();
-//            }
-//            // Headers
-//            org.apache.http.Header[] headers = response.getAllHeaders();
-//            for (int i = 0; i < headers.length; i++) {
-//                System.out.println(headers[i]);
-//            }
-//        } catch (Exception e1) {
-//            // TODO Auto-generated catch block
-//            e1.printStackTrace();
-//        }
-//        return currentIdea;
-//    }
-
     public void getUserIdeas(String link) {
 
         HttpClient client = new DefaultHttpClient();
@@ -220,10 +165,6 @@ public class UserBean{
         }
     }
 
-    public String backToMain() {
-        return "main.html";
-    }
-
     private static String convertStreamToString(InputStream is) {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -245,4 +186,18 @@ public class UserBean{
         }
         return sb.toString();
     }
+
+    public List<String> getUserIdeasTitles(){
+        List<String> ideasTitles = new ArrayList<String>();
+        List<IdeaDTO> ideasDTO = getUserIdeas();
+        if(getUserIdeas() != null && ideasDTO.size() > 0 ){
+            for(IdeaDTO i : ideasDTO){
+                if(!ideasTitles.contains(i.getTitle())){
+                    ideasTitles.add(i.getTitle());
+                }
+            }
+        }
+        return ideasTitles;
+    }
+
 }

@@ -27,8 +27,13 @@
     </managed-bean>
 
     <validator>
-        <validator-id>dataValidator</validator-id>
-        <validator-class>lv.javaguru.java3.validators.DataValidator</validator-class>
+        <validator-id>nameValidator</validator-id>
+        <validator-class>lv.javaguru.java3.validators.NameValidator</validator-class>
+    </validator>
+
+    <validator>
+        <validator-id>emailValidator</validator-id>
+        <validator-class>lv.javaguru.java3.validators.EmailValidator</validator-class>
     </validator>
 
 </faces-config>
